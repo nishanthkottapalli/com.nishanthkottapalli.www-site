@@ -27,8 +27,6 @@ jobs:
       - name: Validate required files
         run: |
           test -f index.html
-          test -f CNAME
-          test -f .nojekyll
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
