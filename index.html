@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#001c21">
+  <link rel="icon" type="image/svg+xml" href="assets/brand/logo.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&family=Inter:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/base.css">
+  <script defer src="js/theme.js"></script>
+  <script defer src="js/site.js"></script>
+  <title>Nishanth Kottapalli — Trunk / Branch / Leaf</title>
+  <meta name="description" content="Personal knowledge tree of foundations, applied systems, projects, writing and experiments by Nishanth Kottapalli.">
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a class="brand" href="index.html" aria-label="Nishanth Kottapalli home">
+      <div class="title title-with-logo">
+        <span class="brand-mark-wrap" aria-hidden="true">
+          <img class="brand-mark" src="assets/brand/logo.svg" alt="">
+        </span>
+        <span>NISHANTH KOTTAPALLI</span>
+      </div>
+      <div class="subtitle">Trunk → Branch → Leaf</div>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a class="pill" href="index.html">Home</a>
+      <a class="pill" href="trunk.html">Trunk</a>
+      <a class="pill" href="branch.html">Branches</a>
+      <a class="pill" href="leaf.html">Leaves</a>
+      <a class="pill" href="case-studies.html">Case Studies</a>
+      <a class="pill" href="resume.html">Resume</a>
+      <a class="pill" href="links.html">Links</a>
+      <button class="icon-btn" type="button" onclick="NMKKTheme.toggle()" aria-label="Toggle theme" title="Toggle theme">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 18a6 6 0 1 1 4.24-10.24A8 8 0 1 0 20 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+<main class="container">
+
+<section class="hero-grid">
+  <div>
+    <span class="eyebrow">Personal knowledge tree</span>
+    <h1 class="h-title">Foundations → applications → shipped proof.</h1>
+    <p class="h-sub">I organise my work like a tree. The <span class="kbd">trunk</span> is how I think and work. The <span class="kbd">branches</span> are the capabilities and foundations I keep developing. The <span class="kbd">leaves</span> are the actual things I ship: systems, repos, articles, demos, games, templates, and case studies.</p>
+    <div class="actions">
+      <a class="btn primary" href="trunk.html">Read the trunk</a>
+      <a class="btn" href="branch.html">Explore branches</a>
+      <a class="btn" href="leaf.html">Browse leaves</a>
+    </div>
+    <div class="badges" aria-label="Focus areas">
+      <span class="pill">Math + Physics</span><span class="pill">Computer Science</span><span class="pill">Electricals + Electronics</span><span class="pill">AI Infrastructure</span><span class="pill">Games + Prototypes</span>
+    </div>
+  </div>
+  <img class="hero-mark" src="assets/brand/logo-full.png" alt="Nishanth Kottapalli skull logo">
+</section>
+
+<section>
+  <h2 class="section-title">The tree model</h2>
+  <div class="grid">
+    <article class="card"><h3>Trunk</h3><p>The operating philosophy: learning by building, moving from fundamentals to systems, and turning work into public knowledge assets.</p><a class="inline" href="trunk.html">Open Trunk →</a></article>
+    <article class="card"><h3>Branches</h3><p>Foundational branches explain reusable principles. Applied branches show where those ideas become useful in real products and systems.</p><a class="inline" href="branch.html">Open Branches →</a></article>
+    <article class="card"><h3>Leaves</h3><p>The visible proof: repos, articles, games, demos, devlogs, reels, diagrams, templates, and case studies.</p><a class="inline" href="leaf.html">Open Leaves →</a></article>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">Foundational branches</h2>
+  <p class="section-copy">These are durable knowledge branches. Each concept is explained once at the foundation level, then linked outward into applied work.</p>
+  <div class="grid four">
+    <article class="card"><h3>Math &amp; Arithmetic</h3><p>Numbers, geometry, trigonometry, vectors, probability, graphs, optimization, and systems math.</p><a class="inline" href="math.html">Explore Math →</a></article>
+    <article class="card"><h3>Physics</h3><p>Motion, forces, energy, waves, heat, electricity, magnetism, fluids, and systems behaviour.</p><a class="inline" href="physics.html">Explore Physics →</a></article>
+    <article class="card"><h3>Computer Science</h3><p>Data structures, algorithms, state machines, networking, distributed systems, security, and architecture.</p><a class="inline" href="computer-science.html">Explore Computer Science →</a></article>
+    <article class="card"><h3>Electricals &amp; Electronics</h3><p>Circuits, signals, timing, sampling, filters, sensors, microcontrollers, communication, and embedded interfaces.</p><a class="inline" href="electricals-electronics.html">Explore Electronics →</a></article>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">Applied branches</h2>
+  <div class="grid two">
+    <article class="card"><h3>Game Development</h3><p>Movement, combat, collision, networking, procedural systems, balancing, and playful interaction design.</p><a class="inline" href="leaf.html">See related leaves →</a></article>
+    <article class="card"><h3>AI / Infrastructure</h3><p>RAG systems, inference platforms, observability, release safety, queues, cost controls, and operational readiness.</p><a class="inline" href="leaf.html">See related leaves →</a></article>
+    <article class="card"><h3>Platform Engineering + DevSecOps</h3><p>Cloud delivery, IaC, CI/CD, auditability, security fundamentals, and production reliability.</p><a class="inline" href="case-studies.html">Case studies →</a></article>
+    <article class="card"><h3>Hardware + Embedded Systems</h3><p>Physical interfaces, operator stations, controls, arcade systems, homelab rigs, and embedded experimentation.</p><a class="inline" href="links.html">Where this goes next →</a></article>
+  </div>
+</section>
+
+</main>
+<footer class="footer">
+  <div class="container"><span>© <span data-year></span> Nishanth Kottapalli</span><span>Built as a static GitHub Pages site.</span></div>
+</footer>
+</body>
+</html>
