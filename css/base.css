@@ -58,8 +58,8 @@ header {
 }
 .brand-mark-wrap { width: 32px; height: 32px; flex: 0 0 auto; display: inline-grid; place-items: center; }
 .brand-mark {
-  width: 32px;
-  height: 32px;
+  width: 64px;
+  height: 64px;
   border-radius: 8px;
   object-fit: cover;
   box-shadow: 4px 4px 0 color-mix(in srgb, var(--line) 16%, transparent);
