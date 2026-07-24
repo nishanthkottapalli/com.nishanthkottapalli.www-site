@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#001c21">
+  <link rel="icon" type="image/svg+xml" href="assets/brand/logo.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&family=Inter:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/base.css">
+  <script defer src="js/theme.js"></script>
+  <script defer src="js/site.js"></script>
+  <title>A secure volatile scratch space on macOS — Nishanth Kottapalli</title>
+  <meta name="description" content="A security-focused explanation of a macOS utility that creates a restricted, RAM-backed scratch filesystem for temporary sensitive data.">
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a class="brand" href="index.html" aria-label="Nishanth Kottapalli home">
+      <div class="title title-with-logo">
+        <span class="brand-mark-wrap" aria-hidden="true">
+          <img class="brand-mark" src="assets/brand/logo.svg" alt="">
+        </span>
+        <span>NISHANTH KOTTAPALLI</span>
+      </div>
+      <div class="subtitle">Engineer. Builder. Systems thinker.</div>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a class="pill" href="index.html">Home</a>
+      <a class="pill" href="trunk.html">Trunk</a>
+      <a class="pill" href="branch.html">Branches</a>
+      <a class="pill active" href="leaf.html" aria-current="page">Leaves</a>
+      <!-- a class="pill" href="case-studies.html">Case Studies</a -->
+      <!-- a class="pill" href="resume.html">Resume</a -->
+      <a class="pill" href="links.html">Links</a>
+      <button class="icon-btn" type="button" onclick="NMKKTheme.toggle()" aria-label="Toggle theme" title="Toggle theme">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 18a6 6 0 1 1 4.24-10.24A8 8 0 1 0 20 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+<main class="container">
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="leaf.html">Leaves</a>
+  <span aria-hidden="true">→</span>
+  <span>Secure volatile scratch space</span>
+</nav>
+
+<article class="article-shell">
+  <header class="article-header">
+    <span class="eyebrow">Leaf · Platform Engineering + DevSecOps</span>
+    <h1 class="article-title">A secure volatile scratch space on macOS</h1>
+    <p class="article-deck">A constrained, RAM-backed workspace for temporary sensitive data—designed to reduce accidental persistence without overstating the security guarantees that volatile storage can provide.</p>
+    <div class="tag-list" aria-label="Article topics">
+      <span class="pill">macOS</span>
+      <span class="pill">Security</span>
+      <span class="pill">RAM disk</span>
+      <span class="pill">Data handling</span>
+    </div>
+  </header>
+
+  <div class="article-layout">
+    <aside class="article-toc" aria-label="On this page">
+      <strong>On this page</strong>
+      <a href="#overview">Overview</a>
+      <a href="#security-meaning">What “secure” means</a>
+      <a href="#usage">Bash-based usage</a>
+      <a href="#why-built">Why I built it</a>
+      <a href="#platform-support">Platform support</a>
+    </aside>
+
+    <div class="article-body prose">
+      <section id="overview">
+        <p>This utility creates a RAM-backed block device, formats it as HFS+, and mounts it at:</p>
+        <pre><code class="language-text">/tmp/SecureScratch</code></pre>
+        <p>On macOS, <code>/tmp</code> resolves to <code>/private/tmp</code>, so tools such as <code>mount</code> and <code>df</code> may report the filesystem at:</p>
+        <pre><code class="language-text">/private/tmp/SecureScratch</code></pre>
+        <p>The utility is intended to provide temporary working space for sensitive data without deliberately placing that data on the Mac’s persistent filesystem.</p>
+      </section>
+
+      <section id="security-meaning">
+        <h2>What does &quot;secure&quot; mean here?</h2>
+        <p>The storage is volatile, which provides several useful security properties:</p>
+        <ul>
+          <li>Its contents disappear after the RAM disk is detached or the machine is restarted.</li>
+          <li>Files are not intentionally written to the underlying SSD.</li>
+          <li>Access to the mount point is restricted to the current user.</li>
+          <li>The filesystem is mounted with <code>nodev</code>, <code>nosuid</code>, and <code>noexec</code>.</li>
+          <li>It is useful for temporary decrypted files, build artefacts, extracted sensitive material, document processing, and intermediate data.</li>
+        </ul>
+        <p>However, a RAM disk is not automatically secure against every threat:</p>
+        <ul>
+          <li>Files are not encrypted while resident in memory.</li>
+          <li>Processes with sufficient privileges may still read them.</li>
+          <li>Memory contents may potentially appear in swap, crash dumps, or other operating-system artefacts.</li>
+          <li>Applications may create autosave files, caches, thumbnails, logs, or recovery data elsewhere.</li>
+          <li>A crash, shutdown, restart, or forced detach destroys the contents immediately.</li>
+          <li>Backup and recovery are intentionally unavailable.</li>
+        </ul>
+        <div class="callout">
+          <p><strong>Security boundary:</strong> This is therefore a control for reducing accidental persistence—not a secrets vault, sandbox, encrypted memory system, or complete data-loss-prevention mechanism.</p>
+        </div>
+      </section>
+
+      <section id="usage">
+        <h2>Bash-based usage</h2>
+        <p>Create a 24 GiB RAM disk:</p>
+        <pre><code class="language-shell">./secure_volatile_scratch_space.sh mount --size-in-gb 24</code></pre>
+        <p>Inspect its status:</p>
+        <pre><code class="language-shell">./secure_volatile_scratch_space.sh status</code></pre>
+        <p>Print the underlying device path:</p>
+        <pre><code class="language-shell">./secure_volatile_scratch_space.sh device</code></pre>
+        <p>Unmount the filesystem and destroy the RAM-backed device:</p>
+        <pre><code class="language-shell">./secure_volatile_scratch_space.sh unmount</code></pre>
+        <p>Force teardown when an ordinary unmount cannot complete:</p>
+        <pre><code class="language-shell">./secure_volatile_scratch_space.sh unmount --force</code></pre>
+        <p>Force mode should be used only after closing applications and processes that may still be accessing the scratch space.</p>
+      </section>
+
+      <section id="why-built">
+        <h2>Why I built it</h2>
+        <p>I designed the security model around this utility to reduce the accidental persistence of temporary sensitive data.</p>
+        <p>It is particularly useful in workflows where writing customer or regulated working data to persistent local storage could place you in breach of contractual data-handling requirements.</p>
+        <p>The RAM disk does not replace endpoint encryption, least-privilege access, short-lived credentials, application controls, audit logging, or approved data-handling procedures. It provides a constrained volatile workspace that can be created for a task and destroyed immediately afterwards.</p>
+      </section>
+
+      <section id="platform-support">
+        <h2>Platform support</h2>
+        <p>This implementation is specifically for macOS.</p>
+        <p>The equivalent design differs by operating system:</p>
+
+        <h3>Linux</h3>
+        <p>Linux can use a native <code>tmpfs</code> mount with restrictive permissions and mount options such as:</p>
+        <pre><code class="language-text">nodev,nosuid,noexec</code></pre>
+        <p>Where the running kernel supports it, the Linux implementation can additionally enforce <code>noswap</code>. A robust utility should detect whether strict no-swap operation is available and fail closed when strict enforcement has been requested but cannot be provided.</p>
+
+        <h3>Windows</h3>
+        <p>Windows requires additional design decisions.</p>
+        <p>Two practical options are:</p>
+        <ul>
+          <li>Use a WSL2 <code>tmpfs</code> when the entire processing workflow can remain inside WSL.</li>
+          <li>Use a separately reviewed PowerShell implementation backed by an organisationally approved and cryptographically signed RAM-disk driver for native Windows applications.</li>
+        </ul>
+        <p>The Windows implementation should not be assumed to provide guarantees identical to macOS or Linux. Windows paging, hibernation, crash dumps, application caches, driver trust, and endpoint configuration must be considered separately.</p>
+      </section>
+    </div>
+  </div>
+
+  <nav class="article-footer-nav" aria-label="Article navigation">
+    <a class="btn" href="computer-science.html">← Computer Science branch</a>
+    <a class="btn primary" href="leaf.html">Back to Leaves</a>
+  </nav>
+</article>
+
+</main>
+<footer class="footer">
+  <div class="container"><span>© <span data-year></span> Nishanth Kottapalli</span><span>Built as a static GitHub Pages site.</span></div>
+</footer>
+</body>
+</html>
