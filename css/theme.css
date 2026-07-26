@@ -67,8 +67,14 @@ html[data-theme="dark"] {
   border-radius: 28px;
   perspective: 1300px;
   isolation: isolate;
-  touch-action: pan-y;
-  overscroll-behavior: contain;
+
+  /*
+   * Vertical gestures scroll the page.
+   * Horizontal gestures remain available to the carousel.
+   */
+  touch-action: pan-y pinch-zoom;
+  overscroll-behavior-x: contain;
+  overscroll-behavior-y: auto;
 }
 
 .arts-carousel .ac-stage:focus-visible {
