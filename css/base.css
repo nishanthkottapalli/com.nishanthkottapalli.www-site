@@ -103,7 +103,7 @@ header {
   letter-spacing: -0.02em;
 }
 
-.subtitle {
+.title .subtitle {
   margin: 0 0 0 64px;
   color: var(--muted);
   font-size: 11px;
