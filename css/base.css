@@ -905,8 +905,8 @@ h3 {
     font-size: 14px;
   }
 
-  title .subtitle {
-    margin-left: -164px;
+  .title .subtitle {
+    margin-left: -160px;
   }
 
   .mermaid-embed {
