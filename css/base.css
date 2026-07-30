@@ -104,7 +104,7 @@ header {
 }
 
 .title .subtitle {
-  margin: 32px 0 0 -192px;
+  margin: 32px 0 0 -188px;
   color: var(--muted);
   font-size: 11px;
   font-weight: 700;
@@ -851,7 +851,7 @@ h3 {
     font-size: 10px;
   }
 
-  .subtitle {
+  .title .subtitle {
     margin-left: 38px;
   }
 
@@ -905,7 +905,7 @@ h3 {
     font-size: 14px;
   }
 
-  .subtitle {
+  title .subtitle {
     margin-left: 35px;
     font-size: 10px;
   }
