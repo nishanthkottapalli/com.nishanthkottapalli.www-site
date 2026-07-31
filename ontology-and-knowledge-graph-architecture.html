@@ -1,73 +1,87 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#001c21">
-  <link
-    rel="icon"
-    type="image/x-icon"
-    href="./assets/brand/favicon.ico"
-  >
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png">
-  <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&family=Inter:wght@600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/theme.css">
-  <link rel="stylesheet" href="css/base.css">
-  <script defer src="js/theme.js"></script>
-  <script defer src="js/site.js"></script>
-  <!-- Animated Flowchart -->
-  <link rel="stylesheet" href="./css/animation.css">
-  <script src="./js/vendor/mermaid.min.js"></script>
-  <script src="./js/render-mermaid.js" defer></script>
-  <title>Nishanth Kottapalli | Ontology and Knowledge Graph Architecture</title>
-  <meta name="description" content="Page not found.">
-</head>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#001c21">
+        <link
+            rel="icon"
+            type="image/x-icon"
+            href="./assets/brand/favicon.ico"
+        >
+        <link rel="icon" type="image/png" sizes="32x32" href="./assets/brand/favicon-32.png">
+        <link rel="apple-touch-icon" href="./assets/brand/apple-touch-icon.png">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&family=Inter:wght@600;700;800;900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="./css/theme.css">
+        <link rel="stylesheet" href="./css/base.css">
+        <script defer src="./js/utils.js"></script>
+        <script defer src="./js/theme.js"></script>
+        <script defer src="./js/site.js"></script>
+      <link rel="stylesheet" href="./css/animation.css">
+      <script src="./js/vendor/mermaid.min.js"></script>
+      <script src="./js/render-mermaid.js" defer></script>
+        <title>Nishanth Kottapalli | Ontology and Knowledge Graph Architecture </title>
+        <meta name="description" content="Foundational roots for skills I've developed over the years.">
+    </head>
+
 <body>
-<header>
-  <div class="container nav">
-    <a class="brand" href="index.html" aria-label="Nishanth Kottapalli home">
-      <div class="title title-with-logo">
-        <span class="brand-mark-wrap" aria-hidden="true">
-          <img class="brand-mark" src="assets/brand/logo.svg" alt="">
-        </span>
-        <span>NISHANTH KOTTAPALLI</span>
-        <div class="subtitle">Engineer. Builder. Systems thinker.</div>
-      </div>
-    </a>
-    <nav class="nav-links" aria-label="Primary navigation">
-      <a class="pill" href="index.html">Home</a>
-      <a class="pill" href="trunk.html">Trunk</a>
-      <a class="pill" href="branch.html">Branches</a>
-      <a class="pill" href="leaf.html">Leaves</a>
-      <a class="pill" href="links.html">Links</a>
-      <button class="icon-btn" type="button" onclick="NMKKTheme.toggle()" aria-label="Toggle theme" title="Toggle theme">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 18a6 6 0 1 1 4.24-10.24A8 8 0 1 0 20 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      </button>
-    </nav>
-  </div>
-</header>
-<main class="container">
-  <span class="eyebrow">404</span>
-  <h1 class="h-title">Page not found.</h1>
-  <p class="h-sub">The branch or leaf you were looking for may have moved. Start again from the home page or explore the main site structure below.</p>
-  <div class="diagram-shell">
-    <div id="diagram" class="diagram" aria-live="polite">
-      <p class="diagram-status">Rendering diagram…</p>
-    </div>
-  </div>
+        <header>
+            <div class="container nav">
+                <a class="brand" href="index.html" aria-label="Nishanth Kottapalli home">
+                <div class="title title-with-logo">
+                    <span class="brand-mark-wrap" aria-hidden="true">
+                    <img class="brand-mark" src="assets/brand/logo.svg" alt="">
+                    </span>
+                    <span>NISHANTH KOTTAPALLI</span>
+                    <div class="subtitle">Engineer. Builder. Systems thinker.</div>
+                </div>
+                </a>
+                <nav class="nav-links" aria-label="Primary navigation">
+                    <a class="pill" href="./index.html">Home</a>
+                    <a class="pill active" href="./root.html" aria-current="page">Roots</a>
+                    <a class="pill" href="./trunk.html">Trunks</a>
+                    <a class="pill" href="./branch.html">Branches</a>
+                    <a class="pill" href="./leaf.html">Leaves</a>
+                    <a class="pill" href="./links.html">Links</a>
+                    <button class="icon-btn" type="button" onclick="NMKKTheme.toggle()" aria-label="Toggle theme" title="Toggle theme">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 18a6 6 0 1 1 4.24-10.24A8 8 0 1 0 20 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </button>
+                </nav>
+            </div>
+        </header>
+        <main class="container">
+
+            <span class="eyebrow">It's dangerous to go alone! Take this.</span>
+            <h1 class="h-title">Periculosum est solus ire! Sume hoc</h1>
+            <p class="h-sub">
+                There are plenty of skills I've learned from playing and developing video games. Art, Music, Animation and of course Programming.
+            </p>
+<pre><a href="./index.html#ground">Ground</a>
+└── <a href="./root.html">Roots</a>
+    |   └── <a href="./root.html#primary">Primary Roots</a>
+    |       └── <svg height="16" viewbox="0 0 640 640" width="16" xmlns="http://www.w3.org/2000/svg"><!--!Font Awesome Free v7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M160 96C160 78.3 174.3 64 192 64L448 64C465.7 64 480 78.3 480 96C480 113.7 465.7 128 448 128L418.5 128L428.8 262.1C465.9 283.3 494.6 318.5 507 361.8L510.8 375.2C513.6 384.9 511.6 395.2 505.6 403.3C499.6 411.4 490 416 480 416L160 416C150 416 140.5 411.3 134.5 403.3C128.5 395.3 126.5 384.9 129.3 375.2L133 361.8C145.4 318.5 174 283.3 211.2 262.1L221.5 128L192 128C174.3 128 160 113.7 160 96zM288 464L352 464L352 576C352 593.7 337.7 608 320 608C302.3 608 288 593.7 288 576L288 464z"></path></svg><a href="./video-games.html">Video Games</a>
+    └── <a href="./trunk.html">Trunks</a>
+        └── <a href="./branch.html">Branches</a>
+            └── <a href="./leaf.html">Leaves</a>
+</pre>
 
 
-  <script id="mermaid-source" type="text/plain">Zmxvd2NoYXJ0IExSCiAgICBBW1NvdXJjZSBzeXN0ZW1zXSAtLT4gQltDb2xsZWN0aW9uIGFuZCBpbmdlc3Rpb25dCiAgICBCIC0tPiBDW0Nhbm9uaWNhbGlzYXRpb24gYW5kIGVudGl0eSByZXNvbHV0aW9uXQogICAgQyAtLT4gRFtPbnRvbG9neSBhbmQgc2VtYW50aWMgbWFwcGluZ10KICAgIEQgLS0+IEVbS25vd2xlZGdlIGdyYXBoXQoKICAgIEUgLS0+IEZbVmFsaWRhdGlvbiBlbmdpbmVdCiAgICBFIC0tPiBHW1JlYXNvbmluZyBlbmdpbmVdCiAgICBFIC0tPiBIW1NlYXJjaCBhbmQgcXVlcnkgbGF5ZXJdCiAgICBFIC0tPiBJW0dyYXBoIGFuYWx5dGljc10KCiAgICBGIC0tPiBKW0FyY2hpdGVjdHVyZSBnb3Zlcm5hbmNlXQogICAgRyAtLT4gS1tSaXNrIGFuZCBpbXBhY3QgYW5hbHlzaXNdCiAgICBIIC0tPiBMW0FQSXMgYW5kIGFwcGxpY2F0aW9uc10KICAgIEkgLS0+IE1bUmVjb21tZW5kYXRpb25zIGFuZCBwcmVkaWN0aW9uc10KCiAgICBOW09udG9sb2d5IHJlcG9zaXRvcnldIC0tPiBECiAgICBPW1BvbGljeSBhbmQgcnVsZSByZXBvc2l0b3J5XSAtLT4gRgogICAgUFtJZGVudGl0eSBhbmQgcHJvdmVuYW5jZSBzZXJ2aWNlXSAtLT4gQw==</script>
-<div class="actions">
-  <a class="btn primary" href="./index.html">Back to Home</a>
-</div>
+            <nav class="article-footer-nav" aria-label="Article navigation">
+                <a class="btn" href="./index.html">Home</a>
+                <a class="btn primary" href="./root.html#primary">Back to Primary Root</a>
+            </nav>
+        </main>
+        <footer class="footer">
+            <div class="container footer-inner">
+                <p>
+                    &copy; Nishanth Kottapalli
+                    <span aria-hidden="true">·</span>
+                    All Rights Reserved.
+                </p>
+            </div>
+        </footer>
 
-</main>
-<footer class="footer">
-  <div class="container"><span>© <span data-year></span> Nishanth Kottapalli</span><span>Built as a static GitHub Pages site.</span></div>
-</footer>
-</body>
+    </body>
 </html>
