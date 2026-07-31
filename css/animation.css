@@ -1,0 +1,74 @@
+:root {
+  --diagram-max-width: 72rem;
+  --flow-dash-length: 4;
+  --flow-gap-length: 4;
+  --flow-pattern-length: 8;
+  --flow-duration: 1s;
+  --flow-stroke-width: 2px;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 2rem;
+  font-family: system-ui, sans-serif;
+  background: Canvas;
+  color: CanvasText;
+}
+
+.diagram-shell {
+  width: min(100%, var(--diagram-max-width));
+}
+
+.diagram {
+  width: 100%;
+  overflow: auto;
+}
+
+.diagram svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-inline: auto;
+}
+
+.diagram-status,
+.diagram-error {
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid currentColor;
+  border-radius: 0.5rem;
+  white-space: pre-wrap;
+}
+
+/* Mermaid assigns this class to generated flowchart connector paths. */
+.diagram .flowchart-link {
+  stroke-dasharray:
+    var(--flow-dash-length)
+    var(--flow-gap-length) !important;
+  stroke-width: var(--flow-stroke-width) !important;
+  animation: mermaid-flow var(--flow-duration) linear infinite;
+}
+
+@keyframes mermaid-flow {
+  from {
+    stroke-dashoffset: var(--flow-pattern-length);
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .diagram .flowchart-link {
+    animation: none !important;
+  }
+}
