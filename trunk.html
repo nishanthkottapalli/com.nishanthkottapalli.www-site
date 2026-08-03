@@ -2,93 +2,1032 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#001c21">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+  <meta
+    name="theme-color"
+    content="#001c21"
+  >
+  <meta
+    name="description"
+    content="The stable bodies of knowledge in Nishanth Kottapalli's personal knowledge ecosystem, connecting broad roots to specialised branches and inspectable leaves."
+  >
+
+  <link
+    rel="canonical"
+    href="https://www.nishanthkottapalli.com/trunk.html"
+  >
+
+  <meta
+    property="og:type"
+    content="website"
+  >
+  <meta
+    property="og:title"
+    content="Trunks - Nishanth Kottapalli"
+  >
+  <meta
+    property="og:description"
+    content="Stable bodies of knowledge connecting source domains to capabilities, projects, writing, experiments and ventures."
+  >
+  <meta
+    property="og:url"
+    content="https://www.nishanthkottapalli.com/trunk.html"
+  >
+
+  <title>
+    Trunks — Nishanth Kottapalli
+  </title>
+
   <link
     rel="icon"
     type="image/x-icon"
     href="./assets/brand/favicon.ico"
   >
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png">
-  <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&family=Inter:wght@600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/theme.css">
-  <link rel="stylesheet" href="css/base.css">
-  <script defer src="js/theme.js"></script>
-  <script defer src="js/site.js"></script>
-  <title>Nishanth Kottapalli - cogito, ergo sum</title>
-  <meta name="description" content="The operating model behind Nishanth Kottapalli's portfolio of work.">
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="32x32"
+    href="./assets/brand/favicon-32.png"
+  >
+  <link
+    rel="apple-touch-icon"
+    href="./assets/brand/apple-touch-icon.png"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&family=Inter:wght@600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="./css/theme.css"
+  >
+  <link
+    rel="stylesheet"
+    href="./css/base.css"
+  >
+
+  <style>
+    .trunk-type,
+    .relationship-label {
+      display: inline-block;
+      color: var(--muted);
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .trunk-type {
+      margin-bottom: 8px;
+    }
+
+    .trunk-card h3 {
+      text-wrap: balance;
+    }
+
+    .trunk-card > p {
+      color: var(--muted);
+    }
+
+    .trunk-card .tag-list {
+      margin-top: 14px;
+    }
+
+    .trunk-card .tag-list + .relationship-label {
+      margin-top: 18px;
+    }
+
+    .trunk-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+      margin-top: 16px;
+    }
+
+    .trunk-links a {
+      font-weight: 700;
+      text-underline-offset: 4px;
+    }
+
+    .ontology-rule {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 2px dashed var(--line-soft);
+    }
+
+    .ontology-rule p {
+      margin-top: 6px;
+      color: var(--muted);
+    }
+
+    .catalogue-note {
+      max-width: 82ch;
+      color: var(--muted);
+    }
+
+    .relationship-example {
+      white-space: pre-wrap;
+    }
+  </style>
+
+  <script
+    defer
+    src="./js/utils.js"
+  ></script>
+  <script
+    defer
+    src="./js/theme.js"
+  ></script>
+  <script
+    defer
+    src="./js/site.js"
+  ></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": "https://www.nishanthkottapalli.com/trunk.html#page",
+    "url": "https://www.nishanthkottapalli.com/trunk.html",
+    "name": "Trunks",
+    "description": "Stable bodies of knowledge in Nishanth Kottapalli's personal knowledge ecosystem.",
+    "isPartOf": {
+      "@id": "https://www.nishanthkottapalli.com/#website"
+    },
+    "about": {
+      "@type": "DefinedTermSet",
+      "name": "Bodies of knowledge",
+      "hasDefinedTerm": [
+        {
+          "@type": "DefinedTerm",
+          "name": "Science and Mathematical Foundations"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Computer Science and Software Systems"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Electrical, Electronic and Embedded Systems"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Cloud, Platform and Security Engineering"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Artificial Intelligence and Knowledge Systems"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Game Design and Interactive Entertainment"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Marketing and Advertising Technology"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Digital Sovereignty, Regulation and Public Systems"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Product, Venture and Technical Leadership"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Automotive, Mobility and Spatial Systems"
+        }
+      ]
+    }
+  }
+  </script>
 </head>
+
 <body>
-<header>
-  <div class="container nav">
-    <a class="brand" href="index.html" aria-label="Nishanth Kottapalli home">
-      <div class="title title-with-logo">
-        <span class="brand-mark-wrap" aria-hidden="true">
-          <img class="brand-mark" src="assets/brand/logo.svg" alt="">
-        </span>
-        <span>NISHANTH KOTTAPALLI</span>
-        <div class="subtitle">Engineer. Builder. Systems thinker.</div>
+  <header>
+    <div class="container nav">
+      <a
+        class="brand"
+        href="./index.html"
+        aria-label="Nishanth Kottapalli home"
+      >
+        <div class="title title-with-logo">
+          <span
+            class="brand-mark-wrap"
+            aria-hidden="true"
+          >
+            <img
+              class="brand-mark"
+              src="./assets/brand/logo.svg"
+              alt=""
+            >
+          </span>
+
+          <span>NISHANTH KOTTAPALLI</span>
+
+          <div class="subtitle">
+            Engineer. Builder. Systems thinker.
+          </div>
+        </div>
+      </a>
+
+      <nav
+        class="nav-links"
+        aria-label="Primary navigation"
+      >
+        <a
+          class="pill"
+          href="./index.html"
+        >
+          Home
+        </a>
+
+        <a
+          class="pill"
+          href="./root.html"
+        >
+          Roots
+        </a>
+
+        <a
+          class="pill active"
+          href="./trunk.html"
+          aria-current="page"
+        >
+          Trunks
+        </a>
+
+        <a
+          class="pill"
+          href="./branch.html"
+        >
+          Branches
+        </a>
+
+        <a
+          class="pill"
+          href="./leaf.html"
+        >
+          Leaves
+        </a>
+
+        <a
+          class="pill"
+          href="./links.html"
+        >
+          Links
+        </a>
+
+        <button
+          class="icon-btn"
+          type="button"
+          onclick="NMKKTheme.toggle()"
+          aria-label="Toggle theme"
+          title="Toggle theme"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M12 18a6 6 0 1 1 4.24-10.24A8 8 0 1 0 20 12"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section>
+      <span class="eyebrow">
+        Work conquers all.
+      </span>
+
+      <h1 class="h-title">
+        Labor omnia vincit
+      </h1>
+
+      <p class="h-sub">
+        Trunks are the stable <strong>bodies of knowledge</strong>
+        that connect broad source domains to specialised
+        capabilities and the artefacts they produce. Tools,
+        projects and ventures may change; a mature trunk
+        accumulates concepts, methods, evidence and practice over
+        time.
+      </p>
+    </section>
+
+    <section aria-labelledby="canonical-model-heading">
+      <h2
+        id="canonical-model-heading"
+        class="section-title"
+      >
+        The canonical model
+      </h2>
+
+      <div class="tree-block">
+        <pre><a href="./index.html#ground">Ground</a> — reasoning, observation, questions, claims, evidence and decisions
+└── <a href="./root.html">Roots</a> - broad source domains and enduring interests
+    └── <strong>Trunks</strong> - coherent bodies of knowledge
+        └── <a href="./branch.html">Branches</a> - specialised topics, practices and capabilities
+            └── <a href="./leaf.html">Leaves</a> - projects, repositories, writing, experiments and other artefacts</pre>
       </div>
-    </a>
-    <nav class="nav-links" aria-label="Primary navigation">
-      <a class="pill" href="./index.html">Home</a>
-      <a class="pill" href="./root.html">Roots</a>
-      <a class="pill active" href="./trunk.html" aria-current="page">Trunks</a>
-      <a class="pill" href="./branch.html">Branches</a>
-      <a class="pill" href="./leaf.html">Leaves</a>
-      <!-- a class="pill" href="case-studies.html">Case Studies</a -->
-      <!-- a class="pill" href="resume.html">Resume</a -->
-      <a class="pill" href="./links.html">Links</a>
-      <button class="icon-btn" type="button" onclick="NMKKTheme.toggle()" aria-label="Toggle theme" title="Toggle theme">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 18a6 6 0 1 1 4.24-10.24A8 8 0 1 0 20 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      </button>
-    </nav>
-  </div>
-</header>
-<main class="container">
 
-<span class="eyebrow">Work conquers all.</span>
-<h1 class="h-title">Labor omnia vincit</h1>
-<p class="h-sub">Trunks are the part that stablize over time while projects, tools, and interests evolve.</p>
-<div class="tree-block">
-<pre>Roots - Primary
-└── Trunk - Core
-    └── Branches
-        └── Roots - Secondary
-            └── Trunks
-            ...
-</pre>
-</div>
+      <div class="callout">
+        <p>
+          <strong>A trunk is not</strong> a personal principle, a
+          working method, an organisation, a product or an
+          individual project. Principles belong in Ground;
+          organisations and ventures sit alongside the tree;
+          products and projects normally appear as Leaves.
+        </p>
+      </div>
+    </section>
 
-<pre><a href="./index.html#ground">Ground</a>
-└── <a href="./root.html">Roots</a>
-    └── <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="16" height="16"><!--!Font Awesome Free v7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M160 96C160 78.3 174.3 64 192 64L448 64C465.7 64 480 78.3 480 96C480 113.7 465.7 128 448 128L418.5 128L428.8 262.1C465.9 283.3 494.6 318.5 507 361.8L510.8 375.2C513.6 384.9 511.6 395.2 505.6 403.3C499.6 411.4 490 416 480 416L160 416C150 416 140.5 411.3 134.5 403.3C128.5 395.3 126.5 384.9 129.3 375.2L133 361.8C145.4 318.5 174 283.3 211.2 262.1L221.5 128L192 128C174.3 128 160 113.7 160 96zM288 464L352 464L352 576C352 593.7 337.7 608 320 608C302.3 608 288 593.7 288 576L288 464z"/></svg><a href="./trunk.html">Trunks</a>
-        └── <a href="./branch.html">Branches</a>
-            └── <a href="./leaf.html">Leaves</a>
-</pre>
+    <section aria-labelledby="behaviour-heading">
+      <h2
+        id="behaviour-heading"
+        class="section-title"
+      >
+        How trunks behave
+      </h2>
 
-<section class="grid two">
-  <article class="card"><h3>Learning by building</h3><p>The fastest path to real understanding is making things that have to work. Even a small experiment should expose design trade-offs, failure modes, and next questions.</p></article>
-  <article class="card"><h3>From fundamentals to systems</h3><p>I want the site to connect foundations like math, physics, computer science, and electronics to applied work like games, AI infrastructure, and product engineering.</p></article>
-  <article class="card"><h3>Public knowledge assets</h3><p>Every useful outcome should leave behind something durable: a repo, article, template, diagram, demo, devlog, or case study.</p></article>
-  <article class="card"><h3>Compounding evolution</h3><p>The point is not to collect random projects. The point is to build a connected body of work where each branch strengthens the next leaf.</p></article>
-</section>
-<div class="callout"><p><strong>Simply put,</strong> the original trunk is how I work. The branches are the capabilities and foundations I keep developing. The leaves are the artifacts I actually ship.</p></div>
-<section>
-  <h2 class="section-title">Why a tree?</h2>
-  
-  <div class="split-grid">
-    <article class="card"><h3>Foundations are reusable</h3><p>A concept like waves or vectors should be explained once at the foundation layer, then reused across games, electronics, AI infrastructure, and systems.</p></article>
-    <article class="card"><h3>Applied work stays connected</h3><p>Game development, embedded interfaces, homelab systems, and production AI no longer look scattered. They become applications growing from shared roots and branches.</p></article>
-  </div>
-</section>
+      <div class="grid two">
+        <article class="card">
+          <h3>Stable, not static</h3>
 
-</main>
-<footer class="footer">
-  <div class="container"><span>© <span data-year></span> Nishanth Kottapalli</span><span>Built as a static GitHub Pages site.</span></div>
-</footer>
+          <p>
+            A trunk persists while its terminology, tools and
+            branches evolve. Computer Science remains a body of
+            knowledge even as languages, frameworks and runtime
+            platforms change.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Connected to several roots</h3>
+
+          <p>
+            A trunk may draw from more than one domain. Game
+            Design grows from Arts &amp; Entertainment, Technology
+            &amp; Computing, Hobbies &amp; Interests and Business.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Expressed through branches</h3>
+
+          <p>
+            Trunks become actionable through narrower subjects,
+            practices and capabilities such as Detection
+            Engineering, Game AI, Platform Engineering or
+            Marketing Analytics.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Proven through leaves</h3>
+
+          <p>
+            Repositories, games, assessments, experiments,
+            articles, diagrams and case studies provide
+            inspectable evidence that a body of knowledge is
+            actually being developed and applied.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="catalogue-heading">
+      <h2
+        id="catalogue-heading"
+        class="section-title"
+      >
+        Current trunks
+      </h2>
+
+      <p class="catalogue-note">
+        This is the initial canonical catalogue. A trunk may
+        connect to several Roots and may share Branches or Leaves
+        with another trunk; those many-to-many relationships are
+        intentional.
+      </p>
+
+      <div class="grid two">
+        <article
+          id="science-mathematical-foundations"
+          class="card trunk-card"
+        >
+          <span class="trunk-type">Body of knowledge</span>
+
+          <h3>Science and Mathematical Foundations</h3>
+
+          <p>
+            Quantitative reasoning, physical models and reusable
+            abstractions for understanding systems, motion,
+            measurement, uncertainty and change.
+          </p>
+
+          <span class="relationship-label">
+            Associated roots
+          </span>
+
+          <div class="tag-list">
+            <span class="pill">Science</span>
+            <span class="pill">Technology &amp; Computing</span>
+          </div>
+
+          <span class="relationship-label">
+            Representative branches
+          </span>
+
+          <div class="tag-list">
+            <span class="pill">Mathematics</span>
+            <span class="pill">Physics</span>
+            <span class="pill">Measurement</span>
+            <span class="pill">Modelling</span>
+            <span class="pill">Probability</span>
+          </div>
+
+          <div class="trunk-links">
+            <a href="./math.html">
+              Mathematics →
+            </a>
+            <a href="./physics.html">
+              Physics →
+            </a>
+          </div>
+        </article>
+
+        <article
+          id="computer-science-software-systems"
+          class="card trunk-card"
+        >
+          <span class="trunk-type">Body of knowledge</span>
+
+          <h3>Computer Science and Software Systems</h3>
+
+          <p>
+            Algorithms, data structures, computation, operating
+            systems, databases, networking, distributed systems
+            and the engineering of reliable software.
+          </p>
+
+          <span class="relationship-label">
+            Associated roots
+          </span>
+
+          <div class="tag-list">
+            <span class="pill">Technology &amp; Computing</span>
+            <span class="pill">Science</span>
+          </div>
+
+          <span class="relationship-label">
+            Representative branches
+          </span>
+
+          <div class="tag-list">
+            <span class="pill">Algorithms</span>
+            <span class="pill">Systems Programming</span>
+            <span class="pill">Distributed Systems</span>
+            <span class="pill">Web Engineering</span>
+            <span class="pill">Software Architecture</span>
+          </div>
+
+          <div class="trunk-links">
+            <a href="./computer-science.html">
+              Computer Science →
+            </a>
+          </div>
+        </article>
+
+        <article
+          id="electrical-electronic-embedded-systems"
+          class="card trunk-card"
+        >
+          <span class="trunk-type">Body of knowledge</span>
+
+          <h3>Electrical, Electronic and Embedded Systems</h3>
+
+          <p>
+            Circuits, signals, sensors, control, embedded
+            computing, digital hardware and physical interfaces
+            between software and the material world.
+          </p>
+
+          <span class="relationship-label">
+            Associated roots
+          </span>
+
+          <div class="tag-list">
+            <span class="pill">Science</span>
+            <span class="pill">Technology &amp; Computing</span>
+          </div>
+
+          <span class="relationship-label">
+            Representative branches
+          </span>
+
+          <div class="tag-list">
+            <span class="pill">Electronics</span>
+            <span class="pill">Embedded Systems</span>
+            <span class="pill">FPGA Programming</span>
+            <span class="pill">Sensors</span>
+            <span class="pill">Control Systems</span>
+          </div>
+
+          <div class="trunk-links">
+            <a href="./electronics.html">
+              Electricals &amp; Electronics →
+            </a>
+          </div>
+        </article>
+
+        <article
+          id="cloud-platform-security-engineering"
+          class="card trunk-card"
+        >
+          <span class="trunk-type">Body of knowledge</span>
+
+          <h3>Cloud, Platform and Security Engineering</h3>
+
+          <p>
+            The design, operation and assurance of cloud
+            platforms, delivery systems, runtime environments,
+            controls and evidence-producing security practices.
+          </p>
+
+          <span class="relationship-label">
+            Associated roots
+          </span>
+
+          <div class="tag-list">
+            <span class="pill">Technology &amp; Computing</span>
+            <span class="pill">Business</span>
+            <span class="pill">Law, Government &amp; Politics</span>
+          </div>
+
+          <span class="relationship-label">
+            Representative branches
+          </span>
+
+          <div class="tag-list">
+            <span class="pill">Platform Engineering</span>
+            <span class="pill">DevSecOps</span>
+            <span class="pill">AWS Security</span>
+            <span class="pill">Detection Engineering</span>
+            <span class="pill">Compliance Engineering</span>
+            <span class="pill">Cyber Resilience</span>
+          </div>
+
+          <div class="ontology-rule">
+            <span class="relationship-label">
+              Connected entities and leaves
+            </span>
+            <p>
+              Nishanth Konsultancy, Security Capabilities Lab,
+              Hardened Compute, security assessments, risk
+              registers and remediation evidence.
+            </p>
+          </div>
+        </article>
+
+        <article
+          id="artificial-intelligence-knowledge-systems"
+          class="card trunk-card"
+        >
+          <span class="trunk-type">Body of knowledge</span>
+
+          <h3>Artificial Intelligence and Knowledge Systems</h3>
+
+          <p>
+            Machine intelligence, knowledge representation,
+            retrieval, planning, model operations and
+            evidence-grounded systems that assist human
+            reasoning and decision-making.
+          </p>
+
+          <span class="relationship-label">
+            Associated roots
+          </span>
+
+          <div class="tag-list">
+            <span class="pill">Technology &amp; Computing</span>
+            <span class="pill">Science</span>
+            <span class="pill">Business</span>
+          </div>
+
+          <span class="relationship-label">
+            Representative branches
+          </span>
+
+          <div class="tag-list">
+            <span class="pill">AI Infrastructure</span>
+            <span class="pill">Retrieval Engineering</span>
+            <span class="pill">Knowledge Graphs</span>
+            <span class="pill">Agent Planning</span>
+            <span class="pill">Model Operations</span>
+            <span class="pill">Experimentation Systems</span>
+          </div>
+
+          <div class="ontology-rule">
+            <span class="relationship-label">
+              Representative leaves
+            </span>
+            <p>
+              Hybrid RAG, Champion–Challenger Experiment Engine,
+              Private AI Fabric, ontology models and grounded AI
+              architecture notes.
+            </p>
+          </div>
+        </article>
+
+        <article
+          id="game-design-interactive-entertainment"
+          class="card trunk-card"
+        >
+          <span class="trunk-type">Body of knowledge</span>
+
+          <h3>Game Design and Interactive Entertainment</h3>
+
+          <p>
+            The design and production of games, playable media,
+            simulations, interactive narratives, economies,
+            agents and multiplayer experiences.
+          </p>
+
+          <span class="relationship-label">
+            Associated roots
+          </span>
+
+          <div class="tag-list">
+            <span class="pill">Arts &amp; Entertainment</span>
+            <span class="pill">Hobbies &amp; Interests</span>
+            <span class="pill">Technology &amp; Computing</span>
+            <span class="pill">Business</span>
+          </div>
+
+          <span class="relationship-label">
+            Representative branches
+          </span>
+
+          <div class="tag-list">
+            <span class="pill">Game Development</span>
+            <span class="pill">Game AI</span>
+            <span class="pill">Simulation Design</span>
+            <span class="pill">Narrative Systems</span>
+            <span class="pill">Multiplayer Systems</span>
+            <span class="pill">Game Economy Design</span>
+          </div>
+
+          <div class="ontology-rule">
+            <span class="relationship-label">
+              Connected entities and leaves
+            </span>
+            <p>
+              RetroKrafters, Arcade Division, Arcade Space
+              Shooter, KINGPIN, GOAP Engine, browser games and
+              playable prototypes.
+            </p>
+          </div>
+
+          <div class="trunk-links">
+            <a href="./video-games.html">
+              Video Games →
+            </a>
+            <a href="./arts-and-entertainment.html">
+              Arts &amp; Entertainment →
+            </a>
+          </div>
+        </article>
+
+        <article
+          id="marketing-advertising-technology"
+          class="card trunk-card"
+        >
+          <span class="trunk-type">Body of knowledge</span>
+
+          <h3>Marketing and Advertising Technology</h3>
+
+          <p>
+            Technology for understanding audiences, operating
+            content, running experiments, serving advertising
+            and connecting marketing activity to measurable
+            outcomes.
+          </p>
+
+          <span class="relationship-label">
+            Associated roots
+          </span>
+
+          <div class="tag-list">
+            <span class="pill">Business</span>
+            <span class="pill">Technology &amp; Computing</span>
+            <span class="pill">Arts &amp; Entertainment</span>
+          </div>
+
+          <span class="relationship-label">
+            Representative branches
+          </span>
+
+          <div class="tag-list">
+            <span class="pill">Social Listening</span>
+            <span class="pill">Content Operations</span>
+            <span class="pill">Marketing Analytics</span>
+            <span class="pill">Ad Decisioning</span>
+            <span class="pill">Experimentation</span>
+            <span class="pill">Attribution</span>
+          </div>
+
+          <div class="ontology-rule">
+            <span class="relationship-label">
+              Connected entities and leaves
+            </span>
+            <p>
+              Roimantics, Gear5Ads, multi-platform content
+              scheduling, reporting pipelines, campaign
+              dashboards and audience-intelligence workflows.
+            </p>
+          </div>
+        </article>
+
+        <article
+          id="digital-sovereignty-regulation-public-systems"
+          class="card trunk-card"
+        >
+          <span class="trunk-type">Body of knowledge</span>
+
+          <h3>Digital Sovereignty, Regulation and Public Systems</h3>
+
+          <p>
+            The relationship between technology, law, state
+            capacity, data governance, regulated markets and
+            infrastructure that must remain trustworthy and
+            inspectable.
+          </p>
+
+          <span class="relationship-label">
+            Associated roots
+          </span>
+
+          <div class="tag-list">
+            <span class="pill">Law, Government &amp; Politics</span>
+            <span class="pill">Technology &amp; Computing</span>
+            <span class="pill">Business</span>
+          </div>
+
+          <span class="relationship-label">
+            Representative branches
+          </span>
+
+          <div class="tag-list">
+            <span class="pill">Indian Cybersecurity Compliance</span>
+            <span class="pill">Data Protection</span>
+            <span class="pill">Tender Intelligence</span>
+            <span class="pill">Sovereign Cloud</span>
+            <span class="pill">Digital Public Infrastructure</span>
+          </div>
+
+          <div class="ontology-rule">
+            <span class="relationship-label">
+              Representative leaves
+            </span>
+            <p>
+              Regulatory Watch India, digital-sovereignty
+              assessments, tender requirement analyses,
+              compliance mappings and hardened-compute
+              validation plans.
+            </p>
+          </div>
+        </article>
+
+        <article
+          id="product-venture-technical-leadership"
+          class="card trunk-card"
+        >
+          <span class="trunk-type">Body of knowledge</span>
+
+          <h3>Product, Venture and Technical Leadership</h3>
+
+          <p>
+            Turning uncertain opportunities into coherent
+            products, organisations and delivery systems through
+            architecture, operating models, prioritisation and
+            accountable technical leadership.
+          </p>
+
+          <span class="relationship-label">
+            Associated roots
+          </span>
+
+          <div class="tag-list">
+            <span class="pill">Business</span>
+            <span class="pill">Technology &amp; Computing</span>
+          </div>
+
+          <span class="relationship-label">
+            Representative branches
+          </span>
+
+          <div class="tag-list">
+            <span class="pill">Product Strategy</span>
+            <span class="pill">Systems Architecture</span>
+            <span class="pill">Technical Leadership</span>
+            <span class="pill">Operating Models</span>
+            <span class="pill">Venture Development</span>
+            <span class="pill">Commercialisation</span>
+          </div>
+
+          <div class="ontology-rule">
+            <span class="relationship-label">
+              Connected entities and leaves
+            </span>
+            <p>
+              Nishanth Konsultancy, RetroKrafters, Roimantics,
+              strategy memoranda, architecture RFCs, service
+              offerings, product plans and delivery playbooks.
+            </p>
+          </div>
+        </article>
+
+        <article
+          id="automotive-mobility-spatial-systems"
+          class="card trunk-card"
+        >
+          <span class="trunk-type">Body of knowledge</span>
+
+          <h3>Automotive, Mobility and Spatial Systems</h3>
+
+          <p>
+            Vehicles, movement, maps, location intelligence,
+            spatial computation and the systems that connect
+            physical assets to digital representations.
+          </p>
+
+          <span class="relationship-label">
+            Associated roots
+          </span>
+
+          <div class="tag-list">
+            <span class="pill">Automotive</span>
+            <span class="pill">Science</span>
+            <span class="pill">Technology &amp; Computing</span>
+          </div>
+
+          <span class="relationship-label">
+            Representative branches
+          </span>
+
+          <div class="tag-list">
+            <span class="pill">Vehicle Systems</span>
+            <span class="pill">Telematics</span>
+            <span class="pill">Spatial Computing</span>
+            <span class="pill">Mapping Systems</span>
+            <span class="pill">Simulation</span>
+          </div>
+
+          <div class="ontology-rule">
+            <span class="relationship-label">
+              Representative leaves
+            </span>
+            <p>
+              Map-generation engines, spatial-processing
+              experiments, mobility research, simulations and
+              automotive technical notes.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="graph-heading">
+      <h2
+        id="graph-heading"
+        class="section-title"
+      >
+        Trunks inside the knowledge graph
+      </h2>
+
+      <div class="split-grid">
+        <article class="card">
+          <h3>The tree gives each item a path</h3>
+
+          <div class="tree-block">
+            <pre class="relationship-example">Technology &amp; Computing
+└── Cloud, Platform and Security Engineering
+    └── Detection Engineering
+        └── Security Capabilities Lab</pre>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>The graph preserves every useful relationship</h3>
+
+          <div class="tree-block">
+            <pre class="relationship-example">Security Capabilities Lab
+├── type → Project
+├── belongsTo → Cloud, Platform and Security Engineering
+├── demonstrates → Detection Engineering
+├── demonstrates → DevSecOps
+├── supports → Nishanth Konsultancy
+├── uses → Python, Docker, AWS and GitHub Actions
+└── produces → repositories, SBOMs and validation evidence</pre>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="principles-heading">
+      <h2
+        id="principles-heading"
+        class="section-title"
+      >
+        Principles that support every trunk
+      </h2>
+
+      <div class="grid two">
+        <article class="card">
+          <h3>Learning by building</h3>
+
+          <p>
+            Real understanding grows through systems that have to
+            work and expose design trade-offs, failure modes and
+            new questions.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>From fundamentals to systems</h3>
+
+          <p>
+            Foundational concepts should remain reusable while
+            their applications connect games, infrastructure, AI,
+            products and physical systems.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Public knowledge assets</h3>
+
+          <p>
+            Useful outcomes should leave behind durable evidence:
+            repositories, writing, diagrams, demos, templates,
+            devlogs, reports or case studies.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Compounding evolution</h3>
+
+          <p>
+            The aim is not to collect unrelated projects. Each
+            branch and leaf should deepen one or more trunks and
+            strengthen the connected body of work.
+          </p>
+        </article>
+      </div>
+
+      <div class="callout">
+        <p>
+          These are <strong>Ground-level principles</strong> that
+          guide how the trunks are developed. They are not
+          themselves trunks.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <span>
+        © <span data-year></span> Nishanth Kottapalli
+      </span>
+
+      <span>
+        All Rights Reserved.
+      </span>
+    </div>
+  </footer>
 </body>
 </html>
