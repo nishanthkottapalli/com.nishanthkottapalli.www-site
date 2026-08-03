@@ -1,102 +1,1954 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#001c21">
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="./assets/brand/favicon.ico"
-    >
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png">
-    <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&family=Inter:wght@600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/theme.css">
-    <link rel="stylesheet" href="css/base.css">
-    <script defer src="js/theme.js"></script>
-    <script defer src="js/site.js"></script>
-    <title>Nishanth Kottapalli - Ex nihilo nihil fit</title>
-    <meta name="description" content="Foundational and applied branches across math, physics, computer science, electronics, AI infrastructure, games and systems.">
-  </head>
-  <body>
+<head>
+  <meta charset="utf-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+  <meta
+    name="theme-color"
+    content="#001c21"
+  >
+  <meta
+    name="description"
+    content="The specialised topics, practices and capabilities that extend the bodies of knowledge in Nishanth Kottapalli's personal knowledge ecosystem."
+  >
+
+  <link
+    rel="canonical"
+    href="https://www.nishanthkottapalli.com/branch.html"
+  >
+
+  <meta
+    property="og:type"
+    content="website"
+  >
+  <meta
+    property="og:title"
+    content="Branches — Nishanth Kottapalli"
+  >
+  <meta
+    property="og:description"
+    content="Specialised topics, practices and capabilities connecting stable bodies of knowledge to projects, writing, experiments, products and ventures."
+  >
+  <meta
+    property="og:url"
+    content="https://www.nishanthkottapalli.com/branch.html"
+  >
+
+  <title>
+    Nishanth Kottapalli | Specialised topics, practices and capabilities
+  </title>
+
+  <link
+    rel="icon"
+    type="image/x-icon"
+    href="./assets/brand/favicon.ico"
+  >
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="32x32"
+    href="./assets/brand/favicon-32.png"
+  >
+  <link
+    rel="apple-touch-icon"
+    href="./assets/brand/apple-touch-icon.png"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&family=Inter:wght@600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="./css/theme.css"
+  >
+  <link
+    rel="stylesheet"
+    href="./css/base.css"
+  >
+
+  <style>
+    .branch-type,
+    .relationship-label,
+    .parent-trunk {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .branch-type,
+    .relationship-label {
+      color: var(--muted);
+    }
+
+    .branch-type {
+      margin-bottom: 8px;
+    }
+
+    .parent-trunk {
+      margin-bottom: 10px;
+      color: var(--accent);
+    }
+
+    .catalogue-intro {
+      max-width: 84ch;
+      color: var(--muted);
+    }
+
+    .branch-family {
+      margin-top: 42px;
+      scroll-margin-top: 96px;
+    }
+
+    .branch-family-header {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .branch-family-header p {
+      max-width: 84ch;
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .branch-card h3 {
+      text-wrap: balance;
+    }
+
+    .branch-card > p {
+      color: var(--muted);
+    }
+
+    .branch-details {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line, #d6ddd9);
+    }
+
+    .branch-details p {
+      margin: 6px 0 0;
+      color: var(--muted);
+    }
+
+    .branch-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+      margin-top: 16px;
+    }
+
+    .branch-links a {
+      font-weight: 700;
+      text-underline-offset: 4px;
+    }
+
+    .branch-index {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .branch-index a {
+      text-decoration: none;
+    }
+
+    .relationship-example {
+      white-space: pre-wrap;
+    }
+
+    .definition-grid strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .definition-grid p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .evidence-note {
+      margin-top: 18px;
+    }
+
+    @media (min-width: 900px) {
+      .branch-family-header {
+        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+        align-items: end;
+      }
+    }
+  </style>
+
+  <script
+    defer
+    src="./js/utils.js"
+  ></script>
+  <script
+    defer
+    src="./js/theme.js"
+  ></script>
+  <script
+    defer
+    src="./js/site.js"
+  ></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": "https://www.nishanthkottapalli.com/branch.html#page",
+    "url": "https://www.nishanthkottapalli.com/branch.html",
+    "name": "Branches",
+    "description": "Specialised topics, practices and capabilities in Nishanth Kottapalli's personal knowledge ecosystem.",
+    "isPartOf": {
+      "@id": "https://www.nishanthkottapalli.com/#website"
+    },
+    "mainEntity": {
+      "@type": "ItemList",
+      "name": "Canonical branch catalogue",
+      "itemListElement": [
+        {
+          "@type": "DefinedTerm",
+          "name": "Quantitative Reasoning and Modelling"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Physical Systems"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Algorithms and Software Architecture"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Distributed and Data Systems"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Embedded Systems and Physical Computing"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Platform Engineering"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Cloud Security Engineering"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "DevSecOps and Secure Delivery"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Detection and Response Engineering"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Compliance and Assurance Engineering"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "AI Infrastructure and Model Operations"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Retrieval and Knowledge Engineering"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Agent Planning and Experimentation"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Game Development"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Game AI and Simulation"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Multiplayer and Interactive Systems"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Content and Campaign Operations"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Audience Intelligence and Marketing Analytics"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Advertising Decisioning and Experimentation"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Regulatory and Tender Intelligence"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Sovereign and Hardened Compute"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Product Strategy and Technical Leadership"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Venture Systems and Commercialisation"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Mobility, Mapping and Spatial Systems"
+        }
+      ]
+    }
+  }
+  </script>
+</head>
+
+<body>
   <header>
     <div class="container nav">
-      <a class="brand" href="index.html" aria-label="Nishanth Kottapalli home">
+      <a
+        class="brand"
+        href="./index.html"
+        aria-label="Nishanth Kottapalli home"
+      >
         <div class="title title-with-logo">
-          <span class="brand-mark-wrap" aria-hidden="true">
-            <img class="brand-mark" src="assets/brand/logo.svg" alt="">
+          <span
+            class="brand-mark-wrap"
+            aria-hidden="true"
+          >
+            <img
+              class="brand-mark"
+              src="./assets/brand/logo.svg"
+              alt=""
+            >
           </span>
+
           <span>NISHANTH KOTTAPALLI</span>
-          <div class="subtitle">Engineer. Builder. Systems thinker.</div>
+
+          <div class="subtitle">
+            Engineer. Builder. Systems thinker.
+          </div>
         </div>
       </a>
-      <nav class="nav-links" aria-label="Primary navigation">
-        <a class="pill" href="./index.html">Home</a>
-        <a class="pill" href="./root.html">Roots</a>
-        <a class="pill" href="./trunk.html">Trunks</a>
-        <a class="pill active" href="branch.html" aria-current="page">Branches</a>
-        <a class="pill" href="./leaf.html">Leaves</a>
-        <a class="pill" href="./links.html">Links</a>
-        <button class="icon-btn" type="button" onclick="NMKKTheme.toggle()" aria-label="Toggle theme" title="Toggle theme">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 18a6 6 0 1 1 4.24-10.24A8 8 0 1 0 20 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+
+      <nav
+        class="nav-links"
+        aria-label="Primary navigation"
+      >
+        <a
+          class="pill"
+          href="./index.html"
+        >
+          Home
+        </a>
+
+        <a
+          class="pill"
+          href="./root.html"
+        >
+          Roots
+        </a>
+
+        <a
+          class="pill"
+          href="./trunk.html"
+        >
+          Trunks
+        </a>
+
+        <a
+          class="pill active"
+          href="./branch.html"
+          aria-current="page"
+        >
+          Branches
+        </a>
+
+        <a
+          class="pill"
+          href="./leaf.html"
+        >
+          Leaves
+        </a>
+
+        <a
+          class="pill"
+          href="./links.html"
+        >
+          Links
+        </a>
+
+        <button
+          class="icon-btn"
+          type="button"
+          onclick="NMKKTheme.toggle()"
+          aria-label="Toggle theme"
+          title="Toggle theme"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M12 18a6 6 0 1 1 4.24-10.24A8 8 0 1 0 20 12"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
         </button>
       </nav>
     </div>
   </header>
+
   <main class="container">
+    <section>
+      <span class="eyebrow">
+        Nothing comes from nothing
+      </span>
 
-    <span class="eyebrow">nothing comes from nothing</span>
-    <h1 class="h-title">Ex nihilo nihil fit</h1>
-    <p class="h-sub">
-        Not all branches are the same. 
-      Some are foundational and explain reusable concepts. 
-      Others are applied and show where those concepts become useful in products, games, infrastructure, and systems.</p>
-            <div class="callout">
-                <h2 id="root-types-title" class="section-title">The Branch-ing Concept</h2>
+      <h1 class="h-title">
+        Ex nihilo nihil fit
+      </h1>
 
-                <p>
-                    Branches are the concepts developed over the years through repeated experiments and development efforts.
-                  Foundational branches are essential - math, physics, computer science, electronics, etc.,.
-                  Applied branches are the where these really shine especially through system design, game development, infra experiments, etc.,.
-                </p>
+      <p class="h-sub">
+        Branches are the specialised <strong>topics</strong>,
+        <strong>practices</strong> and
+        <strong>capabilities</strong> through which a stable body
+        of knowledge becomes useful. They narrow a Trunk into
+        something that can be studied, applied, demonstrated and
+        connected to inspectable Leaves.
+      </p>
+    </section>
 
-                <div class="tree-block">
-<pre><a href="./branch.html">Branches</a>
-├── <a href="#foundational">Foundational Branches</a>
-└── <a href="#applied">Applied Branches</a>
-</pre>
-                </div>
-            </div>
+    <section aria-labelledby="canonical-model-heading">
+      <h2
+        id="canonical-model-heading"
+        class="section-title"
+      >
+        The canonical model
+      </h2>
 
-<pre><a href="./index.html#ground">Ground</a>
-└── <a href="./root.html">Roots</a>
-    └── <a href="./trunk.html">Trunks</a>
-        └── <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="16" height="16"><!--!Font Awesome Free v7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M160 96C160 78.3 174.3 64 192 64L448 64C465.7 64 480 78.3 480 96C480 113.7 465.7 128 448 128L418.5 128L428.8 262.1C465.9 283.3 494.6 318.5 507 361.8L510.8 375.2C513.6 384.9 511.6 395.2 505.6 403.3C499.6 411.4 490 416 480 416L160 416C150 416 140.5 411.3 134.5 403.3C128.5 395.3 126.5 384.9 129.3 375.2L133 361.8C145.4 318.5 174 283.3 211.2 262.1L221.5 128L192 128C174.3 128 160 113.7 160 96zM288 464L352 464L352 576C352 593.7 337.7 608 320 608C302.3 608 288 593.7 288 576L288 464z"/></svg><a href="./branch.html">Branches</a>
-            └── <a href="./leaf.html">Leaves</a>
-</pre>
+      <div class="tree-block">
+        <pre><a href="./index.html#ground">Ground</a> — reasoning, observation, questions, claims, evidence and decisions
+└── <a href="./root.html">Roots</a> — broad source domains and enduring interests
+    └── <a href="./trunk.html">Trunks</a> — coherent bodies of knowledge
+        └── <strong>Branches</strong> — specialised topics, practices and capabilities
+            └── <a href="./leaf.html">Leaves</a> — projects, repositories, writing, experiments and other artefacts</pre>
+      </div>
 
-      <h2 class="section-title">Foundational branches</h2>
-      <section class="grid" id="foundational">
-        <article class="card"><h3>Math &amp; Arithmetic</h3><p>Arithmetic, geometry, trigonometry, vectors, probability, graphs, optimization, and systems math.</p><a class="inline" href="math.html">Open Math &amp; Arithmetic →</a></article>
-        <article class="card"><h3>Physics</h3><p>Motion, energy, momentum, waves, sound, light, heat, electricity, magnetism, and real-world system behaviour.</p><a class="inline" href="physics.html">Open Physics →</a></article>
-        <article class="card"><h3>Computer Science</h3><p>Data structures, algorithms, state machines, concurrency, databases, networking, distributed systems, and security fundamentals.</p><a class="inline" href="computer-science.html">Open Computer Science →</a></article>
-        <article class="card"><h3>Electricals &amp; Electronics</h3><p>Signals, circuits, timing, sampling, filters, sensors, communication, microcontrollers, and embedded interfaces.</p><a class="inline" href="electricals-electronics.html">Open Electronics →</a></article>
-      </section>
-      
-      <h2 class="section-title">Applied branches</h2>
-      <section class="grid two" id="applied">
-        <article class="card"><h3>Game Development</h3><p>Movement, collision, combat, networking, balancing, procedural systems, and interactive design.</p><ul class="list-clean"><li>Leaves: game dev explainers</li><li>Leaves: RetroKrafters devlogs</li><li>Leaves: playable demos</li></ul></article>
-        <article class="card"><h3>AI / Infrastructure</h3><p>Vectors, matrices, probability, queues, inference systems, observability, evaluation, and deployment.</p><ul class="list-clean"><li>Leaves: hybrid-rag</li><li>Leaves: self-hosted LLM notes</li><li>Leaves: infrastructure diagrams</li></ul></article>
-        <article class="card"><h3>Platform Engineering + DevSecOps</h3><p>Microservices, cloud systems, delivery workflows, auditability, incident readiness, and practical production safety.</p></article>
-        <article class="card"><h3>Hardware / Embedded Systems</h3><p>Operator stations, arcade hardware, physical controls, sensors, embedded interfaces, and experimental physical computing.</p></article>
-      </section>
-    
-    </main>
-    <footer class="footer">
-      <div class="container"><span>© <span data-year></span> Nishanth Kottapalli</span><span>Built as a static GitHub Pages site.</span></div>
-    </footer>
-  </body>
+      <div class="callout">
+        <p>
+          <strong>Mathematics, Physics, Computer Science and
+          Electronics are not treated as peer Branches here.</strong>
+          They are broad foundational bodies of knowledge, or
+          parts of broader foundational Trunks. Their narrower
+          areas—such as probability, distributed systems,
+          electromagnetism or embedded systems—behave as
+          Branches.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="definitions-heading">
+      <h2
+        id="definitions-heading"
+        class="section-title"
+      >
+        What can be a Branch?
+      </h2>
+
+      <div class="grid definition-grid">
+        <article class="card">
+          <strong>Specialised topic</strong>
+          <p>
+            A narrower area of study within a Trunk, such as
+            Distributed Systems, Game AI or Data Protection.
+          </p>
+        </article>
+
+        <article class="card">
+          <strong>Practice</strong>
+          <p>
+            A repeatable way of working, such as Threat
+            Modelling, Experiment Design or Content Operations.
+          </p>
+        </article>
+
+        <article class="card">
+          <strong>Capability</strong>
+          <p>
+            An applied ability that can be demonstrated, offered
+            or reused, such as Platform Engineering or Detection
+            Engineering.
+          </p>
+        </article>
+
+        <article class="card">
+          <strong>Technique</strong>
+          <p>
+            A focused method such as Frequency Capping, Entity
+            Resolution, Procedural Generation or Infrastructure
+            Scanning.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="index-heading">
+      <h2
+        id="index-heading"
+        class="section-title"
+      >
+        Branch families
+      </h2>
+
+      <p class="catalogue-intro">
+        The catalogue is grouped by parent Trunk for navigation.
+        In the underlying knowledge graph, a Branch may belong to
+        more than one Trunk and a Leaf may demonstrate several
+        Branches at once.
+      </p>
+
+      <nav
+        class="branch-index"
+        aria-label="Branch family index"
+      >
+        <a
+          class="pill"
+          href="#science-mathematical"
+        >
+          Science &amp; Mathematics
+        </a>
+
+        <a
+          class="pill"
+          href="#computer-science"
+        >
+          Computer Science
+        </a>
+
+        <a
+          class="pill"
+          href="#electronic-embedded"
+        >
+          Electronic &amp; Embedded
+        </a>
+
+        <a
+          class="pill"
+          href="#cloud-platform-security"
+        >
+          Cloud, Platform &amp; Security
+        </a>
+
+        <a
+          class="pill"
+          href="#ai-knowledge"
+        >
+          AI &amp; Knowledge Systems
+        </a>
+
+        <a
+          class="pill"
+          href="#game-interactive"
+        >
+          Games &amp; Interactive Media
+        </a>
+
+        <a
+          class="pill"
+          href="#marketing-advertising"
+        >
+          Marketing &amp; Advertising
+        </a>
+
+        <a
+          class="pill"
+          href="#sovereignty-regulation"
+        >
+          Sovereignty &amp; Regulation
+        </a>
+
+        <a
+          class="pill"
+          href="#product-venture"
+        >
+          Product &amp; Venture
+        </a>
+
+        <a
+          class="pill"
+          href="#mobility-spatial"
+        >
+          Mobility &amp; Spatial
+        </a>
+      </nav>
+    </section>
+
+    <section
+      id="science-mathematical"
+      class="branch-family"
+      aria-labelledby="science-mathematical-heading"
+    >
+      <div class="branch-family-header">
+        <div>
+          <span class="parent-trunk">Parent trunk</span>
+          <h2
+            id="science-mathematical-heading"
+            class="section-title"
+          >
+            Science and Mathematical Foundations
+          </h2>
+        </div>
+
+        <p>
+          Branches that provide quantitative language, physical
+          explanations and reusable models for systems across the
+          rest of the ecosystem.
+        </p>
+      </div>
+
+      <div class="grid two">
+        <article class="card branch-card">
+          <span class="branch-type">Topic and capability</span>
+          <h3>Quantitative Reasoning and Modelling</h3>
+
+          <p>
+            Arithmetic, algebra, geometry, vectors, graphs,
+            optimisation and mathematical models used to
+            describe systems and compare alternatives.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Vectors</span>
+            <span class="pill">Graphs</span>
+            <span class="pill">Optimisation</span>
+            <span class="pill">Systems Maths</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaves
+            </span>
+            <p>
+              Mathematical explainers, simulations, game-motion
+              calculations and system-design models.
+            </p>
+          </div>
+
+          <div class="branch-links">
+            <a href="./math.html">
+              Open Mathematics →
+            </a>
+          </div>
+        </article>
+
+        <article class="card branch-card">
+          <span class="branch-type">Topic and practice</span>
+          <h3>Probability, Measurement and Experimentation</h3>
+
+          <p>
+            Uncertainty, sampling, measurement, comparison and
+            experiment design for evaluating models, products and
+            operational systems.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Probability</span>
+            <span class="pill">Measurement</span>
+            <span class="pill">Evaluation</span>
+            <span class="pill">Experiments</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaves
+            </span>
+            <p>
+              Champion–challenger criteria, model evaluations,
+              campaign experiments and validation reports.
+            </p>
+          </div>
+        </article>
+
+        <article class="card branch-card">
+          <span class="branch-type">Topic</span>
+          <h3>Physical Systems</h3>
+
+          <p>
+            Motion, forces, energy, waves, heat, electricity and
+            the behaviour of systems constrained by the physical
+            world.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Mechanics</span>
+            <span class="pill">Energy</span>
+            <span class="pill">Waves</span>
+            <span class="pill">Electromagnetism</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaves
+            </span>
+            <p>
+              Motion systems, physical simulations, hardware
+              experiments and explanatory notes.
+            </p>
+          </div>
+
+          <div class="branch-links">
+            <a href="./physics.html">
+              Open Physics →
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section
+      id="computer-science"
+      class="branch-family"
+      aria-labelledby="computer-science-heading"
+    >
+      <div class="branch-family-header">
+        <div>
+          <span class="parent-trunk">Parent trunk</span>
+          <h2
+            id="computer-science-heading"
+            class="section-title"
+          >
+            Computer Science and Software Systems
+          </h2>
+        </div>
+
+        <p>
+          Branches concerned with computation, software
+          structure, data, coordination and dependable
+          application behaviour.
+        </p>
+      </div>
+
+      <div class="grid two">
+        <article class="card branch-card">
+          <span class="branch-type">Topic and capability</span>
+          <h3>Algorithms and Software Architecture</h3>
+
+          <p>
+            Data structures, state machines, algorithmic
+            reasoning, interfaces, decomposition and architecture
+            for understandable, evolvable software.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Algorithms</span>
+            <span class="pill">State Machines</span>
+            <span class="pill">Architecture</span>
+            <span class="pill">APIs</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaves
+            </span>
+            <p>
+              Architecture RFCs, reusable libraries, application
+              engines and implementation tutorials.
+            </p>
+          </div>
+        </article>
+
+        <article class="card branch-card">
+          <span class="branch-type">Topic and capability</span>
+          <h3>Distributed and Data Systems</h3>
+
+          <p>
+            Databases, queues, concurrency, networking,
+            consistency, messaging and systems whose state is
+            coordinated across processes or machines.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Databases</span>
+            <span class="pill">Queues</span>
+            <span class="pill">Networking</span>
+            <span class="pill">Distributed Systems</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaves
+            </span>
+            <p>
+              RQ worker systems, gRPC services, event pipelines,
+              multiplayer backends and graph APIs.
+            </p>
+          </div>
+        </article>
+
+        <article class="card branch-card">
+          <span class="branch-type">Capability</span>
+          <h3>Web and Application Engineering</h3>
+
+          <p>
+            Browser applications, backend services, public APIs,
+            administrative interfaces and the integration of
+            user-facing systems with domain engines.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">HTML5</span>
+            <span class="pill">JavaScript</span>
+            <span class="pill">Python</span>
+            <span class="pill">Flask</span>
+            <span class="pill">API Design</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaves
+            </span>
+            <p>
+              Personal websites, consultancy systems, browser
+              games, management UIs and service APIs.
+            </p>
+          </div>
+
+          <div class="branch-links">
+            <a href="./computer-science.html">
+              Open Computer Science →
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section
+      id="electronic-embedded"
+      class="branch-family"
+      aria-labelledby="electronic-embedded-heading"
+    >
+      <div class="branch-family-header">
+        <div>
+          <span class="parent-trunk">Parent trunk</span>
+          <h2
+            id="electronic-embedded-heading"
+            class="section-title"
+          >
+            Electrical, Electronic and Embedded Systems
+          </h2>
+        </div>
+
+        <p>
+          Branches that connect computation to circuits, sensors,
+          controls, machines and interactive physical
+          environments.
+        </p>
+      </div>
+
+      <div class="grid two">
+        <article class="card branch-card">
+          <span class="branch-type">Topic and capability</span>
+          <h3>Embedded Systems and Physical Computing</h3>
+
+          <p>
+            Microcontrollers, sensors, digital interfaces,
+            timing, control and software that interacts directly
+            with physical hardware.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Microcontrollers</span>
+            <span class="pill">Sensors</span>
+            <span class="pill">Control</span>
+            <span class="pill">Interfaces</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaves
+            </span>
+            <p>
+              Operator stations, controller prototypes,
+              environmental sensors and interactive hardware.
+            </p>
+          </div>
+
+          <div class="branch-links">
+            <a href="./electricals-electronics.html">
+              Open Electricals &amp; Electronics →
+            </a>
+          </div>
+        </article>
+
+        <article class="card branch-card">
+          <span class="branch-type">Topic and capability</span>
+          <h3>Arcade and Interactive Hardware</h3>
+
+          <p>
+            Physical controls, cabinets, display systems,
+            embedded interfaces and installations that give
+            digital experiences a material form.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Arcade Cabinets</span>
+            <span class="pill">Controllers</span>
+            <span class="pill">Displays</span>
+            <span class="pill">Interactive Installations</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Connected entity
+            </span>
+            <p>
+              Arcade Division, with RetroKrafters supplying game
+              software and interactive-entertainment IP.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section
+      id="cloud-platform-security"
+      class="branch-family"
+      aria-labelledby="cloud-platform-security-heading"
+    >
+      <div class="branch-family-header">
+        <div>
+          <span class="parent-trunk">Parent trunk</span>
+          <h2
+            id="cloud-platform-security-heading"
+            class="section-title"
+          >
+            Cloud, Platform and Security Engineering
+          </h2>
+        </div>
+
+        <p>
+          Branches for building, operating, securing and
+          validating production systems and the delivery paths
+          that create them.
+        </p>
+      </div>
+
+      <div class="grid two">
+        <article class="card branch-card">
+          <span class="branch-type">Capability and practice</span>
+          <h3>Platform Engineering</h3>
+
+          <p>
+            Reusable cloud foundations, runtime environments,
+            deployment interfaces, observability and paved roads
+            that make application delivery safer and more
+            repeatable.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Cloud Platforms</span>
+            <span class="pill">Runtime Engineering</span>
+            <span class="pill">Observability</span>
+            <span class="pill">Developer Experience</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaves
+            </span>
+            <p>
+              AWS foundations, deployment workflows, container
+              platforms, operating runbooks and platform RFCs.
+            </p>
+          </div>
+        </article>
+
+        <article class="card branch-card">
+          <span class="branch-type">Capability and practice</span>
+          <h3>DevSecOps and Secure Delivery</h3>
+
+          <p>
+            Security integrated into source control, CI/CD,
+            container builds, infrastructure definitions,
+            dependency management and release evidence.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Secure SDLC</span>
+            <span class="pill">CI/CD</span>
+            <span class="pill">SBOM</span>
+            <span class="pill">Container Security</span>
+            <span class="pill">IaC Validation</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaves
+            </span>
+            <p>
+              Multi-stage Dockerfiles, GitHub Actions workflows,
+              Trivy reports, SBOM pipelines and risk registers.
+            </p>
+          </div>
+        </article>
+
+        <article class="card branch-card">
+          <span class="branch-type">Capability</span>
+          <h3>Cloud Security Engineering</h3>
+
+          <p>
+            Identity, network boundaries, logging, encryption,
+            threat detection, configuration assurance and
+            evidence-backed remediation across cloud
+            environments.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">IAM</span>
+            <span class="pill">Network Security</span>
+            <span class="pill">GuardDuty</span>
+            <span class="pill">Security Hub</span>
+            <span class="pill">CloudTrail</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Connected organisation
+            </span>
+            <p>
+              Nishanth Konsultancy uses this Branch in security
+              validation, remediation and enterprise-readiness
+              services.
+            </p>
+          </div>
+        </article>
+
+        <article class="card branch-card">
+          <span class="branch-type">Capability and practice</span>
+          <h3>Detection and Response Engineering</h3>
+
+          <p>
+            Security telemetry, detection logic, alert routing,
+            triage, incident readiness and repeatable response
+            procedures.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Detections</span>
+            <span class="pill">Telemetry</span>
+            <span class="pill">Alerting</span>
+            <span class="pill">Incident Response</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaf
+            </span>
+            <p>
+              Security Capabilities Lab and its executable
+              detection, AWS security and secure-SDLC examples.
+            </p>
+          </div>
+        </article>
+
+        <article class="card branch-card">
+          <span class="branch-type">Capability and practice</span>
+          <h3>Compliance and Assurance Engineering</h3>
+
+          <p>
+            Translating requirements into controls,
+            implementation evidence, test procedures, findings,
+            exceptions, remediation and defensible claims.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Controls</span>
+            <span class="pill">Evidence</span>
+            <span class="pill">Risk Registers</span>
+            <span class="pill">Validation</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaves
+            </span>
+            <p>
+              Security assessments, compliance mappings,
+              exception registers, control tests and tender
+              evidence packages.
+            </p>
+          </div>
+        </article>
+
+        <article class="card branch-card">
+          <span class="branch-type">Capability</span>
+          <h3>Cyber Resilience and Recovery</h3>
+
+          <p>
+            Backup, restoration, continuity, disaster recovery,
+            incident containment and operational safeguards that
+            preserve essential services.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">BCP</span>
+            <span class="pill">DR</span>
+            <span class="pill">Backups</span>
+            <span class="pill">Recovery Testing</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaves
+            </span>
+            <p>
+              BCP and DR plans, recovery runbooks, service-level
+              objectives and validation exercises.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section
+      id="ai-knowledge"
+      class="branch-family"
+      aria-labelledby="ai-knowledge-heading"
+    >
+      <div class="branch-family-header">
+        <div>
+          <span class="parent-trunk">Parent trunk</span>
+          <h2
+            id="ai-knowledge-heading"
+            class="section-title"
+          >
+            Artificial Intelligence and Knowledge Systems
+          </h2>
+        </div>
+
+        <p>
+          Branches for operating models, representing knowledge,
+          retrieving evidence, evaluating behaviour and building
+          systems that assist human reasoning.
+        </p>
+      </div>
+
+      <div class="grid two">
+        <article class="card branch-card">
+          <span class="branch-type">Capability</span>
+          <h3>AI Infrastructure and Model Operations</h3>
+
+          <p>
+            Compute, packaging, deployment, observability,
+            evaluation, model lifecycle management and the
+            operational systems around AI workloads.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Model Serving</span>
+            <span class="pill">MLOps</span>
+            <span class="pill">Evaluation</span>
+            <span class="pill">Private AI</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaves
+            </span>
+            <p>
+              Private AI Fabric, Ollama integrations, model
+              deployment architectures and AI runtime tooling.
+            </p>
+          </div>
+        </article>
+
+        <article class="card branch-card">
+          <span class="branch-type">Topic and capability</span>
+          <h3>Retrieval and Knowledge Engineering</h3>
+
+          <p>
+            Ontologies, knowledge graphs, entity resolution,
+            semantic search, evidence retrieval and grounded
+            generation over connected information.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Ontologies</span>
+            <span class="pill">Knowledge Graphs</span>
+            <span class="pill">RAG</span>
+            <span class="pill">Entity Resolution</span>
+            <span class="pill">Provenance</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaves
+            </span>
+            <p>
+              Hybrid RAG, the personal knowledge architecture,
+              ontology files, graph queries and semantic APIs.
+            </p>
+          </div>
+        </article>
+
+        <article class="card branch-card">
+          <span class="branch-type">Topic and practice</span>
+          <h3>Agent Planning and Constraint Systems</h3>
+
+          <p>
+            Goal-oriented planning, search, constraints,
+            policies and decision processes for agents operating
+            within explicit boundaries.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">GOAP</span>
+            <span class="pill">Planning</span>
+            <span class="pill">Constraints</span>
+            <span class="pill">Policies</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Cross-trunk connection
+            </span>
+            <p>
+              The same planning concepts can support game agents,
+              workflow engines and general decision systems
+              without treating those applications as identical.
+            </p>
+          </div>
+        </article>
+
+        <article class="card branch-card">
+          <span class="branch-type">Practice and capability</span>
+          <h3>Experimentation and Model Evaluation</h3>
+
+          <p>
+            Criteria, traffic allocation, safety constraints,
+            statistical comparisons and promotion decisions for
+            candidate models or system variants.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Champion–Challenger</span>
+            <span class="pill">Traffic Splitting</span>
+            <span class="pill">Guardrails</span>
+            <span class="pill">Human Override</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaf
+            </span>
+            <p>
+              Champion–Challenger Experiment Engine and its
+              architecture RFCs, decision criteria and rollout
+              controls.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section
+      id="game-interactive"
+      class="branch-family"
+      aria-labelledby="game-interactive-heading"
+    >
+      <div class="branch-family-header">
+        <div>
+          <span class="parent-trunk">Parent trunk</span>
+          <h2
+            id="game-interactive-heading"
+            class="section-title"
+          >
+            Game Design and Interactive Entertainment
+          </h2>
+        </div>
+
+        <p>
+          Branches for designing, engineering and publishing
+          games, simulations, agents, economies and interactive
+          experiences.
+        </p>
+      </div>
+
+      <div class="grid two">
+        <article class="card branch-card">
+          <span class="branch-type">Capability</span>
+          <h3>Game Development</h3>
+
+          <p>
+            Input, movement, collision, combat, animation,
+            progression, persistence, UI and the integration of
+            those systems into playable software.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Gameplay Systems</span>
+            <span class="pill">Movement</span>
+            <span class="pill">Collision</span>
+            <span class="pill">Save Systems</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Connected entity and leaves
+            </span>
+            <p>
+              RetroKrafters, Arcade Space Shooter, KINGPIN,
+              browser-game prototypes and development notes.
+            </p>
+          </div>
+
+          <div class="branch-links">
+            <a href="./video-games.html">
+              Open Video Games →
+            </a>
+          </div>
+        </article>
+
+        <article class="card branch-card">
+          <span class="branch-type">Topic and capability</span>
+          <h3>Game AI and Simulation</h3>
+
+          <p>
+            Agent behaviour, planning, world state, survival,
+            emergence and simulations in which systems interact
+            over time.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">GOAP</span>
+            <span class="pill">Agents</span>
+            <span class="pill">Simulation</span>
+            <span class="pill">Emergence</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaves
+            </span>
+            <p>
+              GOAP Engine, survival simulations, recruitment
+              systems and agent-driven game prototypes.
+            </p>
+          </div>
+        </article>
+
+        <article class="card branch-card">
+          <span class="branch-type">Capability</span>
+          <h3>Multiplayer and Interactive Systems</h3>
+
+          <p>
+            Real-time and asynchronous coordination, networking,
+            authoritative state, player sessions and shared
+            interactive spaces.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Networking</span>
+            <span class="pill">Sessions</span>
+            <span class="pill">Shared State</span>
+            <span class="pill">Nakama</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaves
+            </span>
+            <p>
+              Multiplayer prototypes, game-service backends and
+              browser-based shared experiences.
+            </p>
+          </div>
+        </article>
+
+        <article class="card branch-card">
+          <span class="branch-type">Topic and practice</span>
+          <h3>Game Economy and Narrative Systems</h3>
+
+          <p>
+            Progression, incentives, resources, choices,
+            consequences, world-building and narrative structures
+            expressed through gameplay.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Economies</span>
+            <span class="pill">Progression</span>
+            <span class="pill">Narrative</span>
+            <span class="pill">Choice Systems</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaves
+            </span>
+            <p>
+              KINGPIN, Nyay Sutra, Hidden Agenda concepts and
+              interactive narrative designs.
+            </p>
+          </div>
+
+          <div class="branch-links">
+            <a href="./arts-and-entertainment.html">
+              Open Arts &amp; Entertainment →
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section
+      id="marketing-advertising"
+      class="branch-family"
+      aria-labelledby="marketing-advertising-heading"
+    >
+      <div class="branch-family-header">
+        <div>
+          <span class="parent-trunk">Parent trunk</span>
+          <h2
+            id="marketing-advertising-heading"
+            class="section-title"
+          >
+            Marketing and Advertising Technology
+          </h2>
+        </div>
+
+        <p>
+          Branches for publishing content, understanding
+          audiences, operating campaigns and making measurable
+          marketing and advertising decisions.
+        </p>
+      </div>
+
+      <div class="grid two">
+        <article class="card branch-card">
+          <span class="branch-type">Practice and capability</span>
+          <h3>Content and Campaign Operations</h3>
+
+          <p>
+            Planning, generating, reviewing, scheduling,
+            distributing and tracking content across owned and
+            external channels.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Content Workflows</span>
+            <span class="pill">Scheduling</span>
+            <span class="pill">Approvals</span>
+            <span class="pill">Publishing</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Connected entity and leaves
+            </span>
+            <p>
+              Roimantics, multi-platform content scheduling,
+              approval workflows and campaign-operation tools.
+            </p>
+          </div>
+        </article>
+
+        <article class="card branch-card">
+          <span class="branch-type">Capability</span>
+          <h3>Audience Intelligence and Marketing Analytics</h3>
+
+          <p>
+            Social listening, segmentation, behavioural signals,
+            reporting and the interpretation of audience and
+            campaign performance.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Social Listening</span>
+            <span class="pill">Segmentation</span>
+            <span class="pill">Reporting</span>
+            <span class="pill">Behavioural Analytics</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaves
+            </span>
+            <p>
+              Meta Insights digests, reporting pipelines,
+              dashboards and social-listening workflows.
+            </p>
+          </div>
+        </article>
+
+        <article class="card branch-card">
+          <span class="branch-type">Capability and technique</span>
+          <h3>Advertising Decisioning and Experimentation</h3>
+
+          <p>
+            Inventory, eligibility, ranking, frequency controls,
+            assignment, impression tracking and experiments for
+            advertising and owned-media promotion.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Ad Decisioning</span>
+            <span class="pill">Frequency Capping</span>
+            <span class="pill">Assignment</span>
+            <span class="pill">Attribution</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Connected entity and leaf
+            </span>
+            <p>
+              Roimantics and Gear5Ads, including house-ad
+              decisioning across ecosystem web properties.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section
+      id="sovereignty-regulation"
+      class="branch-family"
+      aria-labelledby="sovereignty-regulation-heading"
+    >
+      <div class="branch-family-header">
+        <div>
+          <span class="parent-trunk">Parent trunk</span>
+          <h2
+            id="sovereignty-regulation-heading"
+            class="section-title"
+          >
+            Digital Sovereignty, Regulation and Public Systems
+          </h2>
+        </div>
+
+        <p>
+          Branches connecting technical systems to law, policy,
+          procurement, public accountability and national or
+          organisational control over critical digital
+          capabilities.
+        </p>
+      </div>
+
+      <div class="grid two">
+        <article class="card branch-card">
+          <span class="branch-type">Capability and practice</span>
+          <h3>Regulatory and Tender Intelligence</h3>
+
+          <p>
+            Collecting, interpreting and mapping regulatory,
+            procurement and compliance requirements to technical
+            controls, products and evidence.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">CERT-In</span>
+            <span class="pill">DPDP</span>
+            <span class="pill">Tender Monitoring</span>
+            <span class="pill">Requirement Mapping</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaf
+            </span>
+            <p>
+              Regulatory Watch India and its human-in-the-loop
+              collection, review and evidence workflows.
+            </p>
+          </div>
+        </article>
+
+        <article class="card branch-card">
+          <span class="branch-type">Capability</span>
+          <h3>Sovereign and Hardened Compute</h3>
+
+          <p>
+            Inspectable compute baselines, secure configuration,
+            supply-chain evidence, policy enforcement and
+            deployment patterns for regulated or sensitive
+            environments.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Hardening</span>
+            <span class="pill">Inspectable Evidence</span>
+            <span class="pill">OpenTofu</span>
+            <span class="pill">Secure Images</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaf
+            </span>
+            <p>
+              Hardened Compute, including image baselines,
+              validation reports, compliance mappings and
+              deployment automation.
+            </p>
+          </div>
+        </article>
+
+        <article class="card branch-card">
+          <span class="branch-type">Topic and practice</span>
+          <h3>Data Governance and Digital Public Systems</h3>
+
+          <p>
+            Data ownership, lifecycle, access, provenance,
+            portability and the design of trustworthy systems
+            serving organisations or the public.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Data Governance</span>
+            <span class="pill">Provenance</span>
+            <span class="pill">Access Control</span>
+            <span class="pill">Public Infrastructure</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaves
+            </span>
+            <p>
+              Digital-sovereignty assessments, data-deletion
+              runbooks and architecture studies for controlled
+              infrastructure.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section
+      id="product-venture"
+      class="branch-family"
+      aria-labelledby="product-venture-heading"
+    >
+      <div class="branch-family-header">
+        <div>
+          <span class="parent-trunk">Parent trunk</span>
+          <h2
+            id="product-venture-heading"
+            class="section-title"
+          >
+            Product, Venture and Technical Leadership
+          </h2>
+        </div>
+
+        <p>
+          Branches for deciding what to build, organising how it
+          will be delivered and turning technical capability into
+          durable products, services and ventures.
+        </p>
+      </div>
+
+      <div class="grid two">
+        <article class="card branch-card">
+          <span class="branch-type">Capability and practice</span>
+          <h3>Product Strategy and Systems Architecture</h3>
+
+          <p>
+            Problem framing, boundaries, trade-offs, sequencing,
+            system decomposition and the translation of intent
+            into an executable technical direction.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Product Strategy</span>
+            <span class="pill">Architecture</span>
+            <span class="pill">Roadmaps</span>
+            <span class="pill">Trade-offs</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaves
+            </span>
+            <p>
+              Architecture RFCs, technical plans, white papers,
+              system designs and product validation roadmaps.
+            </p>
+          </div>
+        </article>
+
+        <article class="card branch-card">
+          <span class="branch-type">Capability</span>
+          <h3>Technical Leadership and Operating Models</h3>
+
+          <p>
+            Accountable technical direction, team alignment,
+            delivery systems, risk management and practical
+            operating structures for engineering organisations.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Technical Leadership</span>
+            <span class="pill">Delivery</span>
+            <span class="pill">Operating Models</span>
+            <span class="pill">Risk Management</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Connected organisation
+            </span>
+            <p>
+              Nishanth Konsultancy commercialises this Branch
+              through embedded leadership, diagnostics,
+              implementation and enablement services.
+            </p>
+          </div>
+        </article>
+
+        <article class="card branch-card">
+          <span class="branch-type">Practice and capability</span>
+          <h3>Venture Systems and Commercialisation</h3>
+
+          <p>
+            Entity boundaries, reusable capability, customer
+            profiles, evidence, pricing, distribution and the
+            operational systems needed to turn experiments into
+            businesses.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Venture Design</span>
+            <span class="pill">Commercialisation</span>
+            <span class="pill">Services</span>
+            <span class="pill">Productisation</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Connected entities
+            </span>
+            <p>
+              Nishanth Konsultancy, RetroKrafters, Roimantics,
+              Arcade Division and future product ventures.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section
+      id="mobility-spatial"
+      class="branch-family"
+      aria-labelledby="mobility-spatial-heading"
+    >
+      <div class="branch-family-header">
+        <div>
+          <span class="parent-trunk">Parent trunk</span>
+          <h2
+            id="mobility-spatial-heading"
+            class="section-title"
+          >
+            Automotive, Mobility and Spatial Systems
+          </h2>
+        </div>
+
+        <p>
+          Branches connecting vehicles, movement, location,
+          digital representations and decision systems operating
+          over physical space.
+        </p>
+      </div>
+
+      <div class="grid two">
+        <article class="card branch-card">
+          <span class="branch-type">Topic and capability</span>
+          <h3>Mobility and Vehicle Systems</h3>
+
+          <p>
+            Vehicle behaviour, telematics, diagnostics, operator
+            interfaces and the interaction between mechanical,
+            electrical and software systems.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Vehicles</span>
+            <span class="pill">Telematics</span>
+            <span class="pill">Diagnostics</span>
+            <span class="pill">Operator Interfaces</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaves
+            </span>
+            <p>
+              Automotive research, simulations, diagnostic tools
+              and mobility-system concepts.
+            </p>
+          </div>
+        </article>
+
+        <article class="card branch-card">
+          <span class="branch-type">Capability</span>
+          <h3>Mapping and Spatial Systems</h3>
+
+          <p>
+            Geospatial data, map generation, spatial processing,
+            asset representation and systems that produce or
+            operate over location-aware outputs.
+          </p>
+
+          <div class="tag-list">
+            <span class="pill">Maps</span>
+            <span class="pill">Geospatial Data</span>
+            <span class="pill">Asset Models</span>
+            <span class="pill">Spatial Processing</span>
+          </div>
+
+          <div class="branch-details">
+            <span class="relationship-label">
+              Representative leaves
+            </span>
+            <p>
+              Map-generation APIs, JSON and rendered outputs,
+              spatial algorithms and asset-management engines.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="graph-heading">
+      <h2
+        id="graph-heading"
+        class="section-title"
+      >
+        Branches inside the knowledge graph
+      </h2>
+
+      <div class="split-grid">
+        <article class="card">
+          <h3>A navigational path</h3>
+
+          <div class="tree-block">
+            <pre class="relationship-example">Technology &amp; Computing
+└── Artificial Intelligence and Knowledge Systems
+    └── Retrieval and Knowledge Engineering
+        └── Hybrid RAG</pre>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>The complete relationship view</h3>
+
+          <div class="tree-block">
+            <pre class="relationship-example">Hybrid RAG
+├── type → Project
+├── belongsTo → Artificial Intelligence and Knowledge Systems
+├── demonstrates → Retrieval and Knowledge Engineering
+├── uses → Vector Search
+├── uses → Knowledge Representation
+├── relatedTo → AI Infrastructure and Model Operations
+├── maintainedBy → Nishanth Kottapalli
+└── providesEvidenceFor → Nishanth Konsultancy capability</pre>
+          </div>
+        </article>
+      </div>
+
+      <div class="callout evidence-note">
+        <p>
+          Branch membership is <strong>many-to-many</strong>.
+          Security Capabilities Lab can demonstrate Detection
+          Engineering, DevSecOps, Cloud Security and Compliance
+          Engineering simultaneously. A Leaf should never be
+          forced into one exclusive Branch merely to preserve a
+          visual tree.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="publication-heading">
+      <h2
+        id="publication-heading"
+        class="section-title"
+      >
+        Minimum data for a published Branch
+      </h2>
+
+      <div class="grid">
+        <article class="card">
+          <h3>Identity</h3>
+          <p>
+            Stable identifier, canonical label, definition,
+            lifecycle status and last-reviewed date.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Context</h3>
+          <p>
+            Parent Trunk or Trunks, associated Roots, related
+            Branches and narrower techniques.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Evidence</h3>
+          <p>
+            Representative Leaves, repositories, writing,
+            experiments, projects, products or case studies.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Ecosystem</h3>
+          <p>
+            People, organisations, ventures, brands, services or
+            products that develop, apply, support or
+            commercialise the capability.
+          </p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <span>
+        © <span data-year></span> Nishanth Kottapalli
+      </span>
+
+      <span>
+        All Rights Reserved.
+      </span>
+    </div>
+  </footer>
+</body>
 </html>
