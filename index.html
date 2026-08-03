@@ -2,20 +2,39 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1"
   >
-
   <meta
     name="theme-color"
     content="#001c21"
   >
-
   <meta
     name="description"
-    content="Personal knowledge tree of foundations, applied systems, projects, writing and experiments by Nishanth Kottapalli."
+    content="The personal knowledge ecosystem of Nishanth Kottapalli: foundations, domains, bodies of knowledge, capabilities, projects, writing, experiments and ventures."
+  >
+
+  <link
+    rel="canonical"
+    href="https://www.nishanthkottapalli.com/"
+  >
+
+  <meta
+    property="og:type"
+    content="website"
+  >
+  <meta
+    property="og:title"
+    content="Nishanth Kottapalli — Personal Knowledge Ecosystem"
+  >
+  <meta
+    property="og:description"
+    content="A connected body of knowledge organised as Ground, Roots, Trunks, Branches and Leaves."
+  >
+  <meta
+    property="og:url"
+    content="https://www.nishanthkottapalli.com/"
   >
 
   <title>
@@ -27,14 +46,12 @@
     type="image/x-icon"
     href="./assets/brand/favicon.ico"
   >
-
   <link
     rel="icon"
     type="image/png"
     sizes="32x32"
     href="./assets/brand/favicon-32.png"
   >
-
   <link
     rel="apple-touch-icon"
     href="./assets/brand/apple-touch-icon.png"
@@ -44,13 +61,11 @@
     rel="preconnect"
     href="https://fonts.googleapis.com"
   >
-
   <link
     rel="preconnect"
     href="https://fonts.gstatic.com"
     crossorigin
   >
-
   <link
     href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&family=Inter:wght@600;700;800;900&display=swap"
     rel="stylesheet"
@@ -60,22 +75,48 @@
     rel="stylesheet"
     href="./css/theme.css"
   >
-
   <link
     rel="stylesheet"
     href="./css/base.css"
   >
 
+  <!--
+    TODO - Move this rule into base.css when the Branch
+    semantic colour is adopted across the rest of the site.
+  -->
+  <style>
+    .legend-swatch--branch {
+      border-color: #2b6aa0;
+      border-radius: 4px;
+      background: #72b7ff;
+    }
+
+    .ecosystem-intro {
+      max-width: 82ch;
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .entity-type {
+      display: inline-block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+  </style>
+
   <script
     defer
     src="./js/utils.js"
   ></script>
-
   <script
     defer
     src="./js/theme.js"
   ></script>
-
   <script
     defer
     src="./js/site.js"
@@ -89,26 +130,107 @@
       startOnLoad: true,
       securityLevel: "strict",
       theme: "base",
-
+      flowchart: {
+        htmlLabels: true,
+        useMaxWidth: true,
+        curve: "basis"
+      },
       themeVariables: {
         fontFamily: "Anonymous Pro, monospace",
-        fontSize: "18px",
-
+        fontSize: "17px",
         primaryColor: "#f4c95d",
         primaryTextColor: "#001c21",
         primaryBorderColor: "#735c0f",
-
         secondaryColor: "#7bc8a4",
         secondaryTextColor: "#001c21",
         secondaryBorderColor: "#165b40",
-
         tertiaryColor: "#b7e4c7",
         tertiaryTextColor: "#001c21",
         tertiaryBorderColor: "#2d6a4f",
-
         lineColor: "#526b62"
       }
     });
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://www.nishanthkottapalli.com/#nishanth-kottapalli",
+        "name": "Nishanth Kottapalli",
+        "url": "https://www.nishanthkottapalli.com/",
+        "jobTitle": [
+          "Engineer",
+          "Builder",
+          "Systems thinker"
+        ],
+        "worksFor": {
+          "@id": "https://nishanthkonsultancy.com/#organization"
+        },
+        "sameAs": [
+          "https://github.com/nishanthkottapalli",
+          "https://nishanthkottapalli.itch.io/",
+          "https://in.linkedin.com/in/nishanthkottapalli",
+          "https://orcid.org/0009-0007-7142-5515"
+        ],
+        "knowsAbout": [
+          "Security engineering",
+          "Cloud and platform engineering",
+          "Artificial intelligence systems",
+          "Knowledge systems",
+          "Game design and interactive entertainment",
+          "Marketing and advertising technology"
+        ]
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://nishanthkonsultancy.com/#organization",
+        "name": "Nishanth Konsultancy",
+        "url": "https://nishanthkonsultancy.com/",
+        "founder": {
+          "@id": "https://www.nishanthkottapalli.com/#nishanth-kottapalli"
+        }
+      },
+      {
+        "@type": "Brand",
+        "@id": "https://www.nishanthkottapalli.com/#retrokrafters",
+        "name": "RetroKrafters",
+        "description": "A game studio and playable-media publishing brand."
+      },
+      {
+        "@type": "Brand",
+        "@id": "https://www.nishanthkottapalli.com/#roimantics",
+        "name": "Roimantics",
+        "description": "A marketing-technology and advertising-technology venture."
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.nishanthkottapalli.com/#website",
+        "url": "https://www.nishanthkottapalli.com/",
+        "name": "Nishanth Kottapalli",
+        "description": "The personal knowledge ecosystem of Nishanth Kottapalli.",
+        "publisher": {
+          "@id": "https://www.nishanthkottapalli.com/#nishanth-kottapalli"
+        },
+        "about": [
+          {
+            "@id": "https://www.nishanthkottapalli.com/#nishanth-kottapalli"
+          },
+          {
+            "@id": "https://nishanthkonsultancy.com/#organization"
+          },
+          {
+            "@id": "https://www.nishanthkottapalli.com/#retrokrafters"
+          },
+          {
+            "@id": "https://www.nishanthkottapalli.com/#roimantics"
+          }
+        ]
+      }
+    ]
+  }
   </script>
 </head>
 
@@ -133,6 +255,7 @@
           </span>
 
           <span>NISHANTH KOTTAPALLI</span>
+
           <div class="subtitle">
             Engineer. Builder. Systems thinker.
           </div>
@@ -151,33 +274,38 @@
           Home
         </a>
 
-        <a class="pill" href="./root.html">
+        <a
+          class="pill"
+          href="./root.html"
+        >
           Roots
         </a>
 
-        <a class="pill" href="./trunk.html">
+        <a
+          class="pill"
+          href="./trunk.html"
+        >
           Trunks
         </a>
 
-        <a class="pill" href="./branch.html">
+        <a
+          class="pill"
+          href="./branch.html"
+        >
           Branches
         </a>
 
-        <a class="pill" href="./leaf.html">
+        <a
+          class="pill"
+          href="./leaf.html"
+        >
           Leaves
         </a>
 
-        <!--
-        <a class="pill" href="./case-studies.html">
-          Case Studies
-        </a>
-
-        <a class="pill" href="./resume.html">
-          Resume
-        </a>
-        -->
-
-        <a class="pill" href="./links.html">
+        <a
+          class="pill"
+          href="./links.html"
+        >
           Links
         </a>
 
@@ -223,26 +351,6 @@
           plant or plant-like organism that grows on the surface
           of another plant or plant-like organism.
         </p>
-
-        <!--
-        <div class="actions">
-          <a class="btn primary" href="./root.html">
-            Foundational Roots
-          </a>
-
-          <a class="btn primary" href="./trunk.html">
-            Rooted Vines
-          </a>
-
-          <a class="btn" href="./branch.html">
-            Explore Branches
-          </a>
-
-          <a class="btn" href="./leaf.html">
-            Browse Leaves
-          </a>
-        </div>
-        -->
       </div>
 
       <img
@@ -253,35 +361,6 @@
     </section>
 
     <section aria-label="Guiding principles">
-      <!--
-      <div class="grid">
-        <article class="card">
-          <h3>Don't believe everything</h3>
-          <p>Do your own research.</p>
-        </article>
-
-        <article class="card">
-          <h3>Always question</h3>
-          <p>Why, how, what for and when.</p>
-        </article>
-
-        <article class="card">
-          <h3>Develop your own ideas</h3>
-          <p>Think of solutions early on.</p>
-        </article>
-
-        <article class="card">
-          <h3>Attempt solutions</h3>
-          <p>Practise often.</p>
-        </article>
-
-        <article class="card">
-          <h3>Face challenges</h3>
-          <p>Apply yourself.</p>
-        </article>
-      </div>
-      -->
-
       <div
         class="badges"
         aria-label="Guiding principles"
@@ -329,6 +408,41 @@
       </div>
     </section>
 
+    <section aria-labelledby="architecture-heading">
+      <h2
+        id="architecture-heading"
+        class="section-title"
+      >
+        A tree for navigation. A graph for relationships.
+      </h2>
+
+      <div class="grid two">
+        <article class="card">
+          <h3>Knowledge tree</h3>
+
+          <p>
+            Ground captures reasoning, observation and evidence.
+            Roots are broad source domains. Trunks are stable
+            bodies of knowledge. Branches are specialised or
+            applied capabilities. Leaves are the artefacts that
+            can be read, played, reused or inspected.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Knowledge graph</h3>
+
+          <p>
+            A leaf can connect to several branches, trunks,
+            ventures, technologies and sources. The tree explains
+            where something appears; the graph explains what it
+            is, what it demonstrates and how it relates to the
+            rest of the ecosystem.
+          </p>
+        </article>
+      </div>
+    </section>
+
     <section aria-labelledby="knowledge-tree-heading">
       <article class="card card--diagram">
         <h2
@@ -338,26 +452,62 @@
           Knowledge Tree
         </h2>
 
+        <p class="section-copy">
+          A representative path through the site. The complete
+          system contains many cross-links that are not shown in
+          this navigational view.
+        </p>
+
         <div
           class="mermaid-embed"
           role="img"
-          aria-label="Knowledge tree connecting mathematics, measurement, arithmetic, numerical operations and physics"
+          aria-label="Knowledge tree showing Ground, Roots, Trunks, Branches and Leaves across technology, artificial intelligence and interactive entertainment"
         >
-
           <pre class="mermaid">
-          mindmap
-            mathematics((Ground - Mathematics))
-            :::ground-mathematics
-              measurement(Root - Measurement)
-              :::root-measurement
-                arithmetic[Trunk - Arithmetic]
-                :::trunk-arithmetic
-                  basic(Basic Numerical Operations)
-                  :::leaf-operation
-                  wider(Wider Numerical Operations)
-                  :::leaf-operation
-                physics((Ground - Physics))
-                :::ground-physics
+flowchart TB
+  G["GROUND<br/>Reasoning, observation, first principles and evidence"]
+
+  R_TECH["ROOT<br/>Technology &amp; Computing"]
+  R_ARTS["ROOT<br/>Arts &amp; Entertainment"]
+
+  T_SEC["TRUNK<br/>Security Engineering"]
+  T_AI["TRUNK<br/>Artificial Intelligence Systems"]
+  T_GAME["TRUNK<br/>Game Design &amp; Interactive Entertainment"]
+
+  B_DET["BRANCH<br/>Detection Engineering"]
+  B_RET["BRANCH<br/>Retrieval Engineering"]
+  B_GAME["BRANCH<br/>Game Development"]
+
+  L_SEC["LEAF<br/>Security Capabilities Lab"]
+  L_RAG["LEAF<br/>Hybrid RAG"]
+  L_ARCADE["LEAF<br/>Arcade Space Shooter"]
+
+  G --> R_TECH
+  G --> R_ARTS
+
+  R_TECH --> T_SEC
+  R_TECH --> T_AI
+  R_ARTS --> T_GAME
+
+  T_SEC --> B_DET
+  T_AI --> B_RET
+  T_GAME --> B_GAME
+
+  B_DET --> L_SEC
+  B_RET --> L_RAG
+  B_GAME --> L_ARCADE
+
+  classDef ground fill:#f4c95d,stroke:#735c0f,color:#001c21,stroke-width:3px;
+  classDef root fill:#7bc8a4,stroke:#165b40,color:#001c21,stroke-width:3px;
+  classDef trunk fill:#9a6846,stroke:#4d2e1d,color:#ffffff,stroke-width:3px;
+  classDef branch fill:#72b7ff,stroke:#2b6aa0,color:#001c21,stroke-width:3px;
+  classDef leaf fill:#b7e4c7,stroke:#2d6a4f,color:#001c21,stroke-width:2px;
+
+  class G ground;
+  class R_TECH,R_ARTS root;
+  class T_SEC,T_AI,T_GAME trunk;
+  class B_DET,B_RET,B_GAME branch;
+  class L_SEC,L_RAG,L_ARCADE leaf;
           </pre>
         </div>
 
@@ -391,6 +541,14 @@
 
           <span class="legend-item">
             <span
+              class="legend-swatch legend-swatch--branch"
+              aria-hidden="true"
+            ></span>
+            Branch
+          </span>
+
+          <span class="legend-item">
+            <span
               class="legend-swatch legend-swatch--leaf"
               aria-hidden="true"
             ></span>
@@ -398,6 +556,77 @@
           </span>
         </div>
       </article>
+    </section>
+
+    <section aria-labelledby="ecosystem-heading">
+      <h2
+        id="ecosystem-heading"
+        class="section-title"
+      >
+        Ecosystem
+      </h2>
+
+      <p class="ecosystem-intro">
+        The botanical hierarchy organises knowledge. People,
+        organisations, ventures and brands sit alongside that
+        hierarchy and connect to the capabilities and artefacts
+        they develop, apply, publish or support.
+      </p>
+
+      <div class="grid">
+        <article
+          id="nishanth-konsultancy"
+          class="card"
+        >
+          <span class="entity-type">Organisation</span>
+
+          <h3>Nishanth Konsultancy</h3>
+
+          <p>
+            Enterprise engineering, technical leadership, cloud
+            and platform engineering, AI infrastructure, and
+            security validation.
+          </p>
+
+          <a
+            class="inline"
+            href="https://nishanthkonsultancy.com/"
+            rel="noopener noreferrer"
+          >
+            Visit Nishanth Konsultancy →
+          </a>
+        </article>
+
+        <article
+          id="retrokrafters"
+          class="card"
+        >
+          <span class="entity-type">Studio and brand</span>
+
+          <h3>RetroKrafters</h3>
+
+          <p>
+            Games, playable media, reusable game systems,
+            simulations and interactive-entertainment
+            intellectual property.
+          </p>
+        </article>
+
+        <article
+          id="roimantics"
+          class="card"
+        >
+          <span class="entity-type">Venture and brand</span>
+
+          <h3>Roimantics</h3>
+
+          <p>
+            Marketing technology, advertising technology,
+            audience intelligence, content operations and
+            experimentation systems.
+          </p>
+        </article>
+      </div>
     </section>
   </main>
 
