@@ -321,8 +321,10 @@
         <section id="verification">
           <h2>11. Verify the graph and the interaction together</h2>
           <p>The central property is:</p>
-          <div class="equation equation--hero" role="math" aria-label="Every protected interaction executed implies a reachable path, a valid enforced permit at the receiver, valid tenant binding and an effect within scope">
-            <math display="block"><mo>∀</mo><mi>q</mi><mo>,</mo><mi>t</mi><mo>:</mo><mspace width="0.5em"/><mi>ProtectedInteractionExecuted</mi><mo>(</mo><mi>q</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>⇒</mo><mi>PathReachable</mi><mo>(</mo><msub><mi>w</mi><mi>c</mi></msub><mo>,</mo><msub><mi>w</mi><mi>r</mi></msub><mo>,</mo><mi>t</mi><mo>)</mo><mo>∧</mo><mi>ValidEnforcedPermitAtReceiver</mi><mo>(</mo><mi>q</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>∧</mo><mi>TenantBindingValid</mi><mo>(</mo><mi>q</mi><mo>)</mo><mo>∧</mo><mi>EffectWithinScope</mi><mo>(</mo><mi>q</mi><mo>,</mo><mi>t</mi><mo>)</mo></math>
+          <div class="logic-card">
+          <div class="equation equation--flush" role="math" aria-label="Every protected interaction executed implies a reachable path, a valid enforced permit at the receiver, valid tenant binding and an effect within scope">
+            <math display="block"><mtable columnalign="left"><mtr><mtd><mo>∀</mo><mi>q</mi><mo>,</mo><mi>t</mi><mo>:</mo><mspace width="0.5em"/><mi>ProtectedInteractionExecuted</mi><mo>(</mo><mi>q</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>⇒</mo></mtd></mtr><mtr><mtd><mi>PathReachable</mi><mo>(</mo><msub><mi>w</mi><mi>c</mi></msub><mo>,</mo><msub><mi>w</mi><mi>r</mi></msub><mo>,</mo><mi>t</mi><mo>)</mo><mo>∧</mo></mtd></mtr><mtr><mtd><mi>ValidEnforcedPermitAtReceiver</mi><mo>(</mo><mi>q</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>∧</mo></mtd></mtr><mi>TenantBindingValid</mi><mo>(</mo><mi>q</mi><mo>)</mo><mo>∧</mo><mi>EffectWithinScope</mi><mo>(</mo><mi>q</mi><mo>,</mo><mi>t</mi><mo>)</mo></mtable></math>
+          </div>
           </div>
           <div class="verification-grid">
             <article class="mini-card"><span class="eyebrow">Graph tests</span><h3>Reachability</h3><ul><li>Enumerate intended and unintended paths.</li><li>Test alternate listeners and direct endpoints.</li><li>Compare desired policy with effective routes.</li><li>Repeat after scaling and failover.</li></ul></article>
