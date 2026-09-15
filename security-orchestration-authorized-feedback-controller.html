@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#001c21">
+  <link rel="icon" type="image/x-icon" href="./assets/brand/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/brand/favicon-32.png">
+  <link rel="apple-touch-icon" href="./assets/brand/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&amp;family=Inter:wght@600;700;800;900&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/theme.css">
+  <link rel="stylesheet" href="./css/base.css">
+  <link rel="stylesheet" href="./css/animation.css">
+  <script defer src="./js/utils.js"></script>
+  <script defer src="./js/theme.js"></script>
+  <script defer src="./js/site.js"></script>
+  <script src="./js/vendor/mermaid.min.js"></script>
+  <script defer src="./js/render-mermaid.js"></script>
+  <title>Security orchestration as an authorized feedback controller — Nishanth Kottapalli</title>
+  <meta name="description" content="A mathematical model for safe security automation in multi-tenant distributed cloud systems: observe, decide, authorize, enforce, verify, and restore deliberately.">
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a class="brand" href="./index.html" aria-label="Nishanth Kottapalli home">
+      <div class="title title-with-logo">
+        <span class="brand-mark-wrap" aria-hidden="true"><img class="brand-mark" src="./assets/brand/logo.svg" alt=""></span>
+        <span>NISHANTH KOTTAPALLI</span>
+        <div class="subtitle">Engineer. Builder. Systems thinker.</div>
+      </div>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a class="pill" href="./index.html">Home</a>
+      <a class="pill" href="./root.html">Roots</a>
+      <a class="pill" href="./trunk.html">Trunks</a>
+      <a class="pill" href="./branch.html">Branches</a>
+      <a class="pill active" href="./leaf.html" aria-current="page">Leaves</a>
+      <a class="pill" href="./links.html">Links</a>
+      <button class="icon-btn" type="button" onclick="NMKKTheme.toggle()" aria-label="Toggle theme" title="Toggle theme">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 18a6 6 0 1 1 4.24-10.24A8 8 0 1 0 20 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="./leaf.html">Leaves</a>
+    <span aria-hidden="true">→</span>
+    <span>Authorized feedback controller</span>
+  </nav>
+
+  <article class="article-shell">
+    <header class="article-header">
+      <span class="eyebrow">Leaf · Zero Trust + Distributed Systems + Control</span>
+      <h1 class="article-title">Security orchestration as an authorized feedback controller</h1>
+      <p class="article-deck">Security automation is not merely detection followed by a script. It is a closed-loop controller operating on protected state—and every corrective action must pass through its own authorization boundary.</p>
+      <div class="article-meta">
+        <span>By Nishanth Kottapalli</span>
+        <span aria-hidden="true">·</span>
+        <time datetime="2026-09-14">10 July 2024</time>
+        <span aria-hidden="true">·</span>
+        <span>18 min read</span>
+      </div>
+      <div class="tag-list" aria-label="Article topics">
+        <span class="pill">Zero Trust</span>
+        <span class="pill">Security Orchestration</span>
+        <span class="pill">Control Theory</span>
+        <span class="pill">Multi-tenant Systems</span>
+      </div>
+    </header>
+
+    <div class="article-layout">
+      <aside class="article-toc" aria-label="On this page">
+        <strong>On this page</strong>
+        <a href="#thesis">The thesis</a>
+        <a href="#state">Model the system</a>
+        <a href="#controller">Close the loop</a>
+        <a href="#authorization">Authorize the controller</a>
+        <a href="#containment">Containment and restoration</a>
+        <a href="#multi-tenant">Tenant isolation</a>
+        <a href="#consistency">Choose a consistency contract</a>
+        <a href="#invariant">The central invariant</a>
+        <a href="#implementation">Translate it into software</a>
+        <a href="#worked-example">Worked example</a>
+        <a href="#verification">Verification plan</a>
+        <a href="#sources">Sources</a>
+      </aside>
+
+      <div class="article-body prose">
+        <section id="thesis">
+          <p class="lede">A security orchestrator observes a changing system, selects an intervention, applies it through enforcement points, and watches the result. That makes it a feedback controller. Because its outputs can revoke credentials, isolate workloads, reduce grants, require stronger authentication, or stop new leases, it is also a privileged actor.</p>
+          <div class="callout callout--principle">
+            <p><strong>Design rule:</strong> the controller may propose a security action; it may not bypass the same identity, policy, tenant, freshness, and scope checks imposed on other privileged actors.</p>
+          </div>
+
+          <section class="diagram-shell controller-diagram" data-mermaid-theme="default" data-mermaid-security-level="strict" aria-labelledby="control-loop-title">
+            <div class="diagram-heading">
+              <div>
+                <span class="eyebrow">Closed-loop model</span>
+                <h2 id="control-loop-title" class="diagram-title">Observe → decide → authorize → enforce</h2>
+              </div>
+              <span class="status-chip">Fail closed</span>
+            </div>
+            <div id="diagram" class="diagram" aria-live="polite"><p class="diagram-status">Rendering diagram…</p></div>
+          </section>
+        </section>
+
+        <section id="state">
+          <h2>1. Model the system before automating it</h2>
+          <p>Use a discrete-time model. At step <var>k</var>, let the protected system state be:</p>
+          <div class="equation" role="math" aria-label="X sub k equals the tuple R sub k, G sub k, L sub k, H sub k, and T sub k">
+            <math display="block"><msub><mi>X</mi><mi>k</mi></msub><mo>=</mo><mo>(</mo><msub><mi>R</mi><mi>k</mi></msub><mo>,</mo><msub><mi>G</mi><mi>k</mi></msub><mo>,</mo><msub><mi>L</mi><mi>k</mi></msub><mo>,</mo><msub><mi>H</mi><mi>k</mi></msub><mo>,</mo><msub><mi>T</mi><mi>k</mi></msub><mo>)</mo></math>
+          </div>
+          <div class="definition-grid">
+            <div><code>R<sub>k</sub></code><span>resources and their security-relevant configuration</span></div>
+            <div><code>G<sub>k</sub></code><span>active grants, roles and policy bindings</span></div>
+            <div><code>L<sub>k</sub></code><span>sessions, credentials, tokens and leases</span></div>
+            <div><code>H<sub>k</sub></code><span>workload, identity and control-plane health</span></div>
+            <div><code>T<sub>k</sub></code><span>tenant ownership and isolation relationships</span></div>
+          </div>
+          <p>The controller rarely sees <var>X</var><sub>k</sub> directly. It receives an observation:</p>
+          <div class="equation" role="math" aria-label="y sub k equals h of X sub k plus nu sub k">
+            <math display="block"><msub><mi>y</mi><mi>k</mi></msub><mo>=</mo><mi>h</mi><mo>(</mo><msub><mi>X</mi><mi>k</mi></msub><mo>)</mo><mo>+</mo><msub><mi>ν</mi><mi>k</mi></msub></math>
+          </div>
+          <p>Here <var>h</var> is the measurement process—logs, identity events, configuration snapshots, traces, posture signals and alerts—and <var>ν</var><sub>k</sub> represents missing, delayed, duplicated, corrupted or noisy telemetry. Treating observations as perfect state is the first modelling error to avoid.</p>
+
+          <h3>Symbols and implementation counterparts</h3>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Symbol</th><th>Meaning</th><th>Typical implementation</th></tr></thead>
+              <tbody>
+                <tr><td><var>X</var><sub>k</sub></td><td>Security-relevant system state</td><td>Resource graph, IAM bindings, session store, workload inventory</td></tr>
+                <tr><td><var>y</var><sub>k</sub></td><td>Observation available to the controller</td><td>Normalized event plus correlated state snapshot</td></tr>
+                <tr><td>Π<sub>k</sub></td><td>Policy and its exact version</td><td>Signed policy bundle, revision and rollout metadata</td></tr>
+                <tr><td><var>u</var><sub>k</sub></td><td>Candidate action</td><td>Typed command: revoke, quarantine, step-up, deny-new-leases</td></tr>
+                <tr><td>ω<sub>k</sub></td><td>External disturbance</td><td>Attacker action, failure, deploy, scaling event, administrator change</td></tr>
+                <tr><td><var>d</var><sub>k</sub></td><td>Authorization decision record</td><td>Permit/deny, scope, reason, policy revision, expiry, evidence</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="controller">
+          <h2>2. Close the loop</h2>
+          <p>Let the information available at step <var>k</var> be the observation history and the current policy:</p>
+          <div class="equation" role="math" aria-label="I sub k equals y zero through y k and policy Pi sub k">
+            <math display="block"><msub><mi>I</mi><mi>k</mi></msub><mo>=</mo><mo>(</mo><msub><mi>y</mi><mn>0</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>y</mi><mi>k</mi></msub><mo>,</mo><msub><mi>Π</mi><mi>k</mi></msub><mo>)</mo></math>
+          </div>
+          <p>The controller proposes an action from that information:</p>
+          <div class="equation equation--primary" role="math" aria-label="u sub k equals calligraphic C of y zero through y k and Pi sub k">
+            <math display="block"><msub><mi>u</mi><mi>k</mi></msub><mo>=</mo><mi>𝒞</mi><mo>(</mo><msub><mi>y</mi><mn>0</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>y</mi><mi>k</mi></msub><mo>,</mo><msub><mi>Π</mi><mi>k</mi></msub><mo>)</mo></math>
+          </div>
+          <p>The system then evolves under the applied action and the external disturbance:</p>
+          <div class="equation equation--primary" role="math" aria-label="X sub k plus one equals calligraphic F of X sub k, u tilde sub k, and omega sub k">
+            <math display="block"><msub><mi>X</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mi>ℱ</mi><mo>(</mo><msub><mi>X</mi><mi>k</mi></msub><mo>,</mo><msub><mover><mi>u</mi><mo>~</mo></mover><mi>k</mi></msub><mo>,</mo><msub><mi>ω</mi><mi>k</mi></msub><mo>)</mo></math>
+          </div>
+          <p>The tilde matters: <var>u</var><sub>k</sub> is only a proposal. The plant receives <span class="nowrap"><var>ũ</var><sub>k</sub></span>, the action that survives authorization and enforcement.</p>
+        </section>
+
+        <section id="authorization">
+          <h2>3. Put an authorization guard in front of the controller</h2>
+          <p>Define an authorization guard <var>A</var> that evaluates the controller identity, requested operation, target tenant, target resource, policy revision and current preconditions. Here <span class="nowrap"><var>X̂</var><sub>k</sub></span> is the freshest state the authorizer can observe under the declared consistency contract:</p>
+          <div class="equation" role="math" aria-label="a sub k equals A of u sub k, X hat sub k, Pi sub k and is either zero or one">
+            <math display="block"><msub><mi>a</mi><mi>k</mi></msub><mo>=</mo><mi>A</mi><mo>(</mo><msub><mi>u</mi><mi>k</mi></msub><mo>,</mo><msub><mover><mi>X</mi><mo>^</mo></mover><mi>k</mi></msub><mo>,</mo><msub><mi>Π</mi><mi>k</mi></msub><mo>)</mo><mo>∈</mo><mo>{</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>}</mo></math>
+          </div>
+          <p>The command delivered for enforcement is therefore:</p>
+          <div class="equation" role="math" aria-label="u tilde sub k equals u sub k if authorized, otherwise no-op">
+            <math display="block"><msub><mover><mi>u</mi><mo>~</mo></mover><mi>k</mi></msub><mo>=</mo><mrow><mo>{</mo><mtable columnalign="left left"><mtr><mtd><msub><mi>u</mi><mi>k</mi></msub></mtd><mtd><mtext>if </mtext><msub><mi>a</mi><mi>k</mi></msub><mo>=</mo><mn>1</mn></mtd></mtr><mtr><mtd><msup><mi>u</mi><mo>∅</mo></msup></mtd><mtd><mtext>if </mtext><msub><mi>a</mi><mi>k</mi></msub><mo>=</mo><mn>0</mn></mtd></mtr></mtable></mrow></math>
+          </div>
+          <p><var>u</var><sup>∅</sup> is a safe no-op or a fail-closed transition. It must not silently become “execute anyway and alert later.”</p>
+
+          <div class="logic-card">
+            <span class="eyebrow">Authorization predicate</span>
+            <div class="equation equation--flush" role="math" aria-label="Apply u k implies controller authenticated and action authorized and tenant scope valid and preconditions satisfied">
+              <math display="block"><mi>Apply</mi><mo>(</mo><msub><mi>u</mi><mi>k</mi></msub><mo>)</mo><mo>⇒</mo><mrow><mtable columnalign="left"><mtr><mtd><mi>ControllerAuthenticated</mi></mtd></mtr><mtr><mtd><mo>∧</mo><mi>ActionAuthorized</mi><mo>(</mo><msub><mi>u</mi><mi>k</mi></msub><mo>)</mo></mtd></mtr><mtr><mtd><mo>∧</mo><mi>TenantScopeValid</mi><mo>(</mo><msub><mi>u</mi><mi>k</mi></msub><mo>)</mo></mtd></mtr><mtr><mtd><mo>∧</mo><mi>PreconditionsSatisfied</mi><mo>(</mo><msub><mi>u</mi><mi>k</mi></msub><mo>)</mo></mtd></mtr></mtable></mrow></math>
+            </div>
+          </div>
+
+          <h3>What the guard must bind</h3>
+          <p>A permit should bind at least the controller identity, action type, tenant, resource set, permitted effect, policy revision, evidence revision, issue time, expiry time, preconditions and an idempotency key. A valid signature over an under-specified command is not adequate authorization.</p>
+          <pre><code class="language-json">{
+  "decision_id": "dec_01…",
+  "controller": "security-orchestrator/prod",
+  "action": "revoke_session_family",
+  "tenant_id": "tenant-a",
+  "resource_ids": ["user:1842"],
+  "policy_revision": 417,
+  "evidence_revision": 88031,
+  "preconditions": ["session_epoch == 91", "risk_state == confirmed"],
+  "not_before": "2026-09-14T10:12:20Z",
+  "expires_at": "2026-09-14T10:12:50Z",
+  "idempotency_key": "contain:incident-712:user-1842"
+}</code></pre>
+        </section>
+
+        <section id="containment">
+          <h2>4. Containment must shrink authority</h2>
+          <p>Let ℛ(<var>X</var>) be the set of protected effects reachable from state <var>X</var>: API calls, data reads, writes, role assumptions, token exchanges, network flows and lease creation. An action explicitly labelled <em>containment</em> must be non-expansive:</p>
+          <div class="equation equation--primary" role="math" aria-label="Reachable effects after containment is a subset of reachable effects before containment">
+            <math display="block"><msub><mi>ℛ</mi><mi>after</mi></msub><mo>⊆</mo><msub><mi>ℛ</mi><mi>before</mi></msub></math>
+          </div>
+          <p>A useful containment action usually makes the inclusion strict. The weaker subset form permits an idempotent replay: revoking an already-revoked credential does not further shrink authority, but it also does not restore any.</p>
+
+          <div class="callout">
+            <p><strong>Check the effect, not the action label.</strong> Moving a workload into a “quarantine” network that accidentally gains a new administrative path violates containment even if the command is named <code>isolate</code>.</p>
+          </div>
+
+          <h3>Restoration is not the inverse edge</h3>
+          <p>Restoration expands reachable effects. It is therefore a new authorization decision at a later time, not an automatic reversal when an anomaly score falls:</p>
+          <div class="equation" role="math" aria-label="Restore at k prime implies a new permit at k prime, and not merely lower risk score">
+            <math display="block"><mi>Restore</mi><mo>(</mo><msup><mi>u</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>,</mo><msup><mi>k</mi><mo>′</mo></msup><mo>)</mo><mo>⇒</mo><mi>NewPermit</mi><mo>(</mo><msup><mi>k</mi><mo>′</mo></msup><mo>)</mo><mo>∧</mo><mo>¬</mo><mi>ScoreOnly</mi></math>
+          </div>
+          <p>A falling anomaly score is evidence. It is not authority. Restoration should re-evaluate identity, policy, tenant, current resource state, incident disposition, credential lifecycle and required approvals. Expired or revoked authority stays dead unless a new grant is issued.</p>
+
+          <h3>Security is a constrained control objective</h3>
+          <p>Blindly minimizing reachable authority can destroy availability. A practical controller minimizes risk, disruption and control churn subject to hard safety and service constraints:</p>
+          <div class="equation" role="math" aria-label="Minimize the sum of weighted risk, disruption and action churn subject to the authorization invariant and service objectives">
+            <math display="block"><munder><mi>min</mi><msub><mi>u</mi><mrow><mi>k</mi><mo>:</mo><mi>k</mi><mo>+</mo><mi>N</mi></mrow></msub></munder><mspace width="1em"/><munderover><mo>∑</mo><mi>i</mi><mrow><mi>k</mi><mo>+</mo><mi>N</mi></mrow></munderover><mo>[</mo><mi>α</mi><mi>Risk</mi><mo>(</mo><msub><mi>X</mi><mi>i</mi></msub><mo>)</mo><mo>+</mo><mi>β</mi><mi>Disruption</mi><mo>(</mo><msub><mi>u</mi><mi>i</mi></msub><mo>)</mo><mo>+</mo><mi>γ</mi><mi>Churn</mi><mo>(</mo><msub><mi>u</mi><mi>i</mi></msub><mo>)</mo><mo>]</mo></math>
+          </div>
+          <p>Rate limits, dwell times, hysteresis and human approval for high-blast-radius actions are not operational afterthoughts. They are mechanisms that prevent oscillation and unsafe over-correction.</p>
+        </section>
+
+        <section id="multi-tenant">
+          <h2>5. Make tenant isolation a transition property</h2>
+          <p>For tenants <var>j</var> ∈ 𝒯, represent the overall state as a product of tenant projections plus explicitly shared infrastructure:</p>
+          <div class="equation" role="math" aria-label="X equals the product of tenant states cross shared state">
+            <math display="block"><mi>X</mi><mo>=</mo><mo>(</mo><munder><mo>×</mo><mrow><mi>j</mi><mo>∈</mo><mi>𝒯</mi></mrow></munder><msup><mi>X</mi><mrow><mo>(</mo><mi>j</mi><mo>)</mo></mrow></msup><mo>)</mo><mo>×</mo><msup><mi>X</mi><mi>shared</mi></msup></math>
+          </div>
+          <p>If action <var>u</var> is scoped to tenant <var>t</var>, every unrelated tenant projection should remain observationally equivalent to the no-op transition:</p>
+          <div class="equation equation--primary" role="math" aria-label="For every other tenant j, projecting the action transition equals projecting the no-op transition">
+            <math display="block"><mi>j</mi><mo>≠</mo><mi>t</mi><mo>(</mo><mi>u</mi><mo>)</mo><mo>⇒</mo><msub><mi>proj</mi><mi>j</mi></msub><mo>(</mo><mi>ℱ</mi><mo>(</mo><mi>X</mi><mo>,</mo><mi>u</mi><mo>,</mo><mi>ω</mi><mo>)</mo><mo>)</mo><mo>≃</mo><msub><mi>proj</mi><mi>j</mi></msub><mo>(</mo><mi>ℱ</mi><mo>(</mo><mi>X</mi><mo>,</mo><msup><mi>u</mi><mo>∅</mo></msup><mo>,</mo><mi>ω</mi><mo>)</mo><mo>)</mo></math>
+          </div>
+          <p>Shared resources require an explicit coupling model. If isolating one tenant can exhaust a shared gateway, rotate a shared key or invalidate a shared cache, that cross-tenant effect belongs in the declared action scope and blast-radius review. It must not remain an invisible side effect.</p>
+        </section>
+
+        <section id="consistency">
+          <h2>6. Choose a consistency contract</h2>
+          <p>Authorization is evaluated against distributed state: policy replicas, identity stores, revocation indexes, caches, resource versions and enforcement points. “The controller was authorized” is incomplete unless the system defines which version of that state counted.</p>
+
+          <div class="comparison-grid">
+            <article class="mini-card">
+              <span class="eyebrow">Contract A</span>
+              <h3>Strict authorization</h3>
+              <p>With monotonically ordered authorization revisions, at a defined serialization point τ(<var>q</var>), the effect uses a decision based on a revision at least as new as the required revision for request <var>q</var>.</p>
+              <div class="equation equation--compact" role="math" aria-label="Decision revision is at least the required revision at serialization point tau of q">
+                <math display="block"><mi>rev</mi><mo>(</mo><mi>d</mi><mo>)</mo><mo>≥</mo><mi>requiredRev</mi><mo>(</mo><mi>q</mi><mo>,</mo><mi>τ</mi><mo>(</mo><mi>q</mi><mo>)</mo><mo>)</mo></math>
+              </div>
+              <p>Use this where post-revocation effects are unacceptable and the latency cost is justified.</p>
+            </article>
+
+            <article class="mini-card">
+              <span class="eyebrow">Contract B</span>
+              <h3>Bounded stale authorization</h3>
+              <p>Permit a decision from a snapshot no older than Δ<sub>auth</sub>, then state the maximum exposure window explicitly.</p>
+              <div class="equation equation--compact" role="math" aria-label="Current time minus authorization snapshot time is no more than delta auth">
+                <math display="block"><mi>now</mi><mo>−</mo><mi>snapshotTime</mi><mo>(</mo><mi>d</mi><mo>)</mo><mo>≤</mo><msub><mi>Δ</mi><mi>auth</mi></msub></math>
+              </div>
+              <p>A conservative revocation bound is <code>W ≤ Δprop + Δcache + Δin-flight</code>. Measure all three terms; do not call the system “eventually consistent” and leave the risk unbounded.</p>
+            </article>
+          </div>
+
+          <p>Google’s Zanzibar paper is useful here because it treats authorization consistency as a system property, including causal ordering and externally consistent decisions, rather than as a cache implementation detail. The exact mechanism need not be copied; the discipline should be.</p>
+        </section>
+
+        <section id="invariant">
+          <h2>7. Verify the protected effect, not merely the decision</h2>
+          <p>The central safety property connects the request, the decision actually enforced, and the resulting protected effect. Here <var>q</var> is a protected request and <var>t</var> is its effect time:</p>
+          <div class="equation equation--hero" role="math" aria-label="For all q and t, protected effect executed implies valid enforced permit and effect within authorized scope">
+            <math display="block"><mo>∀</mo><mi>q</mi><mo>,</mo><mi>t</mi><mo>:</mo><mspace width="0.5em"/><mi>ProtectedEffectExecuted</mi><mo>(</mo><mi>q</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>⇒</mo><mi>ValidEnforcedPermit</mi><mo>(</mo><mi>q</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>∧</mo><mi>EffectWithinAuthorizedScope</mi><mo>(</mo><mi>q</mi><mo>,</mo><mi>t</mi><mo>)</mo></math>
+          </div>
+          <p>This is stronger than “the policy engine returned permit.” It requires proof that the PEP enforced the intended decision, that the decision was valid at the chosen consistency point, and that the observed side effects stayed inside the decision’s scope.</p>
+
+          <details class="proof-obligation">
+            <summary>Expanded permit validity predicate</summary>
+            <div class="equation equation--flush equation--scroll" role="math" aria-label="Valid enforced permit is the conjunction of decision permit, authenticated controller, authorized action, valid tenant scope, fresh policy, satisfied preconditions, valid decision time, PEP binding, and replay safety">
+              <math display="block"><mtable columnalign="left"><mtr><mtd><mi>ValidEnforcedPermit</mi><mo>(</mo><mi>q</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>≜</mo></mtd></mtr><mtr><mtd><mi>Decision</mi><mo>(</mo><mi>q</mi><mo>)</mo><mo>=</mo><mi>Permit</mi></mtd></mtr><mtr><mtd><mo>∧</mo><mi>ControllerAuthenticated</mi><mo>(</mo><mi>q</mi><mo>)</mo></mtd></mtr><mtr><mtd><mo>∧</mo><mi>ActionAuthorized</mi><mo>(</mo><mi>q</mi><mo>)</mo></mtd></mtr><mtr><mtd><mo>∧</mo><mi>TenantScopeValid</mi><mo>(</mo><mi>q</mi><mo>)</mo></mtd></mtr><mtr><mtd><mo>∧</mo><mi>PolicyFreshEnough</mi><mo>(</mo><mi>q</mi><mo>,</mo><mi>t</mi><mo>)</mo></mtd></mtr><mtr><mtd><mo>∧</mo><mi>PreconditionsSatisfied</mi><mo>(</mo><mi>q</mi><mo>,</mo><mi>t</mi><mo>)</mo></mtd></mtr><mtr><mtd><mo>∧</mo><mi>NotBefore</mi><mo>(</mo><mi>q</mi><mo>)</mo><mo>≤</mo><mi>t</mi><mo>&lt;</mo><mi>ExpiresAt</mi><mo>(</mo><mi>q</mi><mo>)</mo></mtd></mtr><mtr><mtd><mo>∧</mo><mi>PEPBoundToDecision</mi><mo>(</mo><mi>q</mi><mo>)</mo></mtd></mtr><mtr><mtd><mo>∧</mo><mi>ReplaySafe</mi><mo>(</mo><mi>q</mi><mo>)</mo></mtd></mtr></mtable></math>
+            </div>
+          </details>
+
+          <p>NIST SP 800-207 separates the logical policy engine, which decides; the policy administrator, which establishes or terminates the communication path; and the policy enforcement point, which enables, monitors and terminates the connection. Those roles can be colocated or replicated, but the proof obligations remain distinct.</p>
+        </section>
+
+        <section id="implementation">
+          <h2>8. Translate the model into software contracts</h2>
+          <p>A practical implementation can preserve the model without turning every service into a control-theory project. The important move is to make proposals, decisions, commands and effect receipts distinct records.</p>
+          <ol class="step-list">
+            <li><strong>Normalize observations.</strong> Attach tenant, subject, resource, event time, ingestion time, source integrity and evidence revision.</li>
+            <li><strong>Build a candidate action.</strong> Make it typed, deterministic for the same input, bounded in scope and safe to retry.</li>
+            <li><strong>Authorize at execution time.</strong> Evaluate controller identity, action, tenant, resource, policy revision, current preconditions and decision lifetime.</li>
+            <li><strong>Enforce through a narrow adapter.</strong> The PEP accepts only signed or mutually authenticated commands with an explicit schema and allowlist.</li>
+            <li><strong>Return an effect receipt.</strong> Record the actual changed resources, previous and resulting versions, partial failures and enforcement time.</li>
+            <li><strong>Observe again.</strong> Confirm the intended state transition. A successful API response is not proof that the system reached the safe state.</li>
+          </ol>
+
+          <pre><code class="language-python">def reconcile(observation, policy_revision):
+    candidate = controller.propose(observation, policy_revision)
+    decision = authorizer.evaluate(candidate, fresh_state=True)
+
+    if not decision.permit:
+        return audit.denied(candidate, decision)
+
+    command = bind(candidate, decision, ttl_seconds=30)
+    receipt = enforcement_point.apply(command)
+
+    assert receipt.tenant_id == decision.tenant_id
+    assert receipt.effects &lt;= decision.authorized_effects
+    return verifier.confirm(receipt)</code></pre>
+
+          <h3>Separate control planes by capability</h3>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Component</th><th>May do</th><th>Must not do</th></tr></thead>
+              <tbody>
+                <tr><td>Detector</td><td>Produce evidence and confidence</td><td>Directly mutate protected state</td></tr>
+                <tr><td>Controller</td><td>Propose a bounded typed action</td><td>Mint its own authority</td></tr>
+                <tr><td>Policy engine</td><td>Decide using identity, policy and context</td><td>Assume enforcement occurred</td></tr>
+                <tr><td>Policy administrator</td><td>Issue or terminate the authorized command/path</td><td>Broaden the decided scope</td></tr>
+                <tr><td>PEP</td><td>Enforce and return a receipt</td><td>Accept ambiguous tenant or resource targets</td></tr>
+                <tr><td>Verifier</td><td>Compare intended and observed effects</td><td>Treat request acceptance as state convergence</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="worked-example">
+          <h2>9. Worked example: suspicious workload credentials</h2>
+          <p>Assume a workload identity begins making unusual cross-service calls.</p>
+          <div class="scenario-timeline" aria-label="Worked example sequence">
+            <div><span>01</span><p><strong>Observe.</strong> The detector correlates new egress destinations, a token exchange and an anomalous call graph. The observation is scoped to tenant A and workload W.</p></div>
+            <div><span>02</span><p><strong>Propose.</strong> The controller requests <code>deny_new_leases(W)</code> and <code>revoke_session_family(W)</code>. It does not request deletion, role changes or a tenant-wide network shutdown.</p></div>
+            <div><span>03</span><p><strong>Authorize.</strong> Policy permits this controller to contain workload W in tenant A for 30 seconds, provided the workload generation and identity epoch still match the evidence.</p></div>
+            <div><span>04</span><p><strong>Enforce.</strong> The identity PEP increments W’s session epoch; the lease PEP denies new grants. Each returns a versioned receipt.</p></div>
+            <div><span>05</span><p><strong>Verify.</strong> Existing sessions fail revalidation, no new leases appear, unrelated tenant projections are unchanged, and ℛ<sub>after</sub> ⊂ ℛ<sub>before</sub>.</p></div>
+            <div><span>06</span><p><strong>Restore deliberately.</strong> A later recovery workflow issues fresh workload credentials only after remediation evidence and a new permit. A lower risk score does not re-enable the old epoch.</p></div>
+          </div>
+        </section>
+
+        <section id="verification">
+          <h2>10. Verification plan</h2>
+          <p>Test the model at three levels.</p>
+          <div class="verification-grid">
+            <article class="mini-card"><span class="eyebrow">Properties</span><h3>State-machine tests</h3><ul><li>No protected effect without a valid permit.</li><li>Containment never expands reachable effects.</li><li>Replays are idempotent.</li><li>Restore always requires a new decision.</li></ul></article>
+            <article class="mini-card"><span class="eyebrow">Distributed behaviour</span><h3>Fault injection</h3><ul><li>Delay policy and revocation propagation.</li><li>Duplicate and reorder commands.</li><li>Expire a decision during enforcement.</li><li>Partition the controller from one PEP.</li></ul></article>
+            <article class="mini-card"><span class="eyebrow">Isolation</span><h3>Tenant proofs</h3><ul><li>Generate cross-tenant identifiers.</li><li>Exercise shared-resource coupling.</li><li>Compare effect receipts with permit scope.</li><li>Alert on missing tenant attribution.</li></ul></article>
+          </div>
+
+          <div class="callout callout--trust">
+            <p><strong>Trust anchors:</strong> identity issuers, policy authorities, signing and encryption keys, clocks, enforcement components and the evidence path used to verify effects. Compromise of one of these components changes what the invariant can guarantee; the threat model must say so explicitly.</p>
+          </div>
+        </section>
+
+        <section id="sources">
+          <h2>Sources and further reading</h2>
+          <ul class="source-list">
+            <li><a href="https://doi.org/10.6028/NIST.SP.800-207">NIST SP 800-207: Zero Trust Architecture</a> — the logical policy engine, policy administrator and policy enforcement point model.</li>
+            <li><a href="https://doi.org/10.6028/NIST.SP.800-207A">NIST SP 800-207A: A Zero Trust Architecture Model for Access Control in Cloud-Native Applications in Multi-Cloud Environments</a> — identity-tier and network-tier enforcement for cloud-native systems.</li>
+            <li><a href="https://www.usenix.org/conference/atc19/presentation/pang">Zanzibar: Google’s Consistent, Global Authorization System</a> — causal ordering and external consistency for authorization decisions.</li>
+            <li><a href="https://www.rfc-editor.org/rfc/rfc7009.html">RFC 7009: OAuth 2.0 Token Revocation</a> — a concrete standards-track revocation mechanism and its security considerations.</li>
+          </ul>
+        </section>
+
+        <section class="article-cta" aria-labelledby="cta-title">
+          <span class="eyebrow">From model to evidence</span>
+          <h2 id="cta-title">Can your automation prove what it changed?</h2>
+          <p>A useful security review should connect controller identity, policy revision, enforcement receipts, tenant scope and post-action evidence—not stop at a diagram or a successful API response.</p>
+          <a class="btn primary" href="https://nishanthkonsultancy.com/audit">Get a free Drift Audit →</a>
+        </section>
+      </div>
+    </div>
+
+    <nav class="article-footer-nav" aria-label="Article navigation">
+      <a class="btn" href="./branch.html#cloud-platform-security">← Cloud, Platform &amp; Security</a>
+      <a class="btn primary" href="./leaf.html">Back to Leaves</a>
+    </nav>
+  </article>
+</main>
+
+<footer class="footer">
+  <div class="container"><span>© <span data-year></span> Nishanth Kottapalli</span><span>Built as a static GitHub Pages site.</span></div>
+</footer>
+
+<script id="mermaid-source" type="text/plain">Zmxvd2NoYXJ0IFRECiAgT1siT2JzZXJ2ZSB54oKWIl0gLS0+IENbIkNvbnRyb2xsZXIgQyJdCiAgUFsiUG9saWN5IM6g4oKWIl0gLS0+IEMKICBDIC0tPiBHWyJBdXRob3JpemF0aW9uIGdhdGUgQSJdCiAgRyAtLT58InBlcm1pdHRlZCBhY3Rpb24gxanigpYifCBFWyJQb2xpY3kgZW5mb3JjZW1lbnQgcG9pbnQiXQogIEUgLS0+IFhbIlN5c3RlbSBzdGF0ZSBY4oKW4oKK4oKBIl0KICBYIC0uICJ0ZWxlbWV0cnkiIC4tPiBPCiAgRyAtLiAiZGVueSAvIG5vLW9wIiAuLT4gTlsiTm8gcHJvdGVjdGVkIGVmZmVjdCJdCg==</script>
+</body>
+</html>
