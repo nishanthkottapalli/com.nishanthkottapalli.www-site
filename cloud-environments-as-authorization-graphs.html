@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#001c21">
+  <link rel="icon" type="image/x-icon" href="./assets/brand/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/brand/favicon-32.png">
+  <link rel="apple-touch-icon" href="./assets/brand/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&amp;family=Inter:wght@600;700;800;900&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/theme.css">
+  <link rel="stylesheet" href="./css/base.css">
+  <link rel="stylesheet" href="./css/animation.css">
+  <script defer src="./js/utils.js"></script>
+  <script defer src="./js/theme.js"></script>
+  <script defer src="./js/site.js"></script>
+  <script src="./js/vendor/mermaid.min.js"></script>
+  <script defer src="./js/render-mermaid.js"></script>
+  <title>Represent the cloud environment as a graph, with authorization attached to interactions — Nishanth Kottapalli</title>
+  <meta name="description" content="A mathematical and implementation-oriented model for attaching zero-trust authorization to synchronous and asynchronous interactions in multi-tenant cloud systems.">
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a class="brand" href="./index.html" aria-label="Nishanth Kottapalli home">
+      <div class="title title-with-logo">
+        <span class="brand-mark-wrap" aria-hidden="true"><img class="brand-mark" src="./assets/brand/logo.svg" alt=""></span>
+        <span>NISHANTH KOTTAPALLI</span>
+        <div class="subtitle">Engineer. Builder. Systems thinker.</div>
+      </div>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a class="pill" href="./index.html">Home</a>
+      <a class="pill" href="./root.html">Roots</a>
+      <a class="pill" href="./trunk.html">Trunks</a>
+      <a class="pill" href="./branch.html">Branches</a>
+      <a class="pill active" href="./leaf.html" aria-current="page">Leaves</a>
+      <a class="pill" href="./links.html">Links</a>
+      <button class="icon-btn" type="button" onclick="NMKKTheme.toggle()" aria-label="Toggle theme" title="Toggle theme">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 18a6 6 0 1 1 4.24-10.24A8 8 0 1 0 20 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="./leaf.html">Leaves</a><span aria-hidden="true">→</span><span>Cloud authorization graph</span>
+  </nav>
+
+  <article class="article-shell">
+    <header class="article-header">
+      <span class="eyebrow">Series 01/10 · Zero Trust + Cloud Security + Distributed Systems</span>
+      <h1 class="article-title">Represent the cloud environment as a graph, with authorization attached to interactions.</h1>
+      <p class="article-deck">A network path answers whether traffic can arrive. Authorization answers whether this subject, through this workload, may perform this action on this tenant-owned resource—at the moment the receiving boundary enforces it.</p>
+      <div class="article-meta">
+        <span>By Nishanth Kottapalli</span>
+        <span aria-hidden="true">·</span>
+        <time datetime="2023-07-30">30 July 2023</time>
+        <span aria-hidden="true">·</span>
+        <span>17 min read</span>
+      </div>
+      <div class="tag-list" aria-label="Article topics">
+        <span class="pill">Authorization</span>
+        <span class="pill">Network Graphs</span>
+        <span class="pill">Workload Identity</span>
+        <span class="pill">Multi-tenancy</span>
+      </div>
+    </header>
+
+    <div class="article-layout">
+      <aside class="article-toc" aria-label="On this page">
+        <strong>On this page</strong>
+        <a href="#thesis">The thesis</a>
+        <a href="#network-graph">Network reachability</a>
+        <a href="#request">The request envelope</a>
+        <a href="#tenancy">Tenant ownership</a>
+        <a href="#interaction">Admissible interactions</a>
+        <a href="#paths">Compose an entire path</a>
+        <a href="#async">Asynchronous authority</a>
+        <a href="#pep-placement">PEP placement</a>
+        <a href="#freshness">Time and freshness</a>
+        <a href="#implementation">Translate it into software</a>
+        <a href="#worked-example">Worked example</a>
+        <a href="#verification">Verification plan</a>
+        <a href="#sources">Sources</a>
+      </aside>
+
+      <div class="article-body prose">
+        <section id="thesis">
+          <p class="lede">Cloud architecture diagrams usually show where traffic can flow. Security decisions require a second graph: who is acting, through which workload, for which tenant, under what delegation, against which resource, with what evidence, and at what enforcement time.</p>
+          <div class="callout callout--principle">
+            <p><strong>Design rule:</strong> attach authorization to the interaction—not to the subnet, cluster, service name or fact that two components can establish a connection.</p>
+          </div>
+          <p>This article is the interaction-level companion to <a href="./security-orchestration-authorized-feedback-controller.html"><strong>Security orchestration as an authorized feedback controller</strong></a>. The controller article asks whether a security action may change state. This article asks whether any application interaction may produce a protected effect.</p>
+
+          <section class="diagram-shell controller-diagram" data-mermaid-theme="default" data-mermaid-security-level="strict" aria-labelledby="interaction-path-title">
+            <div class="diagram-heading">
+              <div>
+                <span class="eyebrow">Interaction graph</span>
+                <h2 id="interaction-path-title" class="diagram-title">Every boundary can enforce</h2>
+              </div>
+              <span class="status-chip">No implicit trust</span>
+            </div>
+            <div id="diagram" class="diagram" aria-live="polite"><p class="diagram-status">Rendering diagram…</p></div>
+          </section>
+        </section>
+
+        <section id="network-graph">
+          <h2>1. Begin with the time-varying network graph</h2>
+          <p>Represent network reachability at time <var>t</var> as:</p>
+          <div class="equation equation--primary" role="math" aria-label="G sub N of t equals the graph V comma E sub N of t">
+            <math display="block"><msub><mi>G</mi><mi>N</mi></msub><mo>(</mo><mi>t</mi><mo>)</mo><mo>=</mo><mo>(</mo><mi>V</mi><mo>,</mo><msub><mi>E</mi><mi>N</mi></msub><mo>(</mo><mi>t</mi><mo>)</mo><mo>)</mo></math>
+          </div>
+          <p>The vertex set <var>V</var> contains security-relevant principals and endpoints: clients, gateways, workloads, service proxies, queues, workers, databases and object stores. An edge in <span class="nowrap"><var>E</var><sub>N</sub>(<var>t</var>)</span> says that the relevant transport can reach the relevant endpoint at time <var>t</var>.</p>
+          <p>Edges are typed. “Can reach” should be evaluated for the actual protocol, destination, port, route, service-discovery result and encryption requirements:</p>
+          <div class="equation" role="math" aria-label="A network edge is a tuple of source workload, destination workload, transport, endpoint and time interval">
+            <math display="block"><mi>e</mi><mo>=</mo><mo>(</mo><msub><mi>w</mi><mi>i</mi></msub><mo>,</mo><msub><mi>w</mi><mi>j</mi></msub><mo>,</mo><mi>κ</mi><mo>,</mo><mi>endpoint</mi><mo>,</mo><mi>interval</mi><mo>)</mo></math>
+          </div>
+          <div class="definition-grid">
+            <div><code>V</code><span>clients, gateways, workloads and managed-service endpoints</span></div>
+            <div><code>E<sub>N</sub>(t)</code><span>network paths available at enforcement time</span></div>
+            <div><code>κ</code><span>transport and protocol, such as HTTPS, gRPC or a queue API</span></div>
+            <div><code>N<sub>ij</sub>(t)</code><span>binary reachability for the relevant edge conditions</span></div>
+          </div>
+          <p>The graph changes as workloads scale, endpoints rotate, routes propagate, security groups change and service discovery returns new instances. A diagram captured during design review is therefore not necessarily the graph enforced during a request.</p>
+        </section>
+
+        <section id="request">
+          <h2>2. Carry a complete request envelope</h2>
+          <p>For a service-to-service request, model the security-relevant information as:</p>
+          <div class="equation equation--hero" role="math" aria-label="q equals s, d, w c, w r, tau, a, o, gamma, e and t">
+            <math display="block"><mi>q</mi><mo>=</mo><mo>(</mo><mi>s</mi><mo>,</mo><mi>d</mi><mo>,</mo><msub><mi>w</mi><mi>c</mi></msub><mo>,</mo><msub><mi>w</mi><mi>r</mi></msub><mo>,</mo><mi>τ</mi><mo>,</mo><mi>a</mi><mo>,</mo><mi>o</mi><mo>,</mo><mi>γ</mi><mo>,</mo><mi>e</mi><mo>,</mo><mi>t</mi><mo>)</mo></math>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Symbol</th><th>Meaning</th><th>What must be verified</th></tr></thead>
+              <tbody>
+                <tr><td><var>s</var></td><td>Original subject: user or autonomous workload</td><td>Stable identity, authentication method and current status</td></tr>
+                <tr><td><var>d</var></td><td>Originating device, when applicable</td><td>Device identity, posture and binding to the session</td></tr>
+                <tr><td><var>w</var><sub>c</sub></td><td>Current calling workload</td><td>Runtime identity—not merely an IP address or node identity</td></tr>
+                <tr><td><var>w</var><sub>r</sub></td><td>Receiving workload</td><td>Intended audience and endpoint identity</td></tr>
+                <tr><td><var>τ</var></td><td>Tenant the operation acts for</td><td>Trusted derivation and binding across every hop</td></tr>
+                <tr><td><var>a</var>, <var>o</var></td><td>Requested action and resource</td><td>Canonical action, resource type and exact identifier</td></tr>
+                <tr><td><var>γ</var></td><td>Delegation or workload authorization credential</td><td>Issuer, audience, scope, lifetime and chain restrictions</td></tr>
+                <tr><td><var>e</var></td><td>Verified contextual evidence</td><td>Source, integrity, freshness and relevance</td></tr>
+                <tr><td><var>t</var></td><td>Enforcement time</td><td>Decision and evidence validity at effect time</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout">
+            <p><strong>Do not collapse identities.</strong> The original subject <var>s</var>, current workload <var>w</var><sub>c</sub> and receiving workload <var>w</var><sub>r</sub> answer different questions. Recording only “service A called service B” loses the user, device and delegated purpose behind the call.</p>
+          </div>
+        </section>
+
+        <section id="tenancy">
+          <h2>3. Keep acting tenant and owning tenant distinct</h2>
+          <p>Let the resource’s owning tenant be:</p>
+          <div class="equation equation--primary" role="math" aria-label="tau sub o equals owner tenant of o">
+            <math display="block"><msub><mi>τ</mi><mi>o</mi></msub><mo>=</mo><mi>ownerTenant</mi><mo>(</mo><mi>o</mi><mo>)</mo></math>
+          </div>
+          <p>For an ordinary tenant-isolated resource, authorization normally requires:</p>
+          <div class="equation" role="math" aria-label="tenant valid if acting tenant equals owner tenant or there is an explicit cross tenant grant">
+            <math display="block"><mi>TenantValid</mi><mo>(</mo><mi>q</mi><mo>)</mo><mo>≜</mo><mo>(</mo><mi>τ</mi><mo>=</mo><msub><mi>τ</mi><mi>o</mi></msub><mo>)</mo><mo>∨</mo><mi>ExplicitCrossTenantGrant</mi><mo>(</mo><mi>q</mi><mo>)</mo></math>
+          </div>
+          <p>This prevents two common errors: trusting a tenant ID supplied by the caller without binding it to verified authority, and assuming that reaching a shared service implies access to every tenant partition behind it.</p>
+          <p>Cross-tenant administration, support access and shared resources are not exceptions to modelling. They are explicit relationships with their own subject, purpose, action, resource set, approval and expiry.</p>
+        </section>
+
+        <section id="interaction">
+          <h2>4. An admissible interaction needs both path and permit</h2>
+          <p>Let <span class="nowrap"><var>N</var><sub>ij</sub>(<var>t</var>) ∈ {0,1}</span> indicate permitted network connectivity from <var>w</var><sub>i</sub> to <var>w</var><sub>j</sub>. Let <span class="nowrap"><var>P</var><sub>j</sub>(<var>q</var>,<var>t</var>) ∈ {0,1}</span> be the authorization decision enforced at the receiving boundary.</p>
+          <div class="equation equation--hero" role="math" aria-label="A sub i j of q t equals N sub i j of t times P sub j of q t">
+            <math display="block"><msub><mi>A</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>(</mo><mi>q</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>=</mo><msub><mi>N</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>(</mo><mi>t</mi><mo>)</mo><mo>·</mo><msub><mi>P</mi><mi>j</mi></msub><mo>(</mo><mi>q</mi><mo>,</mo><mi>t</mi><mo>)</mo></math>
+          </div>
+          <p>Because both terms are binary, multiplication expresses conjunction: the interaction is admissible only when the path exists and the receiving boundary permits the request.</p>
+          <div class="comparison-grid">
+            <article class="mini-card"><span class="eyebrow">Necessary, not sufficient</span><h3>Reachability</h3><div class="equation equation--compact" role="math" aria-label="N i j equals one does not imply P j equals one"><math display="block"><msub><mi>N</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>(</mo><mi>t</mi><mo>)</mo><mo>=</mo><mn>1</mn><mo>⇏</mo><msub><mi>P</mi><mi>j</mi></msub><mo>(</mo><mi>q</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>=</mo><mn>1</mn></math></div><p>A successful TCP/TLS connection does not establish resource permission.</p></article>
+            <article class="mini-card"><span class="eyebrow">Also necessary</span><h3>Deliverability</h3><div class="equation equation--compact" role="math" aria-label="P j equals one does not imply N i j equals one"><math display="block"><msub><mi>P</mi><mi>j</mi></msub><mo>(</mo><mi>q</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>=</mo><mn>1</mn><mo>⇏</mo><msub><mi>N</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>(</mo><mi>t</mi><mo>)</mo><mo>=</mo><mn>1</mn></math></div><p>An abstract permit does not create a route, healthy endpoint or secure transport.</p></article>
+          </div>
+
+          <h3>Expand the receiving decision</h3>
+          <div class="logic-card">
+            <div class="equation equation--flush equation--scroll" role="math" aria-label="P j is the conjunction of authenticated subject, authenticated caller, intended receiver, tenant validity, action permission, context validity and freshness">
+              <math display="block"><mtable columnalign="left"><mtr><mtd><msub><mi>P</mi><mi>j</mi></msub><mo>(</mo><mi>q</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>≜</mo></mtd></mtr><mtr><mtd><mi>SubjectAuthenticated</mi><mo>(</mo><mi>s</mi><mo>,</mo><mi>γ</mi><mo>,</mo><mi>t</mi><mo>)</mo></mtd></mtr><mtr><mtd><mo>∧</mo><mi>CallerAuthenticated</mi><mo>(</mo><msub><mi>w</mi><mi>c</mi></msub><mo>,</mo><mi>t</mi><mo>)</mo></mtd></mtr><mtr><mtd><mo>∧</mo><mi>ReceiverIsAudience</mi><mo>(</mo><msub><mi>w</mi><mi>r</mi></msub><mo>,</mo><mi>γ</mi><mo>)</mo></mtd></mtr><mtr><mtd><mo>∧</mo><mi>TenantValid</mi><mo>(</mo><mi>q</mi><mo>)</mo></mtd></mtr><mtr><mtd><mo>∧</mo><mi>ActionAllowed</mi><mo>(</mo><mi>s</mi><mo>,</mo><mi>a</mi><mo>,</mo><mi>o</mi><mo>,</mo><mi>τ</mi><mo>)</mo></mtd></mtr><mtr><mtd><mo>∧</mo><mi>ContextValid</mi><mo>(</mo><mi>e</mi><mo>,</mo><mi>q</mi><mo>)</mo></mtd></mtr><mtr><mtd><mo>∧</mo><mi>FreshEnough</mi><mo>(</mo><mi>γ</mi><mo>,</mo><mi>e</mi><mo>,</mo><mi>t</mi><mo>)</mo></mtd></mtr></mtable></math>
+            </div>
+          </div>
+        </section>
+
+        <section id="paths">
+          <h2>5. Compose authorization across the entire path</h2>
+          <p>Let a request traverse path <span class="nowrap"><var>π</var> = (<var>v</var><sub>0</sub>, …, <var>v</var><sub>m</sub>)</span>. Each hop may receive a transformed request envelope <var>q</var><sub>ℓ</sub> at time <var>t</var><sub>ℓ</sub>. End-to-end admissibility is:</p>
+          <div class="equation equation--primary" role="math" aria-label="A pi equals the product over every hop of network reachability and receiving authorization">
+            <math display="block"><msub><mi>A</mi><mi>π</mi></msub><mo>=</mo><munderover><mo>∏</mo><mrow><mi>ℓ</mi><mo>=</mo><mn>1</mn></mrow><mi>m</mi></munderover><mo>[</mo><msub><mi>N</mi><mrow><msub><mi>v</mi><mrow><mi>ℓ</mi><mo>−</mo><mn>1</mn></mrow></msub><msub><mi>v</mi><mi>ℓ</mi></msub></mrow></msub><mo>(</mo><msub><mi>t</mi><mi>ℓ</mi></msub><mo>)</mo><mo>·</mo><msub><mi>P</mi><msub><mi>v</mi><mi>ℓ</mi></msub></msub><mo>(</mo><msub><mi>q</mi><mi>ℓ</mi></msub><mo>,</mo><msub><mi>t</mi><mi>ℓ</mi></msub><mo>)</mo><mo>]</mo></math>
+          </div>
+          <p>This formula exposes a crucial implementation fact: passing one gateway does not authorize all downstream effects. The API, queue, worker, database and storage service may enforce different policies over different resources.</p>
+
+          <h3>Delegation must not amplify authority</h3>
+          <p>If one workload exchanges or attenuates credential <var>γ</var><sub>ℓ</sub> for the next hop, the delegated scope should only stay equal or shrink:</p>
+          <div class="equation" role="math" aria-label="The next credential scope is a subset of the current scope intersected with the receiver's required scope">
+            <math display="block"><mi>Scope</mi><mo>(</mo><msub><mi>γ</mi><mrow><mi>ℓ</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>)</mo><mo>⊆</mo><mi>Scope</mi><mo>(</mo><msub><mi>γ</mi><mi>ℓ</mi></msub><mo>)</mo><mo>∩</mo><mi>Need</mi><mo>(</mo><msub><mi>v</mi><mrow><mi>ℓ</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>)</mo></math>
+          </div>
+          <p>The tenant and original subject must remain bound unless an explicit, separately authorized transition changes them. Forwarding a broad user token unchanged through every internal service is not the only way to preserve identity—and often preserves far more authority than the downstream workload needs.</p>
+        </section>
+
+        <section id="async">
+          <h2>6. A queue splits one apparent flow into several interactions</h2>
+          <p>For an API that publishes work to a queue and a worker that later consumes it, enqueue, dequeue and data access are separate protected interactions:</p>
+          <div class="equation" role="math" aria-label="The asynchronous flow is admissible only if enqueue, dequeue and worker data access are all admissible">
+            <math display="block"><msub><mi>A</mi><mi>async</mi></msub><mo>=</mo><msub><mi>A</mi><mi>enqueue</mi></msub><mo>·</mo><msub><mi>A</mi><mi>dequeue</mi></msub><mo>·</mo><msub><mi>A</mi><mi>data</mi></msub></math>
+          </div>
+          <p>The queue proves that a message was accepted and later delivered according to its own semantics. It does not prove that the producer was allowed to request the business operation, that the consumer is still allowed to perform it, or that the referenced resource still belongs to the same tenant.</p>
+
+          <h3>The message must carry bounded authority</h3>
+          <pre><code class="language-json">{
+  "message_id": "msg_01…",
+  "subject": "user:1842",
+  "producer": "spiffe://prod.example/api/orders",
+  "consumer_audience": "spiffe://prod.example/worker/orders",
+  "tenant_id": "tenant-a",
+  "action": "invoice.generate",
+  "resource": "order:7821",
+  "delegation_ref": "dlg_01…",
+  "policy_revision": 417,
+  "issued_at": "2026-09-15T10:12:20Z",
+  "expires_at": "2026-09-15T10:17:20Z"
+}</code></pre>
+          <p>The consumer authenticates the message source, verifies integrity and audience, rejects replay according to the delivery contract, and reauthorizes the intended effect at consumption time. If the design intentionally preserves the producer-time decision, that is a different consistency contract and must define its maximum lifetime and revocation behaviour.</p>
+        </section>
+
+        <section id="pep-placement">
+          <h2>7. Place PEPs so the protected resource cannot be reached around them</h2>
+          <p>A policy enforcement point can be a gateway, proxy, application guard, queue policy, database authorization layer, object-store policy—or a deliberate combination. What matters is that the enforcement placement forms a cut across every path from untrusted sources to the protected resource.</p>
+          <p>Let <var>U</var> be the set of untrusted or insufficiently authorized sources, <var>R</var> the protected resources, and <var>C</var><sub>PEP</sub> the enforcing vertices or edges. The non-bypass property is:</p>
+          <div class="equation equation--hero" role="math" aria-label="Every path from untrusted sources to protected resources intersects the policy enforcement cut set">
+            <math display="block"><mo>∀</mo><mi>π</mi><mo>∈</mo><mi>Paths</mi><mo>(</mo><mi>U</mi><mo>,</mo><mi>R</mi><mo>)</mo><mo>:</mo><mspace width="0.5em"/><mi>π</mi><mo>∩</mo><msub><mi>C</mi><mi>PEP</mi></msub><mo>≠</mo><mo>∅</mo></math>
+          </div>
+          <p>A public gateway is not an adequate PEP for a service that can also be reached through an internal load balancer, direct pod address, alternate queue consumer or database endpoint. The graph must include operational, administrative and recovery paths—not only the intended application route.</p>
+          <div class="callout callout--trust">
+            <p><strong>Enforce as close to the protected effect as practical.</strong> An outer PEP can reject broad classes of traffic early. The receiving workload or data boundary still has the most precise resource, action and tenant context.</p>
+          </div>
+        </section>
+
+        <section id="freshness">
+          <h2>8. Authorization is evaluated at an enforcement time</h2>
+          <p>The tuple includes <var>t</var> because identity, grants, tenant ownership, resource state, workload health and policy can change while a request moves through the system.</p>
+          <div class="equation" role="math" aria-label="Credential issue time is no later than enforcement time, which is earlier than credential expiry time">
+            <math display="block"><mi>issuedAt</mi><mo>(</mo><mi>γ</mi><mo>)</mo><mo>≤</mo><mi>t</mi><mo>&lt;</mo><mi>expiresAt</mi><mo>(</mo><mi>γ</mi><mo>)</mo></math>
+          </div>
+          <div class="equation" role="math" aria-label="Enforcement time minus evidence observation time is at most delta evidence">
+            <math display="block"><mi>t</mi><mo>−</mo><mi>observedAt</mi><mo>(</mo><mi>e</mi><mo>)</mo><mo>≤</mo><msub><mi>Δ</mi><mi>evidence</mi></msub></math>
+          </div>
+          <p>Those checks are necessary but not sufficient. The PEP must also define its policy-revision and revocation consistency contract. A valid-looking token can describe authority that has since been revoked; a fresh policy decision can still rely on stale tenant or resource state.</p>
+          <p>For sensitive effects, bind the permit to the resource generation or version used in the decision:</p>
+          <div class="equation equation--primary" role="math" aria-label="The resource version at enforcement must equal the resource version in the authorization decision">
+            <math display="block"><mi>version</mi><mo>(</mo><mi>o</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>=</mo><mi>decisionResourceVersion</mi><mo>(</mo><mi>q</mi><mo>)</mo></math>
+          </div>
+          <p>If it changed, re-evaluate rather than applying an old decision to a new object state.</p>
+        </section>
+
+        <section id="implementation">
+          <h2>9. Translate the graph into deployable controls</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Model element</th><th>Cloud/Kubernetes realization</th><th>Evidence to retain</th></tr></thead>
+              <tbody>
+                <tr><td>Vertex <var>v</var></td><td>Client, ingress, service account, workload, queue, database or bucket</td><td>Stable resource and workload identity</td></tr>
+                <tr><td>Network edge <var>N</var><sub>ij</sub></td><td>Routes, firewalls/security groups, NetworkPolicy, listener and service discovery</td><td>Effective connectivity test and configuration revision</td></tr>
+                <tr><td>Workload identity</td><td>Short-lived cloud workload credential or SPIFFE-style identity</td><td>Issuer, subject, audience, validity and trust bundle</td></tr>
+                <tr><td>Gateway PEP</td><td>Ingress/API gateway authentication and coarse request policy</td><td>Authenticated principal, route, decision and correlation ID</td></tr>
+                <tr><td>Application PEP</td><td>Action/resource/tenant authorization in the receiving service</td><td>Policy revision, inputs, decision and reason</td></tr>
+                <tr><td>Queue PEP</td><td>Producer/consumer permissions plus message integrity and audience</td><td>Producer identity, message ID, enqueue/dequeue times</td></tr>
+                <tr><td>Data PEP</td><td>Database role, tenant predicate, row policy or object-store policy</td><td>Bound tenant, resource, operation and affected records</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Receiving-boundary decision</h3>
+          <pre><code class="language-python">def authorize_interaction(request, caller_identity, now):
+    resource = resources.load_canonical(request.resource_id)
+    owner_tenant = resource.owner_tenant
+
+    assert caller_identity.subject == request.calling_workload
+    assert request.receiving_workload == THIS_WORKLOAD
+    assert request.tenant_id == owner_tenant or cross_tenant_grant(request)
+    assert delegation.valid_for(request.action, resource, now)
+    assert evidence.fresh_enough(request.context, now)
+
+    return policy.evaluate(
+        subject=request.original_subject,
+        caller=caller_identity.subject,
+        tenant=request.tenant_id,
+        action=request.action,
+        resource=resource,
+        context=request.context,
+    )</code></pre>
+
+          <h3>Effect receipt</h3>
+          <p>The receiving PEP should emit a decision record even for denies, and the protected component should emit an effect receipt for permits. The correlation chain should reconstruct:</p>
+          <pre><code class="language-text">network edge → authenticated caller → request envelope
+→ policy decision → protected effect → resulting resource version</code></pre>
+        </section>
+
+        <section id="worked-example">
+          <h2>10. Worked example: tenant-scoped invoice generation</h2>
+          <div class="scenario-timeline" aria-label="Tenant-scoped invoice generation sequence">
+            <div><span>01</span><p><strong>Client to gateway.</strong> The gateway authenticates user 1842 and device context, derives tenant A from the verified session and authorizes the invoice request route.</p></div>
+            <div><span>02</span><p><strong>Gateway to API.</strong> The API authenticates the gateway/workload identity, verifies the delegated subject and independently authorizes <code>invoice.generate</code> for <code>order:7821</code>.</p></div>
+            <div><span>03</span><p><strong>API to queue.</strong> The queue authorizes the API as a producer. The message binds tenant A, order 7821, the worker audience, policy revision and a short expiry.</p></div>
+            <div><span>04</span><p><strong>Queue to worker.</strong> The worker authenticates message provenance, checks replay and expiry, then reauthorizes the business action at consumption time.</p></div>
+            <div><span>05</span><p><strong>Worker to tenant data.</strong> The data PEP resolves <span class="nowrap"><var>τ</var><sub>o</sub> = tenant A</span>, verifies it matches the acting tenant and restricts the query to the authorized order.</p></div>
+            <div><span>06</span><p><strong>Verify.</strong> Decision and effect receipts show that each reachable edge was permitted, each receiving boundary enforced, and no resource owned by another tenant was read or modified.</p></div>
+          </div>
+        </section>
+
+        <section id="verification">
+          <h2>11. Verify the graph and the interaction together</h2>
+          <p>The central property is:</p>
+          <div class="equation equation--hero" role="math" aria-label="Every protected interaction executed implies a reachable path, a valid enforced permit at the receiver, valid tenant binding and an effect within scope">
+            <math display="block"><mo>∀</mo><mi>q</mi><mo>,</mo><mi>t</mi><mo>:</mo><mspace width="0.5em"/><mi>ProtectedInteractionExecuted</mi><mo>(</mo><mi>q</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>⇒</mo><mi>PathReachable</mi><mo>(</mo><msub><mi>w</mi><mi>c</mi></msub><mo>,</mo><msub><mi>w</mi><mi>r</mi></msub><mo>,</mo><mi>t</mi><mo>)</mo><mo>∧</mo><mi>ValidEnforcedPermitAtReceiver</mi><mo>(</mo><mi>q</mi><mo>,</mo><mi>t</mi><mo>)</mo><mo>∧</mo><mi>TenantBindingValid</mi><mo>(</mo><mi>q</mi><mo>)</mo><mo>∧</mo><mi>EffectWithinScope</mi><mo>(</mo><mi>q</mi><mo>,</mo><mi>t</mi><mo>)</mo></math>
+          </div>
+          <div class="verification-grid">
+            <article class="mini-card"><span class="eyebrow">Graph tests</span><h3>Reachability</h3><ul><li>Enumerate intended and unintended paths.</li><li>Test alternate listeners and direct endpoints.</li><li>Compare desired policy with effective routes.</li><li>Repeat after scaling and failover.</li></ul></article>
+            <article class="mini-card"><span class="eyebrow">Authorization tests</span><h3>Interaction matrix</h3><ul><li>Vary subject, caller, tenant, action and resource.</li><li>Reject wrong audience and stale evidence.</li><li>Exercise revocation during multi-hop requests.</li><li>Prove delegation cannot amplify scope.</li></ul></article>
+            <article class="mini-card"><span class="eyebrow">Boundary tests</span><h3>Bypass and effects</h3><ul><li>Attempt to route around each PEP.</li><li>Inject cross-tenant identifiers.</li><li>Replay queue messages.</li><li>Compare receipts with actual data changes.</li></ul></article>
+          </div>
+          <div class="callout callout--trust">
+            <p><strong>Trust anchors:</strong> identity issuers, workload attestation, tenant and resource registries, policy authorities, keys and trust bundles, clocks, service discovery, receiving PEPs and the audit path. If one is compromised, state explicitly which graph or authorization claims no longer hold.</p>
+          </div>
+        </section>
+
+        <section id="sources">
+          <h2>Sources and further reading</h2>
+          <ul class="source-list">
+            <li><a href="https://doi.org/10.6028/NIST.SP.800-207">NIST SP 800-207: Zero Trust Architecture</a> — resource-focused zero-trust principles and the policy engine, policy administrator and PEP model.</li>
+            <li><a href="https://doi.org/10.6028/NIST.SP.800-207A">NIST SP 800-207A: A Zero Trust Architecture Model for Access Control in Cloud-Native Applications in Multi-Cloud Environments</a> — identity-tier and network-tier policy enforcement for cloud-native systems.</li>
+            <li><a href="https://doi.org/10.6028/NIST.SP.800-204A">NIST SP 800-204A: Building Secure Microservices-based Applications Using Service-Mesh Architecture</a> — service-to-service security and proxy-based enforcement.</li>
+            <li><a href="https://spiffe.io/docs/latest/spiffe-about/spiffe-concepts/">SPIFFE concepts</a> — workload identity, trust domains, SVIDs and trust bundles.</li>
+            <li><a href="https://www.rfc-editor.org/rfc/rfc8693.html">RFC 8693: OAuth 2.0 Token Exchange</a> — subject, actor and delegated token-exchange semantics.</li>
+          </ul>
+        </section>
+
+        <section class="article-cta" aria-labelledby="cta-title">
+          <span class="eyebrow">From diagram to enforced path</span>
+          <h2 id="cta-title">Can every protected effect be traced to its receiving permit?</h2>
+          <p>A useful cloud security review should compare effective network paths, workload identities, tenant bindings, authorization decisions and data effects—not stop at security-group screenshots or an API gateway policy.</p>
+          <a class="btn primary" href="https://nishanthkonsultancy.com/audit">Get a free Drift Audit →</a>
+        </section>
+      </div>
+    </div>
+
+    <nav class="article-footer-nav" aria-label="Article navigation">
+      <a class="btn" href="./leaf.html#zero-trust-series">Series index</a>
+      <a class="btn" href="./workload-identities-and-device-posture.html">Article 02: Workload identity →</a>
+      <a class="btn primary" href="./leaf.html">Back to Leaves</a>
+    </nav>
+  </article>
+</main>
+
+<footer class="footer">
+  <div class="container"><span>© <span data-year></span> Nishanth Kottapalli</span><span>Built as a static GitHub Pages site.</span></div>
+</footer>
+
+<script id="mermaid-source" type="text/plain">Zmxvd2NoYXJ0IFRECiAgQ1siQ2xpZW50Il0gLS0+IEdbIkdhdGV3YXkgUEVQIl0KICBHIC0tPiBBWyJBUEkgd29ya2xvYWQgUEVQIl0KICBBIC0tPiBEWyJUZW5hbnQgZGF0YSBQRVAiXQogIEEgLS0+IFFbIlF1ZXVlIFBFUCJdCiAgUSAtLT4gV1siV29ya2VyIFBFUCJdCiAgVyAtLT4gRAo=</script>
+</body>
+</html>
