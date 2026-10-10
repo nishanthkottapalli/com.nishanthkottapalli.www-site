@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#001c21">
+  <title>MLOps pipelines using Terraform IaC on AWS | Nishanth Kottapalli</title>
+  <meta name="description" content="What Terraform provisions, what SageMaker Pipelines executes, and what your team owns across SageMaker AI, Studio, and Unified Studio.">
+  <meta name="author" content="Nishanth Kottapalli">
+  <link rel="canonical" href="https://www.nishanthkottapalli.com/mlops-pipelines-terraform-aws.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Nishanth Kottapalli">
+  <meta property="og:title" content="MLOps pipelines using Terraform IaC on AWS">
+  <meta property="og:description" content="Separate infrastructure, ML execution, and model delivery. A practical comparison of SageMaker AI, Studio, and Unified Studio.">
+  <meta property="og:url" content="https://www.nishanthkottapalli.com/mlops-pipelines-terraform-aws.html">
+  <meta property="og:image" content="https://www.nishanthkottapalli.com/assets/brand/android-chrome-512x512.png">
+  <meta property="og:image:width" content="512">
+  <meta property="og:image:height" content="512">
+  <meta property="og:image:alt" content="Nishanth Kottapalli brand mark">
+  <meta property="article:author" content="https://www.nishanthkottapalli.com/">
+  <meta property="article:published_time" content="2026-08-12">
+  <meta property="article:modified_time" content="2026-08-03">
+  <meta property="article:section" content="AI Infrastructure and Model Operations">
+  <meta property="article:tag" content="MLOps">
+  <meta property="article:tag" content="Terraform">
+  <meta property="article:tag" content="Amazon SageMaker">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="MLOps pipelines using Terraform IaC on AWS">
+  <meta name="twitter:description" content="What Terraform provisions, what SageMaker Pipelines executes, and what your team owns across SageMaker AI, Studio, and Unified Studio.">
+  <meta name="twitter:image" content="https://www.nishanthkottapalli.com/assets/brand/android-chrome-512x512.png">
+  <meta name="twitter:image:alt" content="Nishanth Kottapalli brand mark">
+
+  <link rel="icon" type="image/x-icon" href="./assets/brand/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/brand/favicon-32.png">
+  <link rel="apple-touch-icon" href="./assets/brand/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&amp;family=Inter:wght@600;700;800;900&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/theme.css">
+  <link rel="stylesheet" href="./css/base.css">
+
+  <!-- Page-specific additions only. Shared assets and the Pages workflow are reused. -->
+  <style>
+    .mlops-page .skip-link {
+      position: fixed;
+      top: 10px;
+      left: 16px;
+      z-index: 1000;
+      padding: 10px 16px;
+      border: var(--border);
+      border-radius: 8px;
+      background: var(--yellow);
+      color: #001c21;
+      transform: translateY(-160%);
+    }
+    .mlops-page .skip-link:focus { transform: translateY(0); }
+    .mlops-page :focus-visible { outline: 3px solid var(--purple); outline-offset: 5px; }
+    .mlops-article .article-title {
+      max-width: 23ch;
+      font-size: clamp(2.3rem, 5.3vw, 4.6rem);
+      line-height: 1.08;
+      overflow-wrap: break-word;
+    }
+    .mlops-article .article-deck { max-width: 66ch; }
+    .mlops-article .article-toc {
+      max-height: calc(100vh - 144px);
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+    .mlops-article .prose a { text-underline-offset: 0.2em; }
+    .mlops-article .prose p,
+    .mlops-article .prose li,
+    .mlops-article .prose td { overflow-wrap: anywhere; }
+    .mlops-article .prose pre { overflow-wrap: normal; }
+    .mlops-article .citation {
+      white-space: nowrap;
+      font-size: 0.8em;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .mlops-article [id] { scroll-margin-top: 130px; }
+    .mlops-article .mlops-note {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+    .mlops-article .mlops-table { min-width: 740px; }
+    .mlops-article .table-wrap { overscroll-behavior-x: contain; }
+    .mlops-article caption {
+      padding: 14px 16px;
+      background: var(--surface-soft);
+      color: var(--ink);
+      font-weight: 700;
+      text-align: left;
+    }
+    .mlops-article .table-wrap tbody th {
+      min-width: 125px;
+      font-size: 0.84rem;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    .mlops-article .mlops-figure {
+      margin: 28px 0;
+      padding: clamp(14px, 3vw, 24px);
+      border: var(--border);
+      border-radius: 18px;
+      background: var(--surface);
+      box-shadow: var(--shadow-small);
+    }
+    .mlops-article .mlops-figure h3 { margin: 0 0 16px; }
+    .mlops-article .mlops-diagram {
+      padding: 14px;
+      overflow-x: auto;
+      border: 1px solid #b4c3bf;
+      border-radius: 12px;
+      background: #f5f5f2;
+      color: #001c21;
+    }
+    .mlops-article .mlops-diagram svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin-inline: auto;
+    }
+    .mlops-article #release-diagram svg { max-width: 560px !important; }
+    .mlops-article .mlops-figure figcaption {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+    .mlops-article .mlops-diagram-source {
+      margin-top: 16px;
+      border-top: 1px solid var(--line-soft);
+      padding-top: 12px;
+    }
+    .mlops-article .mlops-diagram-source summary {
+      width: fit-content;
+      cursor: pointer;
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+    .mlops-article .mlops-diagram-source pre { margin-bottom: 0; box-shadow: none; }
+    .mlops-article .mlops-code-label {
+      margin: 24px 0 -12px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .mlops-article .source-list { font-size: 0.9rem; line-height: 1.55; }
+    .mlops-article .source-list li { padding-left: 4px; }
+    .mlops-article .mlops-related {
+      display: grid;
+      gap: 10px;
+      margin-top: 24px;
+    }
+    @media (max-width: 980px) {
+      .mlops-page > header { position: static; }
+      .mlops-article .article-layout { grid-template-columns: 1fr; }
+      .mlops-article .article-toc {
+        position: static;
+        max-height: none;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .mlops-article .article-toc strong { grid-column: 1 / -1; }
+      .mlops-article [id] { scroll-margin-top: 24px; }
+    }
+    @media (max-width: 640px) {
+      .mlops-article .article-title { font-size: clamp(2.15rem, 9vw, 3.2rem); }
+      .mlops-article .article-toc { grid-template-columns: 1fr; }
+      .mlops-article .mlops-diagram { padding: 8px; }
+      .mlops-article #ownership-diagram svg { min-width: 680px; }
+      .mlops-article #release-diagram svg { min-width: 440px; }
+      .mlops-article .prose pre { padding: 15px; }
+    }
+    @media (max-width: 420px) {
+      .mlops-page .brand { min-width: 0; max-width: 100%; }
+      .mlops-page .title-with-logo {
+        display: grid;
+        grid-template-columns: 28px minmax(0, 1fr);
+        gap: 0 10px;
+      }
+      .mlops-page .brand-mark-wrap { grid-row: 1 / 3; }
+      .mlops-page .title .subtitle {
+        grid-column: 2;
+        margin: 4px 0 0;
+        font-size: 9px;
+        line-height: 1.4;
+        letter-spacing: 0.06em;
+      }
+    }
+    @media print {
+      .mlops-page {
+        --ink: #001c21;
+        --paper: #ffffff;
+        --surface: #ffffff;
+        --surface-soft: #edf1ee;
+        --surface-muted: #e2e8e4;
+        --muted: #53666a;
+        --line: #001c21;
+        --line-soft: rgba(0, 28, 33, 0.18);
+        background: white;
+        color: #001c21;
+      }
+      .mlops-page > header,
+      .mlops-page .skip-link,
+      .mlops-page .breadcrumb,
+      .mlops-article .article-toc,
+      .mlops-article .mlops-diagram-source,
+      .mlops-article .article-footer-nav { display: none; }
+      .mlops-page .container { width: 100%; }
+      .mlops-article .article-layout { display: block; }
+      .mlops-article .article-header,
+      .mlops-article .mlops-figure,
+      .mlops-article .table-wrap { box-shadow: none; }
+      .mlops-article .article-title { font-size: 30pt; }
+      .mlops-article .article-deck,
+      .mlops-article .article-meta,
+      .mlops-article .mlops-note,
+      .mlops-article .mlops-figure figcaption { color: #333; }
+      .mlops-article .table-wrap { overflow: visible; }
+      .mlops-article .table-wrap table { min-width: 0; font-size: 9pt; }
+      .mlops-article .prose pre { white-space: pre-wrap; box-shadow: none; }
+      .mlops-article #ownership-diagram svg,
+      .mlops-article #release-diagram svg { min-width: 0; max-height: 200mm; }
+      .mlops-article h2,
+      .mlops-article h3 { break-after: avoid; }
+    }
+  </style>
+
+  <script defer src="./js/utils.js"></script>
+  <script defer src="./js/theme.js"></script>
+  <script defer src="./js/site.js"></script>
+  <script defer src="./js/vendor/il2w.js"></script>
+  <script defer src="./js/vendor/mermaid.min.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": "https://www.nishanthkottapalli.com/mlops-pipelines-terraform-aws.html#article",
+    "url": "https://www.nishanthkottapalli.com/mlops-pipelines-terraform-aws.html",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://www.nishanthkottapalli.com/mlops-pipelines-terraform-aws.html"
+    },
+    "headline": "MLOps pipelines using Terraform IaC on AWS",
+    "description": "What Terraform provisions, what SageMaker Pipelines executes, and what your team owns across SageMaker AI, Studio, and Unified Studio.",
+    "datePublished": "2026-08-12",
+    "dateModified": "2026-08-03",
+    "inLanguage": "en",
+    "articleSection": "AI Infrastructure and Model Operations",
+    "keywords": ["MLOps", "Terraform", "Infrastructure as Code", "AWS", "SageMaker AI", "SageMaker Studio", "SageMaker Unified Studio", "Model Registry"],
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://www.nishanthkottapalli.com/assets/brand/android-chrome-512x512.png",
+      "width": 512,
+      "height": 512
+    },
+    "author": {
+      "@type": "Person",
+      "@id": "https://www.nishanthkottapalli.com/#nishanth-kottapalli",
+      "name": "Nishanth Kottapalli",
+      "url": "https://www.nishanthkottapalli.com/"
+    },
+    "publisher": {
+      "@type": "Person",
+      "@id": "https://www.nishanthkottapalli.com/#nishanth-kottapalli",
+      "name": "Nishanth Kottapalli"
+    },
+    "isPartOf": {"@id": "https://www.nishanthkottapalli.com/#website"}
+  }
+  </script>
+</head>
+<body class="mlops-page">
+<a class="skip-link" href="#main-content">Skip to article</a>
+<header>
+  <div class="container nav">
+    <a class="brand" href="./index.html" aria-label="Nishanth Kottapalli home">
+      <div class="title title-with-logo">
+        <span class="brand-mark-wrap" aria-hidden="true"><img class="brand-mark" src="./assets/brand/logo.svg" alt=""></span>
+        <span>NISHANTH KOTTAPALLI</span>
+        <div class="subtitle">Engineer. Builder. Systems thinker.</div>
+      </div>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a class="pill" href="./index.html">Home</a>
+      <a class="pill" href="./root.html">Roots</a>
+      <a class="pill" href="./trunk.html">Trunks</a>
+      <a class="pill" href="./branch.html">Branches</a>
+      <a class="pill active" href="./leaf.html" aria-current="location">Leaves</a>
+      <a class="pill" href="./links.html">Links</a>
+      <button class="icon-btn" type="button" onclick="NMKKTheme.toggle()" aria-label="Toggle theme" title="Toggle theme">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 18a6 6 0 1 1 4.24-10.24A8 8 0 1 0 20 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main class="container" id="main-content" tabindex="-1">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="./leaf.html">Leaves</a>
+    <span aria-hidden="true">→</span>
+    <span>MLOps pipelines on AWS</span>
+  </nav>
+
+  <article class="article-shell mlops-article" aria-labelledby="article-title">
+    <header class="article-header">
+      <span class="eyebrow">Leaf · AI Infrastructure + Platform Engineering</span>
+      <h1 class="article-title" id="article-title">MLOps pipelines using Terraform IaC on AWS</h1>
+      <p class="article-deck">What gets provisioned, what runs the workflow, and who owns the path to production across SageMaker AI, Studio, and Unified Studio.</p>
+      <div class="article-meta">
+        <span>By Nishanth Kottapalli</span>
+        <span aria-hidden="true">·</span>
+        <time datetime="2026-07-12">12 August 2026</time>
+        <span aria-hidden="true">·</span>
+        <span data-reading-time>14 min read</span>
+      </div>
+      <div class="tag-list" aria-label="Article topics">
+        <span class="pill">MLOps</span>
+        <span class="pill">Terraform</span>
+        <span class="pill">AWS</span>
+        <span class="pill">SageMaker</span>
+        <span class="pill">Model delivery</span>
+      </div>
+    </header>
+ 
+    <div class="article-layout">
+      <aside class="article-toc" aria-label="On this page">
+        <strong>On this page</strong>
+        <a href="#starting-point">Start with ownership</a>
+        <a href="#names">Untangle the names</a>
+        <a href="#comparison">Compare the approaches</a>
+        <a href="#boundaries">Three delivery boundaries</a>
+        <a href="#sagemaker-ai">SageMaker AI with Terraform</a>
+        <a href="#studio">What Studio adds</a>
+        <a href="#unified-studio">What Unified Studio adds</a>
+        <a href="#worked-pipeline">A worked ML pipeline</a>
+        <a href="#promotion">Promote across accounts</a>
+        <a href="#operations">Operate and reproduce</a>
+        <a href="#decision">Choose the environment</a>
+        <a href="#sources">Sources and further reading</a>
+      </aside>
+
+      <div class="article-body prose">
+        <section id="starting-point" aria-label="Start with ownership">
+          <p class="il2w-free-writing-entry" id="il2wFreeWritingEntry" data-date="2024-11-15">December has always something to look forward to. Perusing through the shortlisted events Friday sent me over...Hmm.."AWS re:Invent conference" looks interesting" esp. this : "next generation of Amazon SageMaker". The AWS CEO himself, Matt Garman is scheduled to make this announcement. What should I Do...Go there or Watch from CC. It anyways get's uploaded to the <a href="https://www.youtube.com/@AWSEventsChannel">AWS Events Channel</a> Anyhoos, </p>
+          <p class="lede">An MLOps architecture has to answer more than "which SageMaker interface should we use?" It must explain how infrastructure changes, how training runs, and how an evaluated model becomes a production release.</p>
+          <p class="callout callout--trust">Infrastructure as Code (IaC) makes resources and configuration reviewable. A machine-learning workflow expresses processing, training, evaluation, and their dependencies. A delivery workflow decides which changes and model versions are allowed into each environment. Those responsibilities remain visible even when a managed platform packages several of them together.</p>
+          <p class="mlops-note">The example below is an illustrative architecture for a support-ticket classifier. Code fragments show integration boundaries and assume the surrounding infrastructure and application code exist.</p>
+        </section>
+
+        <section id="names">
+          <h2>1. Untangle the names first</h2>
+          <p><strong>Amazon SageMaker AI</strong> is the managed ML service formerly named Amazon SageMaker. AWS changed that name on 3 December 2024 while retaining existing API namespaces. The broader Amazon SageMaker platform now also encompasses analytics, data processing, governance, and Unified Studio. <a class="citation" href="#ref-1" aria-label="Source 1">[1]</a></p>
+          <p><strong>Amazon SageMaker Studio</strong> is the ML development experience with applications such as JupyterLab and Code Editor. <strong>Studio Classic</strong> is the specific older Studio experience, renamed in November 2023. Its documentation now directs users toward migration and restricts creation of Classic applications. "Classic SageMaker" is therefore an ambiguous label for the core APIs. <a class="citation" href="#ref-2" aria-label="Source 2">[2]</a> <a class="citation" href="#ref-3" aria-label="Source 3">[3]</a></p>
+          <p><strong>Amazon SageMaker Unified Studio</strong> brings multiple data and AI services into a shared development and governance environment. It can provide access to SageMaker AI capabilities; it does not replace every underlying service with a new execution engine. <a class="citation" href="#ref-1" aria-label="Source 1">[1]</a> <a class="citation" href="#ref-7" aria-label="Source 7">[7]</a></p>
+        </section>
+
+        <section id="comparison">
+          <h2>2. Compare responsibilities</h2>
+          <p>The columns below describe ways to assemble and access an ML platform. They are overlapping layers: using an IDE does not prevent direct API access or an independently operated delivery pipeline.</p>
+          <div class="table-wrap" role="region" aria-label="SageMaker approaches comparison; scroll horizontally on narrow screens" tabindex="0">
+            <table class="mlops-table">
+              <caption>What changes when the working environment changes?</caption>
+              <thead><tr><th scope="col">Concern</th><th scope="col">SageMaker AI through APIs</th><th scope="col">SageMaker Studio</th><th scope="col">SageMaker Unified Studio</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Provisioning focus</th><td>ML resources and their IAM, data, compute, and network dependencies.</td><td>ML development domains, users, spaces, and application settings.</td><td>Governed domains, blueprints, project profiles, projects, and membership.</td></tr>
+                <tr><th scope="row">ML orchestration</th><td>SageMaker Pipelines or a deliberately chosen orchestrator.</td><td>The same underlying ML workflow services, accessed from an IDE or UI.</td><td>The execution service selected by the workload and project design.</td></tr>
+                <tr><th scope="row">Templates</th><td>Your modules and application repositories.</td><td>Optional SageMaker Projects and Service Catalog provisioning.</td><td>Blueprints and project profiles; additional ModelOps automation where configured.</td></tr>
+                <tr><th scope="row">Delivery automation</th><td>Explicit CI/CD, events, schedules, and approvals.</td><td>Provided by your chosen template or delivery integration.</td><td>Provided by the configured project solution and delivery integration.</td></tr>
+                <tr><th scope="row">Engineering still owned</th><td colspan="3">Model logic, evaluation criteria, release policy, least privilege, observability, recovery, cost control, and the evidence connecting a run to a release.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="mlops-note">This is an architectural synthesis of the service, pipeline, project, and module documentation - not a universal ranking of implementation effort. <a class="citation" href="#ref-2" aria-label="Source 2">[2]</a> <a class="citation" href="#ref-4" aria-label="Source 4">[4]</a> <a class="citation" href="#ref-6" aria-label="Source 6">[6]</a> <a class="citation" href="#ref-8" aria-label="Source 8">[8]</a></p>
+        </section>
+
+        <section id="boundaries">
+          <h2>3. Separate three delivery boundaries</h2>
+          <div class="callout callout--principle">
+            <p><strong>The Design principle(s)</strong>, for a resolute seperation of responsibilities (don't even get me started on the choices of IDEs, I believe this to be a pre-requisite.), I decided Absolution:
+               name the owner of the infrastructure, the pipeline definition, each execution, and the deployed model. A workspace should make these easier to use; it should not make those ownership decisions disappear.</p>
+          </div>
+          <p>Absolution translated:</p>
+          <ol class="step-list">
+            <li><strong>Provision the foundation.</strong> Review and apply changes to networking, storage, keys, roles, environments, and long-lived service configuration.</li>
+            <li><strong>Publish and execute the ML workflow.</strong> Build a pipeline definition from reviewed code, publish a version, and run it against identified inputs. SageMaker Pipelines executes an ML directed acyclic graph (DAG). <a class="citation" href="#ref-4" aria-label="Source 4">[4]</a></li>
+            <li><strong>Deliver a model release.</strong> Associate evaluation evidence with an exact candidate, authorize promotion, update serving infrastructure, and verify the result.</li>
+          </ol>
+          <figure class="mlops-figure">
+            <h3 id="ownership-diagram-title">Provisioning and execution have different callers</h3>
+            <div id="ownership-diagram" class="mlops-diagram" data-mermaid-output="ownership-source" role="region" aria-labelledby="ownership-diagram-title" tabindex="0">
+              <p>Terraform provisions IAM, networking, storage, and the working environment. In this example it also publishes the pipeline definition. CI, a schedule, or an operator starts an execution; SageMaker Pipelines then orchestrates jobs that produce a model and evidence.</p>
+            </div>
+            <figcaption>One valid ownership choice: Terraform owns the pipeline definition. Dashed edges represent provisioning or definition updates; solid edges represent authoring, inspection, execution requests, or resulting work.</figcaption>
+            <details class="mlops-diagram-source">
+              <summary>Inspect the Mermaid source</summary>
+              <pre><code id="ownership-source">flowchart TB
+  accTitle: Provisioning and execution have different callers
+  accDescr: Terraform provisions foundation resources and an environment, and publishes a SageMaker pipeline definition. CI, a schedule, or an operator starts a pipeline execution. The pipeline orchestrates jobs that produce a model and evidence.
+  I["Terraform apply"] -. "provision" .-> F["IAM, network and storage"]
+  I -. "provision" .-> W["Studio or Unified Studio"]
+  I -. "publish definition" .-> P["SageMaker Pipelines"]
+  C["CI, schedule or operator"] -->|"start execution"| P
+  W -->|"author and inspect"| P
+  P --> J["Processing and training jobs"]
+  J --> R["Model and evidence"]</code></pre>
+            </details>
+          </figure>
+          <p>A practical ownership rule follows: if Terraform manages a pipeline definition, use the SDK to <em>generate</em> its JSON during the build, then let Terraform publish it. Alternatively, let a dedicated delivery job own publication through the SDK. Having both independently update the same definition invites drift and unexpected reversions. The same decision applies to endpoints changed by Terraform and deployment automation.</p>
+        </section>
+
+        <section id="sagemaker-ai">
+          <h2>4. SageMaker AI already has native pipelines</h2>
+          <p>The Terraform AWS provider includes <code>aws_sagemaker_pipeline</code>. It accepts a pipeline definition directly or through an S3 location. There is no general requirement to substitute Step Functions because Terraform cannot represent a SageMaker pipeline. <a class="citation" href="#ref-5" aria-label="Source 5">[5]</a></p>
+          <p class="mlops-code-label">Terraform fragment · publish the reviewed definition</p>
+          <pre><code class="language-hcl">resource "aws_sagemaker_pipeline" "support_triage" {
+  pipeline_name         = "support-triage-dev"
+  pipeline_display_name = "support-triage-dev"
+  role_arn              = var.pipeline_execution_role_arn
+
+  pipeline_definition = file("${path.module}/build/pipeline.json")
+
+  tags = {
+    Environment = "dev"
+    Workload    = "support-triage"
+  }
+}</code></pre>
+          <p>The surrounding infrastructure repository must provide the configured AWS provider, execution role, and referenced resources. Generate <code>build/pipeline.json</code> before planning and retain the same build artifact through apply. The file contains the steps and dependencies; the HCL fragment above does not define the classifier.</p>
+          <p>Applying the resource publishes configuration. Starting a run is a separate operation. A delivery job, operator, or event integration can call <code>StartPipelineExecution</code>, selecting a pipeline version and runtime parameters. <a class="citation" href="#ref-10" aria-label="Source 10">[10]</a></p>
+          <p class="mlops-code-label">AWS CLI fragment · start an identified execution</p>
+          <pre><code class="language-bash">aws sagemaker start-pipeline-execution \
+  --pipeline-name support-triage-dev \
+  --pipeline-version-id "$PIPELINE_VERSION_ID" \
+  --client-request-token "$EXECUTION_REQUEST_TOKEN" \
+  --pipeline-parameters \
+    Name=DatasetManifestUri,Value="$DATASET_MANIFEST_URI"</code></pre>
+          <p class="mlops-note">The selected definition must declare <code>DatasetManifestUri</code>. Set the version, manifest URI, credentials, and Region in the calling environment. The request token must be 32–128 characters: persist one token for retries of the same logical request, and issue a new token for a new run. Capture the returned execution ARN. <a class="citation" href="#ref-10" aria-label="Source 10">[10]</a></p>
+          <p>Choose Step Functions when its broader service coordination fits the workflow—for example, an ML stage inside a larger business process. AWS has published a Terraform and Step Functions implementation; it is one architecture, not a limitation that applies to every SageMaker deployment. <a class="citation" href="#ref-11" aria-label="Source 11">[11]</a></p>
+        </section>
+
+        <section id="studio">
+          <h2>5. Studio adds a working environment</h2>
+          <p>A Studio deployment adds an environment in which people develop, inspect, and operate ML workloads. Terraform commonly manages resources such as <code>aws_sagemaker_domain</code>, <code>aws_sagemaker_user_profile</code>, and <code>aws_sagemaker_space</code>, alongside the relevant roles and network configuration. Domain provisioning and publishing an ML DAG remain separate concerns.</p>
+          <p>Studio provides access to jobs, endpoints, and pipeline tooling. A workflow can be managed through service APIs as well as the UI; a data scientist does not need to create a Service Catalog product for every pipeline run. <a class="citation" href="#ref-2" aria-label="Source 2">[2]</a> <a class="citation" href="#ref-4" aria-label="Source 4">[4]</a></p>
+          <p><strong>SageMaker Projects</strong> offers a self-service provisioning path through Service Catalog products. AWS’s May 2025 Terraform Cloud example uses a Service Catalog engine to provision Terraform-backed projects without a CloudFormation wrapper. That integration matters when project templates are part of your platform; it is not a prerequisite for using SageMaker Pipelines. <a class="citation" href="#ref-6" aria-label="Source 6">[6]</a></p>
+          <p>Operationally, give an interactive development role the permissions its work requires. Keep production promotion behind a separate delivery identity and approval policy. Moving a notebook into an IDE does not establish that separation by itself.</p>
+        </section>
+
+        <section id="unified-studio">
+          <h2>6. Unified Studio adds governed project provisioning</h2>
+          <p>On 2 July 2026, AWS announced Terraform provisioning support for Unified Studio through the AWS-IA module. Its documented scope includes domain infrastructure and IAM roles, with submodules for blueprints, project profiles, and projects. <a class="citation" href="#ref-7" aria-label="Source 7">[7]</a></p>
+          <p>The distinction between domain types matters: the Unified Studio module provisions a DataZone-backed V2 domain. It is not an interchangeable use of <code>aws_sagemaker_domain</code>. The reviewed module uses both the AWS and AWS Cloud Control providers; project and project-profile resources include <code>awscc_datazone_*</code> types. <a class="citation" href="#ref-8" aria-label="Source 8">[8]</a></p>
+          <p class="mlops-code-label">Terraform fragment · domain foundation in an infrastructure repository</p>
+          <pre><code class="language-hcl">module "unified_studio" {
+  source = "./vendor/terraform-aws-sagemaker-unified-studio"
+
+  domain_name = "ml-platform-dev"
+  vpc_id      = var.vpc_id
+  subnet_ids  = var.private_subnet_ids
+
+  tags = {
+    Environment = "dev"
+  }
+}</code></pre>
+          <p class="mlops-note">Here, the local module directory contains a reviewed upstream revision committed with the infrastructure code. Supply its required providers and existing network inputs. This fragment provisions the domain foundation; projects and your ML delivery integration need their own configuration. <a class="citation" href="#ref-8" aria-label="Source 8">[8]</a></p>
+          <p>A blueprint describes the resources and capabilities available to an environment; a project profile composes the environment choices offered during project creation. The built-in blueprint catalogue covers several services, and some blueprints provision resources through CloudFormation. Terraform as the entry point does not imply that every downstream resource is directly represented in your Terraform state. <a class="citation" href="#ref-9" aria-label="Source 9">[9]</a></p>
+          <div class="callout">
+            <p><strong>Read the automation behind the template.</strong> AWS's Unified Studio ModelOps reference solution configures GitHub connections and template repositories, then uses EventBridge and Lambda for project setup and deployment integration. It also describes Step Functions, GitHub Actions, and CDK deployment components. Those are implemented parts of that solution—not capabilities to assume from creating a domain alone. <a class="citation" href="#ref-12" aria-label="Source 12">[12]</a></p>
+          </div>
+          <p>The useful shift is that project onboarding and governance can be packaged once and reused. Assess the resulting system by inspecting what it creates, which identity runs each action, and how updates and failures are handled. A shorter Terraform entry point can still represent a substantial operating platform.</p>
+        </section>
+
+        <section id="worked-pipeline">
+          <h2>7. Follow one model from data to serving</h2>
+          <p>Consider a support-ticket classifier that predicts a routing category and can abstain when confidence is insufficient. Evaluation thresholds are decisions the product team must specify from observed business costs; they are not SageMaker defaults.</p>
+          <ol class="step-list">
+            <li><strong>Prepare.</strong> Read an immutable dataset manifest, validate the schema, minimize personal data, and split examples without leaking duplicated tickets or later outcomes into the test set.</li>
+            <li><strong>Train.</strong> Run the reviewed training code with a recorded image digest, configuration, and random seed. Store the trained artifact under an immutable identity.</li>
+            <li><strong>Evaluate.</strong> Produce a report covering macro-F1, recall for important categories, abstention behaviour, and relevant customer or language slices. Compare with a declared baseline.</li>
+            <li><strong>Gate and register.</strong> If the quality rule passes, register that candidate with its artifact and evaluation references, initially awaiting approval. If it fails, preserve the report and stop this promotion path.</li>
+            <li><strong>Approve and validate serving.</strong> Review the exact candidate, deploy it to staging, and check its request schema, preprocessing, latency, and failure handling.</li>
+            <li><strong>Release and observe.</strong> Promote the same artifact to production, verify the endpoint's actual model version, and monitor operational and business outcomes.</li>
+          </ol>
+          <figure class="mlops-figure">
+            <h3 id="release-diagram-title">A successful run produces a candidate</h3>
+            <div id="release-diagram" class="mlops-diagram" data-mermaid-output="release-source" role="region" aria-labelledby="release-diagram-title" tabindex="0">
+              <p>Preparation, training, and evaluation lead to a quality decision. Failure stops promotion while retaining evidence. A passing model is registered and waits for approval. Approved candidates go through staging checks before production; a failed staging check holds the release.</p>
+            </div>
+            <figcaption>This is a proposed delivery flow. The ML workflow, approval, and serving deployment have distinct responsibilities. Model Registry approval changes status; the configured delivery integration must act on that decision. <a class="citation" href="#ref-13" aria-label="Source 13">[13]</a></figcaption>
+            <details class="mlops-diagram-source">
+              <summary>Inspect the Mermaid source</summary>
+              <pre><code id="release-source">flowchart TB
+  accTitle: Quality and release gates for a model candidate
+  accDescr: A trained and evaluated candidate passes a quality gate before registration. It then requires release approval and staging checks. Failed quality retains evidence and stops; declined approval or failed staging holds the release.
+  T["Prepare, train and evaluate"] --> Q{"Quality pass?"}
+  Q -->|"No"| X["Retain evidence; stop"]
+  Q -->|"Yes"| R["Register candidate"]
+  R --> A{"Approved?"}
+  A -->|"No"| H["Hold release"]
+  A -->|"Yes"| S["Deploy to staging"]
+  S --> V{"Checks pass?"}
+  V -->|"No"| H
+  V -->|"Yes"| P["Promote same artifact"]</code></pre>
+            </details>
+          </figure>
+          <p>For this use case, automatic routing can have a different release criterion from simply suggesting a category to a support agent. Make that product distinction part of evaluation and approval. An infrastructure deployment reporting success cannot tell you whether expensive misrouting is acceptably rare.</p>
+          <p>A registry status of <code>Approved</code> can initiate deployment when an appropriate template or integration is configured. It does not universally create an endpoint, and changing the status alone is not proof that the intended model is serving. <a class="citation" href="#ref-13" aria-label="Source 13">[13]</a></p>
+        </section>
+
+        <section id="promotion">
+          <h2>8. Promote an artifact across accounts</h2>
+          <p>For an enterprise implementation, I would start with separate development, staging, and production accounts, separate Terraform state, and explicit deployment roles. This is a design recommendation: the account boundary limits accidental coupling, while the roles and resource policies determine actual access.</p>
+          <div class="table-wrap" role="region" aria-label="Environment responsibilities; scroll horizontally on narrow screens" tabindex="0">
+            <table>
+              <caption>Example environment contract</caption>
+              <thead><tr><th scope="col">Environment</th><th scope="col">Work allowed</th><th scope="col">Promotion evidence</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Development</th><td>Explore, change code, train, evaluate, and create candidates within budget.</td><td>Code revision, input manifest, execution ARN, artifact digest, and evaluation report.</td></tr>
+                <tr><th scope="row">Staging</th><td>Exercise the approved serving package with representative integration tests.</td><td>Request/response compatibility, latency and error results, and release-policy checks.</td></tr>
+                <tr><th scope="row">Production</th><td>Deploy an explicitly authorized version through the production delivery role.</td><td>Approval record, target configuration, deployment result, and recovery target.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p><strong>Promote the evaluated model rather than silently retraining it at each stage.</strong> If production policy requires retraining with different data, treat its output as a new candidate requiring evaluation. Otherwise the artifact that passed staging and the artifact serving customers may be different models.</p>
+          <p>Choose whether each account receives a verified copy of the artifact or accesses a governed central registry and storage location. AWS's cross-account deployment guidance involves model-package access and the relevant S3, ECR, and KMS permissions. Project membership alone does not establish those service permissions. <a class="citation" href="#ref-14" aria-label="Source 14">[14]</a></p>
+          <p>Use distinct identities for provisioning, interactive development, pipeline execution, and production deployment. Scope data access to the required locations and bound <code>iam:PassRole</code> to the execution roles the caller actually needs. Keep approval authority separate from a training job's ability to emit a candidate.</p>
+          <p>Decide which system owns the endpoint configuration. If Terraform owns it, release automation should request the corresponding reviewed Terraform change. If a deployment service owns it, avoid a competing Terraform configuration that can revert a later model rollout. Record the ownership boundary alongside the recovery procedure.</p>
+        </section>
+
+        <section id="operations">
+          <h2>9. Make the run reproducible and the release recoverable</h2>
+          <p>A useful release record connects <strong>source commit -> pipeline definition/version -> execution -> inputs and image -> model package -> approval -> endpoint configuration</strong>. Keep exact identifiers in the record. Labels such as "latest" and a screenshot of a green pipeline are insufficient to reconstruct that chain.</p>
+          <p>Commit Terraform's provider lock file and review dependency upgrades. That lock file tracks providers; remote module selections require their own version constraints or pinned source revisions. A local, reviewed module copy is another explicit versioning choice. <a class="citation" href="#ref-15" aria-label="Source 15">[15]</a></p>
+          <p>Version datasets and container images as carefully as code. Record seeds and relevant runtime settings, but distinguish repeatable inputs from numerically identical training: hardware, parallel execution, and ML libraries can still affect results. Define the reproducibility tolerance your workload needs.</p>
+          <p>SageMaker step caching is opt-in, uses step-specific matching attributes, and reuses eligible successful results within a configured time window. A cache hit is not a fresh evaluation. Ensure that changing a dataset also changes the immutable input reference used by the workflow, and understand which attributes form the cache key. <a class="citation" href="#ref-16" aria-label="Source 16">[16]</a></p>
+          <p>For serving, retain the previous approved artifact and a known-good configuration. Where supported, SageMaker deployment guardrails offer traffic shifting and alarm-driven rollback. Select the rollout mode and alarms explicitly, and check endpoint feature compatibility. These guardrails apply to supported real-time and asynchronous inference endpoints, not every possible deployment target. <a class="citation" href="#ref-17" aria-label="Source 17">[17]</a></p>
+          <p>Track time to a validated release, time to recover, failed or duplicated runs, and cost per accepted model. For the classifier, also track misrouting and human correction rates. Those measurements reveal whether the platform is reducing delivery effort while maintaining the required outcome.</p>
+        </section>
+
+        <section id="decision">
+          <h2>10. Choose the environment around the work</h2>
+          <p>My recommendation is to start with the team's operating needs:</p>
+          <ul>
+            <li><strong>Use SageMaker AI directly</strong> when your team already has development tools, CI/CD, and governance, and mainly needs managed ML execution or serving.</li>
+            <li><strong>Add Studio</strong> when managed ML development applications and a shared view of SageMaker resources improve the team's workflow.</li>
+            <li><strong>Use Unified Studio</strong> when shared discovery, governance, and project provisioning across data and AI services justify the broader platform.</li>
+          </ul>
+          <p>Evaluate a representative project before standardizing the approach. Measure onboarding work, review the effective permissions, follow an unsuccessful training run, and recover a failed release. Include the identities and resources created indirectly by templates in that review.</p>
+          <div class="callout callout--principle">
+            <p><strong>The question I would bring to an architecture review:</strong> for this production prediction, can we identify the code and data that produced the model, the evidence that justified its release, the identity that deployed it, and the procedure that restores a known-good version?</p>
+          </div>
+          <!--div class="mlops-related" aria-label="Related reading">
+            <a href="./cloud-environments-as-authorization-graphs.html">Related: attach authorization to cloud interactions →</a>
+            <a href="./security-orchestration-authorized-feedback-controller.html">Related: model security automation as an authorized controller →</a>
+          </div-->
+        </section>
+
+        <section id="sources">
+          <h2>Sources and further reading</h2>
+          <p class="mlops-note">Primary AWS and HashiCorp references, checked on 03 August 2026. Provider and module documentation can evolve; review the version selected in your own infrastructure repository.</p>
+          <ol class="source-list">
+            <li id="ref-1"><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/whatis.html">AWS: What is Amazon SageMaker AI?</a> - service naming and the broader SageMaker platform.</li>
+            <li id="ref-2"><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/studio-updated.html">AWS: Amazon SageMaker Studio</a> - development applications and access to ML resources.</li>
+            <li id="ref-3"><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/studio.html">AWS: Amazon SageMaker Studio Classic</a> - naming, lifecycle, and migration guidance.</li>
+            <li id="ref-4"><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/pipelines.html">AWS: SageMaker Pipelines</a> - managed ML workflow orchestration and authoring interfaces.</li>
+            <li id="ref-5"><a href="https://github.com/hashicorp/terraform-provider-aws/blob/main/website/docs/r/sagemaker_pipeline.html.markdown">HashiCorp: aws_sagemaker_pipeline</a> - native Terraform resource and definition inputs.</li>
+            <li id="ref-6"><a href="https://aws.amazon.com/blogs/machine-learning/deploy-amazon-sagemaker-projects-with-terraform-cloud/">AWS: Deploy Amazon SageMaker Projects with Terraform Cloud</a> - 30 May 2025; a Service Catalog integration pattern.</li>
+            <li id="ref-7"><a href="https://aws.amazon.com/about-aws/whats-new/2026/07/amazon-sagemaker-unified-studio-terraform/">AWS: Unified Studio Terraform provisioning announcement</a> - 2 July 2026; scope of the launch.</li>
+            <li id="ref-8"><a href="https://github.com/aws-ia/terraform-aws-sagemaker-unified-studio">AWS-IA: terraform-aws-sagemaker-unified-studio</a> - module, resource types, inputs, providers, and submodules.</li>
+            <li id="ref-9"><a href="https://docs.aws.amazon.com/sagemaker-unified-studio/latest/adminguide/supported-blueprints.html">AWS: Unified Studio supported blueprints</a> - environment capabilities and provisioned resources.</li>
+            <li id="ref-10"><a href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_StartPipelineExecution.html">AWS: StartPipelineExecution API</a> - execution version, parameters, and idempotency token.</li>
+            <li id="ref-11"><a href="https://aws.amazon.com/blogs/machine-learning/deploy-and-manage-machine-learning-pipelines-with-terraform-using-amazon-sagemaker/">AWS: Deploy and manage ML pipelines with Terraform using SageMaker</a> - an implementation using Step Functions.</li>
+            <li id="ref-12"><a href="https://aws.amazon.com/blogs/machine-learning/automate-modelops-with-sagemaker-unified-studio-part-2-technical-implementation/">AWS: Automate ModelOps with Unified Studio, Part 2</a> - 12 August 2025; the integration components behind a reference solution.</li>
+            <li id="ref-13"><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-registry-approve.html">AWS: Update the approval status of a model</a> - approval states and configured deployment behaviour.</li>
+            <li id="ref-14"><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-registry-deploy.html">AWS: Deploy a model from the registry with Python</a> - model deployment and cross-account permissions.</li>
+            <li id="ref-15"><a href="https://developer.hashicorp.com/terraform/language/files/dependency-lock">HashiCorp: Dependency lock file</a> - provider selection, checksums, and the distinction from module versioning.</li>
+            <li id="ref-16"><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/pipelines-caching.html">AWS: Caching pipeline steps</a> - cache matching, scope, eligibility, and timeouts.</li>
+            <li id="ref-17"><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/deployment-guardrails.html">AWS: Deployment guardrails</a> - rollout options, rollback, and supported endpoint types.</li>
+          </ol>
+        </section>
+      </div>
+    </div>
+
+    <nav class="article-footer-nav" aria-label="Article navigation">
+      <a class="btn" href="./leaf.html">← Back to Leaves</a>
+      <a class="btn primary" href="./branch.html#ai-knowledge">AI &amp; Knowledge Systems</a>
+      <a class="btn" href="./branch.html#cloud-platform-security">Cloud, Platform &amp; Security</a>
+    </nav>
+  </article>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <span>© <span data-year>2026</span> Nishanth Kottapalli</span>
+    <span>All Rights Reserved.</span>
+  </div>
+</footer>
+
+<!--
+  This page uses the repository's vendored Mermaid 11.16.0 bundle.
+  Sources are plain, readable text above; content never depends on rendering.
+  Fixed render IDs and a fixed seed replace the shared single-diagram helper.
+  No network imports, generated timestamps, or random IDs are used here.
+-->
+<script>
+(() => {
+  "use strict";
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    if (!window.mermaid) return;
+    if (document.fonts && document.fonts.ready) await document.fonts.ready;
+
+    window.mermaid.initialize({
+      startOnLoad: false,
+      securityLevel: "strict",
+      suppressErrorRendering: true,
+      deterministicIds: true,
+      deterministicIDSeed: "nk-mlops-terraform-aws-v1",
+      theme: "base",
+      flowchart: {
+        htmlLabels: false,
+        useMaxWidth: true,
+        curve: "linear",
+        nodeSpacing: 28,
+        rankSpacing: 36,
+        padding: 14
+      },
+      themeVariables: {
+        background: "#f5f5f2",
+        fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif",
+        fontSize: "16px",
+        primaryColor: "#b7e4c7",
+        primaryTextColor: "#001c21",
+        primaryBorderColor: "#165b40",
+        secondaryColor: "#d9eaff",
+        secondaryTextColor: "#001c21",
+        secondaryBorderColor: "#2b6aa0",
+        tertiaryColor: "#fff0aa",
+        tertiaryTextColor: "#001c21",
+        tertiaryBorderColor: "#735c0f",
+        lineColor: "#344d52",
+        textColor: "#001c21",
+        edgeLabelBackground: "#f5f5f2"
+      }
+    });
+
+    for (const container of document.querySelectorAll("[data-mermaid-output]")) {
+      const source = document.getElementById(container.dataset.mermaidOutput);
+      if (!source) continue;
+      try {
+        const result = await window.mermaid.render(
+          `${container.id}-svg`,
+          source.textContent.trim()
+        );
+        container.innerHTML = result.svg;
+        const svg = container.querySelector("svg");
+        if (svg) {
+          svg.removeAttribute("height");
+          svg.setAttribute("role", "img");
+          svg.setAttribute("focusable", "false");
+        }
+        if (result.bindFunctions) result.bindFunctions(container);
+      } catch (error) {
+        console.warn("The article diagram could not be rendered; its summary and source remain available.", error);
+      }
+    }
+  });
+})();
+</script>
+</body>
+</html>

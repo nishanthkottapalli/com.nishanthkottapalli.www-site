@@ -1,6 +1,22 @@
 /* ==========================================================================
-   Reset and global styles
+   I Love to Write - il2w
    ========================================================================== */
+
+/* uses */
+
+/* Font : Cedarville Cursive by Kimberly Geswein */
+
+@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap');
+
+.cedarville-cursive-regular {
+  font-family: "Cedarville Cursive", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* More fonts from Kimberly : https://fonts.google.com/?query=Kimberly+Geswein
+
+
 /* ==========================================================================
    Reset and global styles
    ========================================================================== */
@@ -417,6 +433,56 @@ h3 {
 .list-clean li + li {
   margin-top: 6px;
 }
+
+/* ==========================================================================
+   I Love to Write - il2w
+   ========================================================================== */
+
+.il2w-free-writing-entry {
+    position: relative;
+    font-family: var(--font-il2w-fw);
+    font-size: 1.05rem;
+    line-height: 1.85; /* Aligns perfectly with the ruled lines */
+    color: #111111; /* Harsh, deep ink color */
+    
+    /* Loose-leaf paper background */
+    background: 
+        /* The classic pink left-margin line */
+        linear-gradient(90deg, transparent 54px, #ff8fa3 54px, #ff8fa3 56px, transparent 56px),
+        /* Cheap notebook ruled blue lines */
+        linear-gradient(#d6e4ff 1px, transparent 1px);
+    background-size: 100% 100%, 100% 1.85rem; /* Matches the line-height exactly */
+    background-color: #faf9f5; /* Off-white, cheap institutional paper look */
+    
+    /* Structural padding to simulate standard margins */
+    padding: 1.85rem 20px 1.85rem 74px; 
+    border: 1px solid #e1dfd7;
+    border-radius: 2px; /* Rigid, unstyled corners */
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05); /* Barely noticeable drop shadow */
+    
+    /* Anti-Self-Correction styling overrides */
+    text-decoration-color: #ff3333;
+    caret-color: #000;
+}
+
+/* Make the emoji look like a messy stamp in the margin */
+.il2w-free-writing-entry::before {
+    content: var(--random, "\1F30A");
+    position: absolute;
+    left: 18px; /* Tosses it into the left binding margin */
+    top: 1.95rem;
+    font-size: 1.3rem;
+    opacity: 0.7; /* Slightly faded, like cheap ink stamp */
+    filter: grayscale(0.1);
+}
+
+/*.il2w-free-writing-entry::before {
+    content: var(--random, "\1F30A"); 
+    margin-right: 10px;
+    font-size: 1.2rem;
+    vertical-align: middle;
+}
+*/
 
 
 /* ==========================================================================
